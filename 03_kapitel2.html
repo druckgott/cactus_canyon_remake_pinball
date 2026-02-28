@@ -31,21 +31,22 @@
   </thead>
   <tbody>
 
-    <!-- Wild West Shootout – Topper Mini-Game -->
-    <tr>
-        <td>
-            <strong>🤠 Wild West Shootout – Topper Mini-Game</strong><br>
-            <ul>
-                <li>🎯 Normal targets / Drop Targets → ❌ Interrupts combo counter</li>
-                <li>🛡️ Slingshots / Bumpers → ❌ Combo resets if ball doesn't land on ramp/loop</li>
-                <li>↩️ Missed Ramps / Loops → ❌ Counts as interruption if ball drains or goes outlane</li>
-                <li>⏳ Timeout → ❌ Combo expires if next ramp/loop not hit in time</li>
-                <li>💥 Multiball / Other Modes → ❌ Combo may pause or reset in certain modes</li>
-                <li>✅ During normal single-ball play → Combo counter is active</li>
-            </ul>
-        </td>
-        <td><img src="images/wildwest_playfield1.png" alt="Playfield Original"></td>
-    </tr>
+  <!-- Wild West Shootout – Topper Mini-Game -->
+  <tr>
+      <td>
+          <strong>⭐ Wild West Shootout – Topper Mini-Game</strong><br>
+          <ul>
+              <li>🍺 Hit 10 Beer Glasses → 🎯 Guide ball over Beer Glass ramp or Drop Target</li>
+              <li>💡 Topper lamp blinks → Display shows "Shootout Mode ready"</li>
+              <li>🟢 Normal ball play pauses briefly → 🎮 Flipper buttons control target</li>
+              <li>🔴 Light bar moves over enemies → ⏱️ Timing is crucial</li>
+              <li>👉 Press right flipper when light is under red enemy → ❌ Do nothing when under green enemy</li>
+              <li>✅ Hit all enemies → Shootout ends → 🏆 Points / Bonus / Star progress awarded</li>
+              <li>🟢 Normal ball play resumes</li>
+          </ul>
+      </td>
+      <td><div class="playfield-img" data-img="images/wildwest_playfield1.png"></div></td>
+  </tr>
 
     <!-- Skill Shot / Hurry-Up at Plunge -->
     <tr>
@@ -57,54 +58,62 @@
             </ul>
 
             <strong>Skill Shot Types</strong><br>
-            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+            <table class="table table-borderless inner-grid mb-0">
+                  <thead>
+                    <tr>
+                        <th style="width:25%;">Action</th>
+                        <th style="width:25%;">Outcome</th>
+                        <th style="width:25WW%;">Goal</th>
+                        <th style="width:25%;">Goal</th>
+                    </tr>
+                </thead>
                 <tr>
-                    <th style="border:1px solid #ccc; padding:5px;">Type</th>
-                    <th style="border:1px solid #ccc; padding:5px;">Activation</th>
-                    <th style="border:1px solid #ccc; padding:5px;">Target / Bonus</th>
-                    <th style="border:1px solid #ccc; padding:5px;">Notes</th>
+                    <th>Type</th>
+                    <th>Activation</th>
+                    <th>Target / Bonus</th>
+                    <th>Notes</th>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Left Ramp Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Shoot ball from plunger into left ramp</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Points / Mini Bonus</td>
-                    <td style="border:1px solid #ccc; padding:5px;">🔔 Blinking LEDs show start</td>
+                    <td>🎯 Left Ramp Skill Shot</td>
+                    <td>Shoot ball from plunger into left ramp</td>
+                    <td>💰 Points / Mini Bonus</td>
+                    <td>🔔 Blinking LEDs show start</td>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Train Ramp Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Direct plunge into Train Ramp</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Points / possible Mini Hurry-Up</td>
-                    <td style="border:1px solid #ccc; padding:5px;">⏱️ Precise timing required</td>
+                    <td>🎯 Train Ramp Skill Shot</td>
+                    <td>Direct plunge into Train Ramp</td>
+                    <td>💰 Points / possible Mini Hurry-Up</td>
+                    <td>⏱️ Precise timing required</td>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Right Ramp Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Direct plunge into right ramp</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Points / Mini Bonus</td>
-                    <td style="border:1px solid #ccc; padding:5px;">📺 Ramp indicated on display</td>
+                    <td">🎯 Right Ramp Skill Shot</td>
+                    <td">Direct plunge into right ramp</td>
+                    <td">💰 Points / Mini Bonus</td>
+                    <td">📺 Ramp indicated on display</td>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Saloon / Beer Scoop Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Plunge into Saloon / Beer Scoop</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Bonus points / Shootout progress</td>
-                    <td style="border:1px solid #ccc; padding:5px;">⭐ May count toward Topper activation</td>
+                    <td>🎯 Saloon / Beer Scoop Skill Shot</td>
+                    <td>Plunge into Saloon / Beer Scoop</td>
+                    <td>💰 Bonus points / Shootout progress</td>
+                    <td>⭐ May count toward Topper activation</td>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Center / River Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Plunge into River Ramp / Center Loop</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Points / possible Hurry-Up</td>
-                    <td style="border:1px solid #ccc; padding:5px;">🔔 Blinking LEDs indicate shot</td>
+                    <td>🎯 Center / River Skill Shot</td>
+                    <td>Plunge into River Ramp / Center Loop</td>
+                    <td>💰 Points / possible Hurry-Up</td>
+                    <td>🔔 Blinking LEDs indicate shot</td>
                 </tr>
 
                 <tr>
-                    <td style="border:1px solid #ccc; padding:5px;">🎯 Extra Loop / Jackpot Skill Shot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">Plunge into loop at ball start</td>
-                    <td style="border:1px solid #ccc; padding:5px;">💰 Points / possible Jackpot</td>
-                    <td style="border:1px solid #ccc; padding:5px;">⏱️ Very precise timing required</td>
+                    <td>🎯 Extra Loop / Jackpot Skill Shot</td>
+                    <td>Plunge into loop at ball start</td>
+                    <td>💰 Points / possible Jackpot</td>
+                    <td>⏱️ Very precise timing required</td>
                 </tr>
             </table>
         </td>
