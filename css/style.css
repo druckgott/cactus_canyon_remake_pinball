@@ -43,7 +43,7 @@ h1 {
 
 /* Erste Spalte (Text) */
 .phase-table td:first-child {
-  width: 70%;
+  width: 80%;
   text-align: left;
 }
 
@@ -125,4 +125,24 @@ h1 {
 table.inner-grid {
     table-layout: fixed;
     width: 100%;
+}
+
+.playfield-img {
+  width: 200px;              /* Breite des Thumbnails */
+  aspect-ratio: 704 / 1520;  /* Original Seitenverhältnis (H/B) */
+  background-size: cover;     /* Bild füllt Container, Zuschneiden möglich */
+  background-position: center;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.playfield-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+td img, td .playfield-img {
+  display: block;
+  margin: 0 auto; /* zentriert horizontal */
 }
