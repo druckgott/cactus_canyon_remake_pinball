@@ -43,7 +43,7 @@ h1 {
 
 /* Erste Spalte (Text) */
 .phase-table td:first-child {
-  width: 35%;
+  width: 70%;
   text-align: left;
 }
 
@@ -81,4 +81,48 @@ h1 {
 .star-icon {
   color: #d4a017;
   margin-right: 5px;
+}
+
+/* Farbliche Icons für Western/Cactus Canyon */
+.icon-star {
+    color: #FFD700; /* Gold */
+    margin-right: 5px;
+}
+
+.icon-target {
+    color: #E74C3C; /* Rot */
+    margin-right: 5px;
+}
+
+.icon-multiball {
+    color: #3498DB; /* Blau */
+    margin-right: 5px;
+}
+
+.icon-bonus {
+    color: #F39C12; /* Orange */
+    margin-right: 5px;
+}
+
+.icon-interrupt {
+    color: #7F8C8D; /* Grau */
+    margin-right: 5px;
+}
+
+/* Standard Bootstrap Table Styling wie vorher */
+.phase-table td:first-child {
+    text-align: left;
+}
+
+.phase-table ul {
+    padding-left: 20px;
+}
+
+.phase-table li {
+    margin-bottom: 6px;
+}
+
+table.inner-grid {
+    table-layout: fixed;
+    width: 100%;
 }
