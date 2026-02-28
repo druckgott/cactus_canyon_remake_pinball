@@ -5,10 +5,15 @@
 <title>Cactus Canyon Kapitel 1</title>
 
 <!-- Bootstrap CSS (Online / CDN) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoPqP5i0QxVJftC6L0dSmv1z0Rj3l3niYF7ytYJ8tBt3gFZ" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap Icons (CDN) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Bootstrap JS Bundle (mit Popper für Modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <!-- Dein Custom CSS -->
 <link rel="stylesheet" href="css/style.css">
 
@@ -29,121 +34,168 @@
     <!-- High Noon Phase -->
     <tr>
         <td>
-            <strong><i class="bi bi-star-fill icon-star"></i> High Noon Overview</strong>
+            <strong>⭐ High Noon Overview</strong>
             <table class="table table-borderless inner-grid mb-0">
                 <thead>
-                <tr>
-                    <th style="width:33%;">Action</th>
-                    <th style="width:33%;">Outcome</th>
-                    <th style="width:34%;">Goal</th>
-                </tr>
+                    <tr>
+                        <th style="width:33%;">Action</th>
+                        <th style="width:33%;">Outcome</th>
+                        <th style="width:34%;">Goal</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><i class="bi bi-play-fill icon-action"></i> Defeat all 4 Bart brothers</td>
-                    <td><i class="bi bi-trophy-fill icon-bonus"></i> Bionic Bart phase unlock</td>
-                    <td>Progress Star 1</td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-play-fill icon-action"></i> Win all 4 Quick Draws</td>
-                    <td><i class="bi bi-trophy-fill icon-bonus"></i> Showdown unlock</td>
-                    <td>Progress Star 2</td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-play-fill icon-action"></i> Complete the Mine</td>
-                    <td><i class="bi bi-lightning-fill icon-multiball"></i> Multiball triggered</td>
-                    <td>Progress Star 3</td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-play-fill icon-action"></i> Complete the Stampede</td>
-                    <td><i class="bi bi-lightning-fill icon-multiball"></i> Multiball triggered</td>
-                    <td>Progress Star 4</td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-play-fill icon-action"></i> Execute 10 Combos</td>
-                    <td><i class="bi bi-trophy-fill icon-bonus"></i> Star activated</td>
-                    <td>Progress Star 5</td>
-                </tr>
+                    <tr>
+                        <td>🔫 Defeat all 4 Bart brothers</td>
+                        <td>🏆 Bionic Bart phase unlock</td>
+                        <td>⭐ Progress Star 1</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Win all 4 Quick Draws</td>
+                        <td>🏆 Showdown unlock</td>
+                        <td>⭐ Progress Star 2</td>
+                    </tr>
+                    <tr>
+                        <td>⛏️ Complete the Mine</td>
+                        <td>⚡ Multiball triggered</td>
+                        <td>⭐ Progress Star 3</td>
+                    </tr>
+                    <tr>
+                        <td>🐂 Complete the Stampede</td>
+                        <td>⚡ Multiball triggered</td>
+                        <td>⭐ Progress Star 4</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Execute 10 Combos</td>
+                        <td>🏆 Star activated</td>
+                        <td>⭐ Progress Star 5</td>
+                    </tr>
                 </tbody>
             </table>
         </td>
-      <td><img src="images/highnoon_playfield1.png" alt="Playfield Original"></td>
+        <td>
+          <div class="playfield-img" data-img="images/highnoon_playfield1.png"></div>
+        </td>
+        
     </tr>
 
     <!-- Bionic Bart -->
     <tr>
-    <td>
-        <strong><i class="bi bi-star-fill icon-star"></i> Star 1: Bionic Bart</strong><br>
-        <ul>
-        <li><i class="bi bi-play-fill icon-action"></i> Action: Focus on Step 2 → <i class="bi bi-lightbulb icon-hint"></i> Outcome: Know which target to hit → Goal: Prepare for Bionic Bart</li>
-        <li><i class="bi bi-play-fill icon-action"></i> Action: Shoot Saloon door → <i class="bi bi-bullseye icon-target"></i> Outcome: Saloon opens / Battle starts → Goal: Hit Big Bart</li>
-        <li><i class="bi bi-play-fill icon-action"></i> Action: Hit Big Bart 3x → <i class="bi bi-bullseye icon-target"></i> Outcome: Brother defeated → Goal: Repeat for Bubba, Bob, Bronco, Baron (4 repetitions)</li>
-        <li><i class="bi bi-play-fill icon-action"></i> Action: Enter Saloon on 5th attempt → <i class="bi bi-trophy-fill icon-bonus"></i> Outcome: Bionic Bart fight starts → Goal: Complete Star 1</li>
-        </ul>
-    </td>
-    <td><img src="images/bionicbart_playfield1.png" alt="Playfield Original"></td>
+        <td>
+            <strong>⭐ Star 1: Bionic Bart</strong><br>
+            <ul>
+                <li>🎯 Shoot Saloon door</li>
+                <li>🚪 Enter Saloon → battle starts</li>
+                <li>🏹 Hit Big Bart 3 times → brother defeated</li>
+                <li>🔁 Repeat 4 times for Bubba, Bob, Bronco, and Baron</li>
+                <li>🏆 Open Saloon on 5th attempt → Bionic Bart fight starts</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/bionicbart_playfield1.png"></div></td>
+        
     </tr>
 
     <!-- Showdown Multiball -->
     <tr>
-      <td>
-        <strong><i class="bi bi-star-fill icon-star"></i> Star 2: Showdown Multiball</strong><br>
-        <ul>
-          <li><i class="bi bi-play-fill text-primary"></i> Action: Hit all 4 Quick Draws → <i class="bi bi-lightning-fill icon-multiball"></i> Outcome: Showdown triggers → Goal: Progress Star 2</li>
-          <li><i class="bi bi-bullseye icon-target"></i> Targets: The 4 "Bad Guys"</li>
-        </ul>
-      </td>
-      <td><img src="images/showdown_playfield1.png" alt="Playfield Original"></td>
-    </tr>
-
-    <!-- Motherlode / Mine Multiball -->
-    <tr>
-      <td>
-        <strong><i class="bi bi-star-fill icon-star"></i> Star 3: Motherlode / Mine Multiball</strong><br>
-        <ul>
-          <li><i class="bi bi-play-fill text-primary"></i> Action: Lock 3 balls in the Mine → <i class="bi bi-lightning-fill icon-multiball"></i> Outcome: Multiball starts → Goal: Collect jackpots</li>
-          <li><i class="bi bi-trophy-fill icon-bonus"></i> During Multiball: Hit lit lanes → Outcome: Each counts as 1 jackpot → Goal: Complete 5 jackpots</li>
-          <li><i class="bi bi-trophy-fill icon-bonus"></i> Action: Hit Motherlode → Outcome: Super Jackpot → Goal: Max score / Star 3 complete</li>
-          <li><i class="bi bi-x-circle-fill icon-interrupt"></i> Multiball ends when 1 ball remains → Outcome: Return to normal play → Goal: Prepare for next Star</li>
-        </ul>
-      </td>
-      <td><img src="images/motherlode_playfield1.png" alt="Playfield Original"></td>
-    </tr>
-
-    <!-- Stampede Multiball -->
-    <tr>
-      <td>
-        <strong><i class="bi bi-star-fill icon-star"></i> Star 4: Stampede Multiball</strong><br>
-        <ul>
-          <li><i class="bi bi-play-fill text-primary"></i> Action: Hit 3 ramps & 2 loops multiple times → <i class="bi bi-lightning-fill icon-multiball"></i> Outcome: Stampede Multiball starts → Goal: Star 4 progress</li>
-          <li><i class="bi bi-trophy-fill icon-bonus"></i> Goal: Complete all 5 ramp/loop shots → Star 4 complete</li>
-        </ul>
-      </td>
-      <td><img src="images/stampede_playfield1.png" alt="Playfield Original"></td>
-    </tr>
-
-    <!-- Combos -->
-    <tr>
-      <td>
-        <strong><i class="bi bi-star-fill icon-star"></i> Star 5: Combos</strong><br>
-        <ul>
-          <li><i class="bi bi-play-fill text-primary"></i> Action: Execute 10 combos in sequence → <i class="bi bi-trophy-fill icon-bonus"></i> Outcome: Star activated → Goal: Complete Star 5</li>
-          <li><i class="bi bi-x-circle-fill icon-interrupt"></i> Combo interruptions:
+        <td>
+            <strong>⭐ Star 2: Showdown Multiball</strong><br>
             <ul>
-              <li>Normal targets / Drop Targets</li>
-              <li>Slingshots / Bumpers (unless ball lands on ramp/loop)</li>
-              <li>Missed ramps/loops</li>
-              <li>Timeout / multiball interference</li>
+                <li>🎳 Guide ball over an inlane or special ramp → 💡 Left ramps light left Quick Draw lamps / Right ramps light right Quick Draw lamps → Some ramps / Drop Targets also trigger lamps</li>
+                <li>💡 Quick Draw lamp blinks → 🎯 Hit the corresponding Bad Guy target → ✅ 1/4 Quick Draw complete</li>
+                <li>📍 Target positions:
+                    <ul>
+                        <li>1️⃣ Diagonally right of the right gun</li>
+                        <li>2️⃣ Diagonally left of the left gun</li>
+                        <li>3️⃣ To the left of the Bronco Loop</li>
+                        <li>4️⃣ To the right of the Bank Robbery Ramp</li>
+                        <li>5️⃣ Below the Quick Draw light next to the Bank Robbery Ramp</li>
+                    </ul>
+                </li>
+                <li>🔁 Repeat for all 4 Quick Draws → ⚡ Showdown Multiball triggers → ⭐ Progress Star 2</li>
             </ul>
-          </li>
-        </ul>
-      </td>
-      <td><img src="images/combos_playfield1.png" alt="Playfield Original"></td>
+        </td>
+        <td><div class="playfield-img" data-img="images/showdown_playfield1.png"></div></td>
+        
     </tr>
+
+  <!-- Motherlode / Mine Multiball -->
+  <tr>
+      <td>
+          <strong>⭐ Star 3: Motherlode / Mine Multiball</strong><br>
+          <ul>
+              <li>🎳 Lock 3 balls in the Mine → ⚡ Multiball starts → 💰 Collect jackpots (green)</li>
+              <li>💡 During Multiball: Hit lit lanes → ✅ Each counts as 1 jackpot → 🎯 Complete 5 jackpots (orange)</li>
+              <li>🏆 Hit Motherlode → 💥 Super Jackpot → ⭐ Max score / Star 3 complete</li>
+              <li>❌ Multiball ends when 1 ball remains → ⬅️ Return to normal play → 🔜 Prepare for next Star</li>
+          </ul>
+      </td>
+      <td><div class="playfield-img" data-img="images/motherlode_playfield1.png"></div></td>
+      
+  </tr>
+
+  <!-- Stampede Multiball -->
+  <tr>
+      <td>
+          <strong>⭐ Star 4: Stampede Multiball</strong><br>
+          <ul>
+              <li>🎳 Hit 3 ramps & 2 loops multiple times → ⚡ Stampede Multiball starts → 💰 Score points / Star 4 progress</li>
+              <li>🏆 Complete all 5 ramp/loop shots → ⭐ Star 4 complete</li>
+          </ul>
+      </td>
+      <td> <div class="playfield-img" data-img="images/stampede_playfield1.png"></div></td>
+     
+  </tr>
+
+  <!-- Combos -->
+  <tr>
+      <td>
+          <strong>⭐ Star 5: Combos</strong><br>
+          <ul>
+              <li>🎮 Execute 10 combos in sequence → 🏆 Star activated → ⭐ Complete Star 5</li>
+              <ul>
+                <li>✔️ Linke Rampe → Rechte Rampe</li>
+                <li>✔️ Linke Rampe → Loop</li>
+                <li>✔️ Loop → Rechte Rampe</li>
+              </ul>
+              <li>❌ Combo interruptions:
+                  <ul>
+                      <li>⛔ Normal targets / Drop Targets</li>
+                      <li>⛔ Slingshots / Bumpers (unless ball lands on ramp/loop)</li>
+                      <li>⛔ Missed ramps/loops</li>
+                      <li>⛔ Timeout / multiball interference</li>
+                  </ul>
+              </li>
+          </ul>
+      </td>
+      <td><div class="playfield-img" data-img="images/combos_playfield1.png"></div></td>
+      
+  </tr>
 
   </tbody>
 </table>
 
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Modal einmalig am Ende der Seite -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body p-0 text-center">
+        <img id="modalImage" src="" class="img-fluid" alt="Playfield">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Alle Bilder anklickbar machen
+  document.querySelectorAll('.playfield-img').forEach(function(div){
+    let imgUrl = div.dataset.img;
+    div.style.backgroundImage = `url(${imgUrl})`;
+    div.addEventListener('click', function(){
+      document.getElementById('modalImage').src = imgUrl;
+      let modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      modal.show();
+    });
+  });
+</script>
+
 </body>
 </html>
