@@ -3,29 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <title>Cactus Canyon Kapitel 1</title>
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
 <style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .cell { border: 1px solid #ccc; padding: 10px; text-align: center; }
-  img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
-  h1 { grid-column: span 4; text-align: center; }
+  body { padding: 20px; font-family: Arial, sans-serif; }
+  .phase-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  .phase-table th, .phase-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    vertical-align: top;
+    text-align: center;
+  }
+  .phase-table img { max-width: 100%; height: auto; }
 </style>
 </head>
 <body>
 
-<h1>Kapitel 1: Cactus Canyon Spielablauf</h1>
+<h1 style="text-align:center;">Kapitel 1: Cactus Canyon Spielablauf</h1>
 
-<div class="grid">
-  <div class="cell"><strong>Original Version</strong><br>Beschreibung der Phase</div>
-  <div class="cell"><img src="images/playfield1.png" alt="Playfield Original"></div>
-  <div class="cell"><img src="images/playfield2.png" alt="Playfield Remake"></div>
-  <div class="cell"><strong>Remake / Lyman Sheats</strong><br>Beschreibung der Phase</div>
+<table class="phase-table">
+  <thead>
+    <tr>
+      <th>Original Version</th>
+      <th>Playfield 1</th>
+      <th>Playfield 2</th>
+      <th>Remake / Lyman Sheats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Phase 1</strong><br><i class="bi bi-controller"></i> Start</td>
+      <td><img src="images/playfield1.png" alt="Playfield Original"></td>
+      <td><img src="images/playfield2.png" alt="Playfield Remake"></td>
+      <td><strong>Phase 1 Remake</strong><br><i class="bi bi-controller"></i> Start</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2</strong><br>Spieler bewegt sich</td>
+      <td><img src="images/playfield3.png" alt="Playfield Original"></td>
+      <td><img src="images/playfield4.png" alt="Playfield Remake"></td>
+      <td><strong>Phase 2 Remake</strong><br>Spieler bewegt sich</td>
+    </tr>
 
-  <div class="cell">Phase 2 Original</div>
-  <div class="cell"><img src="images/playfield3.png" alt="Playfield Original"></div>
-  <div class="cell"><img src="images/playfield4.png" alt="Playfield Remake"></div>
-  <div class="cell">Phase 2 Remake</div>
-</div>
+    <!-- High Noon Phase -->
+    <tr>
+    <td>
+        <strong>High Noon</strong><br>
+        <ul>
+        <li>Star 1: Defeat all 4 Bart brothers (leads to Bionic Bart)</li>
+        <li>Star 2: Win all 4 Quick Draws (leads to Showdown)</li>
+        <li>Star 3: Complete the Mine (Motherlode)</li>
+        <li>Star 4: Complete the Stampede</li>
+        <li>Star 5: Combos (10 required)</li>
+        </ul>
+    </td>
+    <td><img src="images/highnoon_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/highnoon_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <strong></strong><br>
+        <ul>
+            <li>XXX</li>     
+        </ul>
+    </td>
+    </tr>
 
+    <!-- Bionic Bart -->
+    <tr>
+    <td>
+        <strong>Bionic Bart</strong><br>
+        <ul>
+        <li>Star triggers Bart Brothers</li>
+        <li>To reach Bionic Bart, focus only on point 2:</li>
+        <li>Shoot the Saloon door</li>
+        <li>Shoot into the Saloon (battle starts)</li>
+        <li>Hit Big Bart 3 times (brother defeated)</li>
+        <li>Repeat this 4 times (for Bubba, Bob, Bronco, and Baron)</li>
+        <li>On the 5th time, open the Saloon and enter → Bionic Bart fight starts!</li>
+        </ul>
+    </td>
+    <td><img src="images/bionicbart_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/bionicbart_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <strong></strong><br>
+        <ul>
+            <li>XXX</li>     
+        </ul>
+    </td>
+    </tr>
+
+    <!-- Showdown Multiball -->
+    <tr>
+    <td>
+        <strong>Showdown Multiball</strong><br>
+        <ul>
+        <li>4 Quick Draws (leads to Showdown)</li>
+        <li>The 4 Quick Draw Targets (the "Bad Guys"):</li>
+        <!-- Optional: Du kannst hier noch die Namen der Bad Guys einfügen -->
+        </ul>
+    </td>
+    <td><img src="images/showdown_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/showdown_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <strong></strong><br>
+        <ul>
+            <li>XXX</li>     
+        </ul>
+    </td>
+    </tr>
+
+    <!-- Motherlode / Mine Multiball -->
+    <tr>
+    <td>
+        <strong>Motherlode / Mine Multiball</strong><br>
+        <ul>
+        <li>Complete the Mine (Motherlode)</li>
+        <li>Hit the mine entrance once → Lock lights up ("Lock" ball lock)</li>
+        <li>Lock 3 balls into the Mine → Multiball starts</li>
+        <li>During Multiball: Collect jackpots (lit lanes, ramps, orbits)</li>
+        <li>5 Jackpots: Collect a total of 5 jackpots on different lanes (ramps and orbits)</li>
+        <li>Lanes: Normally all 5 main lanes light up (Left Orbit, Left Ramp, Center Ramp, Right Ramp, Right Orbit)</li>
+        <li>Sequence: Each time you hit a lit lane, the light goes out and counts as 1 jackpot</li>
+        <li>Objective: Hit the Motherlode (Super Jackpot) → Mine flashes</li>
+        <li>Multiball ends when only 1 ball remains in play</li>
+        </ul>
+    </td>
+    <td><img src="images/motherlode_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/motherlode_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <!-- German column left empty for now -->
+    </td>
+    </tr>
+
+    <!-- Stampede Multiball -->
+    <tr>
+    <td>
+        <strong>Stampede / Cattle Drive Multiball</strong><br>
+        <ul>
+        <li>Hit ramps multiple times (order doesn't matter), each ramp 3x (lights indicate remaining shots)</li>
+        <li>1. Bronco Loop (left loop)</li>
+        <li>2. River Adventure Ramp (left ramp)</li>
+        <li>3. Train Ramp (train ramp)</li>
+        <li>4. Sharpshooter / Trick Shooting Loop (right loop)</li>
+        <li>5. Bank Robbery Ramp (right ramp)</li>
+        <li>Each of these shots must be hit multiple times until "completed" is shown in-game. Once all five are completed → Stampede Multiball starts → Star active for Motherlode</li>
+        <li>All 3 ramps and 2 loops as jackpot shots are active → only score points</li>
+        </ul>
+    </td>
+    <td><img src="images/stampede_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/stampede_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <!-- German column left empty for now -->
+    </td>
+    </tr>
+
+    <!-- Combos -->
+    <tr>
+    <td>
+        <strong>Combos</strong><br>
+        <ul>
+        <li>No other shots allowed in between, e.g.:</li>
+        <ul>
+            <li>Left Ramp → Right Ramp</li>
+            <li>Left Ramp → Loop</li>
+            <li>Loop → Right Ramp</li>
+        </ul>
+        <li>10 combos required to activate the Star</li>
+        <li>Combo interruptions:</li>
+        <ul>
+            <li>Normal target groups / Drop Targets</li>
+            <li>Slingshots / Bumpers (unless ball lands directly on a ramp or loop)</li>
+            <li>Missed ramps/loops (not fully completed)</li>
+            <li>Timeout (combo light remains on)</li>
+            <li>Multiball / other modes (in certain cases)</li>
+            <li>Some players report that Stampede or Showdown may pause or reset the normal combo counter</li>
+        </ul>
+        </ul>
+    </td>
+    <td><img src="images/combos_playfield1.png" alt="Playfield Original"></td>
+    <td><img src="images/combos_playfield2.png" alt="Playfield Remake"></td>
+    <td>
+        <!-- German column left empty for now -->
+    </td>
+    </tr>
+
+
+  </tbody>
+</table>
+
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
