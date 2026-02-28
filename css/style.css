@@ -1,0 +1,84 @@
+body {
+  background: linear-gradient(to bottom, #f5e6c8, #e0c097);
+  font-family: "Segoe UI", Arial, sans-serif;
+  padding: 30px;
+  color: #3b2a1a;
+}
+
+/* Titel */
+h1 {
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #5a3b1c;
+  text-shadow: 1px 1px 2px #fff;
+}
+
+/* Tabelle */
+.phase-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff8ec;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.phase-table thead th {
+  background: linear-gradient(to bottom, #6b3f1d, #4b2a12);
+  color: #ffd66b;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 15px;
+  border: none;
+}
+
+/* Zellen */
+.phase-table td {
+  border: 1px solid #d6b98c;
+  padding: 15px;
+  vertical-align: top;
+  background: #fffdf7;
+}
+
+/* Erste Spalte (Text) */
+.phase-table td:first-child {
+  width: 35%;
+  text-align: left;
+}
+
+/* Bilder */
+.phase-table img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #c9a35f;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Listen */
+.phase-table ul {
+  padding-left: 20px;
+}
+
+.phase-table li {
+  margin-bottom: 6px;
+}
+
+/* Abschnittstitel */
+.phase-table strong {
+  color: #7a4a22;
+  font-size: 1.05rem;
+}
+
+/* Hover-Effekt */
+.phase-table tbody tr:hover {
+  background: #fff1d6;
+  transition: 0.2s;
+}
+
+/* Icons */
+.star-icon {
+  color: #d4a017;
+  margin-right: 5px;
+}
