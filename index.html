@@ -135,20 +135,8 @@
   </div>
 </div>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-  fetch('commit.txt')
-    .then(response => response.text())
-    .then(text => {
-      // Nur die ersten 7 Zeichen verwenden
-      const shortHash = text.trim().slice(0, 7);
-      document.getElementById('commit-info').innerText = `🔧Commit: ${shortHash}`;
-    })
-    .catch(err => {
-      console.error('Could not load commit.txt:', err);
-      document.getElementById('commit-info').innerText = 'Commit info not available';
-    });
-</script>
+<!-- Statt der drei <script> Blöcke -->
+<script src="js/scripts.js"></script>
 
 </body>
 </html>

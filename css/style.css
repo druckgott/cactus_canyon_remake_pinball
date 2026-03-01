@@ -211,42 +211,185 @@ nav a:hover {
   border-radius: 6px;        /* optional: abgerundete Ecken */
 }
 
+.print-img {
+  display: none; /* standardmäßig unsichtbar */
+}
+
+
+/* Print Controls Container */
+#print-controls {
+  margin: 20px 0;
+  text-align: center;
+  font-family: 'Lucida Console', monospace;
+}
+
+/* Label */
+#print-controls label {
+  font-weight: bold;
+  color: #3b2a1a;
+  margin-right: 10px;
+}
+
+/* Input Number */
+#print-controls input[type="number"] {
+  width: 60px;
+  padding: 4px;
+  border: 2px solid #d4a017;  /* gold border */
+  border-radius: 6px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+/* Print Button */
+#print-btn {
+  margin-left: 20px;
+  padding: 8px 16px;
+  font-family: 'Lucida Console', monospace;
+  font-weight: bold;
+  color: #fff8e7;
+  background: linear-gradient(to bottom, #a25d23, #6b3f1d); /* Holz-Gradient */
+  border: 2px solid #d4a017; /* gold border */
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Button Hover Effect */
+#print-btn:hover {
+  background: linear-gradient(to bottom, #d4a017, #b57c35); /* gold highlight */
+  color: #3b2a1a; /* dunkles Holz */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.5);
+}
+
 
 /* ===============================
    Druckversion für Rules-Seite
 =============================== */
 @media print {
+
   body {
     background: #fff !important;
     color: #000 !important;
     padding: 0;
+    margin: 0;
   }
 
-  /* Top-Bar, Navigation, Footer ausblenden */
-  #top-bar, nav, #site-footer, .modal {
+  #top-bar, nav, #print-controls, .modal {
     display: none !important;
   }
 
-  /* Tabelle weiterhin farbig */
-  .phase-table, .phase-table th, .phase-table td, table.inner-grid {
-    background-color: inherit !important;
-    color: inherit !important;
+  .phase-table, .phase-table th, .phase-table td {
+    background-color: #fff8ec !important;
+    color: #3b2a1a !important;
     border: 1px solid #d6b98c !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     page-break-inside: avoid;
   }
 
-  /* Zweite Spalte (Playfield) ausblenden */
-  .phase-table td:nth-child(2) {
+  /* Zeige Zelle komplett, aber entferne nur das visuelle Playfield-Div */
+  .phase-table td:nth-child(2) .playfield-img {
     display: none !important;
   }
 
-  /* Bilder, die wir per JS klonen, sichtbar machen */
+  /* Nested tables korrekt darstellen */
+  table.inner-grid {
+    display: table !important;
+    width: 100% !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Printbilder – Größe wird über CSS-Variable gesteuert */
   .phase-table td img.print-img {
     display: block !important;
-    width: 500px; /* gewünschte Druckbreite */
-    height: auto;
-    margin: 10px auto 30px auto;
+    width: auto;
+    max-width: 90%;
+    max-height: var(--print-img-scale, 80vh);
+    margin: 20px auto 40px auto;
+    page-break-after: always;
   }
+
+  .phase-table tbody tr {
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  .phase-table {
+    border: 2px solid #d6b98c !important; /* äußerer Rahmen */
+    border-radius: 0 !important;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .phase-table th,
+  .phase-table td {
+    border: 1px solid #d6b98c !important; /* innere Zellen */
+    background-color: #fff8ec !important;
+  }
+
+    .phase-table thead th {
+    display: table-cell !important;
+    background: linear-gradient(to bottom, #6b3f1d, #4b2a12) !important; /* Originalfarben */
+    -webkit-print-color-adjust: exact;  /* wichtig für Chrome/Edge */
+    print-color-adjust: exact;          /* wichtig für Firefox */
+    color: #ffd66b !important;
+  }
+
+    table.inner-grid {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important; /* Verhindert Zeilenbruch */
+  }
+
+  table.inner-grid td, table.inner-grid th {
+    border: 1px solid #d6b98c !important; /* Sichtbare Ränder im Druck */
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+    vertical-align: top !important;
+  }
+
+    .phase-table ul {
+    margin: 0 0 0.5em 1.5em !important;
+    padding-left: 1.5em !important;
+  }
+
+  .phase-table li {
+    page-break-inside: avoid !important; /* Unterlisten nicht trennen */
+  }
+
+    .phase-table td:nth-child(2) .print-img {
+    display: block !important;
+    width: auto;
+    max-width: 90%;
+    max-height: var(--print-img-scale, 80vh);
+    margin: 0 auto 20px auto;
+    page-break-after: always;
+  }
+
+    .print-img {
+    display: block !important;
+    width: auto;
+    max-width: 90%;
+    max-height: var(--print-img-scale, 80vh);
+    margin: 0 auto 40px auto;
+    page-break-after: always;
+    border-left: 2px solid #d6b98c;
+    border-right: 2px solid #d6b98c;
+    border-bottom: 2px solid #d6b98c;
+    border-radius: 0;
+  }
+
+   /* Footer sichtbar machen */
+  #site-footer {
+    display: block !important;
+    position: relative; /* damit nichts überlappt */
+    page-break-inside: avoid; /* nicht aufteilen */
+    background: none !important; /* optional, falls Gradient stört */
+    border: none !important;    /* optional, falls Rahmen stört */
+    box-shadow: none !important;
+  }
+
 }

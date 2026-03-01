@@ -16,6 +16,8 @@
 </head>
 <body>
 
+
+
 <!-- Top-Bar -->
 <div id="top-bar">
   🚀 Check out this project on 
@@ -33,6 +35,12 @@
 
 
 <h1 class="page-title">Cactus Canyon Remake Gamerules</h1>
+
+<div id="print-controls">
+  <label for="img-scale">Image Size (% max height):</label>
+  <input type="number" id="img-scale" min="10" max="100" value="50" step="5">
+  <button id="print-btn">🖨️ Print</button>
+</div>
 
 <table class="phase-table">
   <thead>
@@ -126,7 +134,7 @@
 
             <tr>
               <td>💰</td>
-              <td>Complete <a href="#savepolly-bank">Bank Ramp/a></td> 
+              <td>Complete <a href="#savepolly-bank">Bank Ramp</a></td> 
               <td>Completes Bank Robbery objective</td>
               <td>Mode progression</td>
             </tr>
@@ -321,7 +329,7 @@
                 </ul>
             </ul>
         </td>
-        <td><div class="playfield-img" data-img="images/bounty_playfield.png"></div></td>
+        <td><!--<div class="playfield-img" data-img="images/bounty_playfield.png"></div>--></td>
     </tr>
 
     <!-- Ranking Up – Overview -->
@@ -594,49 +602,8 @@
   </div>
 </div>
 
-<script>
-  // Alle Bilder anklickbar machen
-  document.querySelectorAll('.playfield-img').forEach(function(div){
-    let imgUrl = div.dataset.img;
-    div.style.backgroundImage = `url(${imgUrl})`;
-    div.addEventListener('click', function(){
-      document.getElementById('modalImage').src = imgUrl;
-      let modal = new bootstrap.Modal(document.getElementById('imageModal'));
-      modal.show();
-    });
-  });
-</script>
-
-<script>
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-  fetch('commit.txt')
-    .then(response => response.text())
-    .then(text => {
-      // Nur die ersten 7 Zeichen verwenden
-      const shortHash = text.trim().slice(0, 7);
-      document.getElementById('commit-info').innerText = `🔧Commit: ${shortHash}`;
-    })
-    .catch(err => {
-      console.error('Could not load commit.txt:', err);
-      document.getElementById('commit-info').innerText = 'Commit info not available';
-    });
-</script>
-
-<script>
-  // Für jede Tabellenzeile
-  document.querySelectorAll('.phase-table tbody tr').forEach(tr => {
-    const imgDiv = tr.querySelector('td:nth-child(2) .playfield-img');
-    const firstTd = tr.querySelector('td:first-child');
-
-    if(imgDiv && firstTd){
-      const printImg = document.createElement('img');
-      printImg.src = imgDiv.dataset.img;
-      printImg.classList.add('print-img');  // nur für Print sichtbar
-      firstTd.appendChild(printImg);
-    }
-  });
-</script>
+<!-- Statt der drei <script> Blöcke -->
+<script src="js/scripts.js"></script>
 
 </body>
 </html>
