@@ -264,11 +264,9 @@ nav a:hover {
 }
 
 
-/* ===============================
-   Druckversion für Rules-Seite
-=============================== */
 @media print {
 
+  /* Grundlegende Druckanpassungen */
   body {
     background: #fff !important;
     color: #000 !important;
@@ -276,120 +274,104 @@ nav a:hover {
     margin: 0;
   }
 
+  /* Unsichtbar auf dem Druck: Navigation, Top-Bar, Modal, Print Controls */
   #top-bar, nav, #print-controls, .modal {
     display: none !important;
   }
 
-  .phase-table, .phase-table th, .phase-table td {
-    background-color: #fff8ec !important;
-    color: #3b2a1a !important;
-    border: 1px solid #d6b98c !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    page-break-inside: avoid;
-  }
-
-  /* Zeige Zelle komplett, aber entferne nur das visuelle Playfield-Div */
-  .phase-table td:nth-child(2) .playfield-img {
-    display: none !important;
-  }
-
-  /* Nested tables korrekt darstellen */
-  table.inner-grid {
-    display: table !important;
-    width: 100% !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Printbilder – Größe wird über CSS-Variable gesteuert */
-  .phase-table td img.print-img {
-    display: block !important;
-    width: auto;
-    max-width: 90%;
-    max-height: var(--print-img-scale, 80vh);
-    margin: 20px auto 40px auto;
-    page-break-after: always;
-  }
-
-  .phase-table tbody tr {
-    page-break-after: always;
-    page-break-inside: avoid;
-  }
-
+  /* Phase-Tabelle */
   .phase-table {
-    border: 2px solid #d6b98c !important; /* äußerer Rahmen */
     border-radius: 0 !important;
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+
+    page-break-inside: avoid;   /* Tabelle nicht zerschneiden */
+    page-break-before: always;  /* Jede Tabelle auf neuer Seite */
   }
 
-  .phase-table th,
-  .phase-table td {
-    border: 1px solid #d6b98c !important; /* innere Zellen */
+  .phase-table th, .phase-table td {
     background-color: #fff8ec !important;
+    color: #3b2a1a !important;
+    padding: 8px !important;
+    vertical-align: top !important;
+    border: 1px solid #d6b98c !important;
   }
 
-    .phase-table thead th {
-    display: table-cell !important;
-    background: linear-gradient(to bottom, #6b3f1d, #4b2a12) !important; /* Originalfarben */
-    -webkit-print-color-adjust: exact;  /* wichtig für Chrome/Edge */
-    print-color-adjust: exact;          /* wichtig für Firefox */
+  .phase-table thead th {
+    background: linear-gradient(to bottom, #6b3f1d, #4b2a12) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
     color: #ffd66b !important;
   }
 
-    table.inner-grid {
-    display: table !important;
-    width: 100% !important;
-    border-collapse: collapse !important;
-    page-break-inside: avoid !important; /* Verhindert Zeilenbruch */
+  /* Playfield-Spalte rechts ausblenden, Zelle behalten für Layout */
+  .phase-table td:nth-child(2),
+  .phase-table th:nth-child(2) {
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    padding: 0 !important;
   }
 
-  table.inner-grid td, table.inner-grid th {
-    border: 1px solid #d6b98c !important; /* Sichtbare Ränder im Druck */
-    page-break-inside: avoid !important;
-    page-break-after: auto !important;
-    vertical-align: top !important;
+  .phase-table td:nth-child(2) .playfield-img {
+    display: none !important;  /* nur kleine Thumbnails verstecken */
   }
 
-    .phase-table ul {
-    margin: 0 0 0.5em 1.5em !important;
-    padding-left: 1.5em !important;
-  }
-
-  .phase-table li {
-    page-break-inside: avoid !important; /* Unterlisten nicht trennen */
-  }
-
-    .phase-table td:nth-child(2) .print-img {
-    display: block !important;
-    width: auto;
-    max-width: 90%;
-    max-height: var(--print-img-scale, 80vh);
-    margin: 0 auto 20px auto;
-    page-break-after: always;
-  }
-
-    .print-img {
+  /* Große Druckbilder */
+  .phase-table td img.print-img,
+  .print-img {
     display: block !important;
     width: auto;
     max-width: 90%;
     max-height: var(--print-img-scale, 80vh);
     margin: 0 auto 40px auto;
+    page-break-inside: avoid !important;  /* Bilder nicht zerschneiden */
     page-break-after: always;
-    border-left: 2px solid #d6b98c;
-    border-right: 2px solid #d6b98c;
-    border-bottom: 2px solid #d6b98c;
     border-radius: 0;
   }
 
-   /* Footer sichtbar machen */
-  #site-footer {
-    display: block !important;
-    position: relative; /* damit nichts überlappt */
-    page-break-inside: avoid; /* nicht aufteilen */
-    background: none !important; /* optional, falls Gradient stört */
-    border: none !important;    /* optional, falls Rahmen stört */
-    box-shadow: none !important;
+  /* Verschachtelte Tabellen ("inner-grid") – keine Ränder, gleiche Farbe */
+  table.inner-grid {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto !important;
   }
 
+  table.inner-grid th,
+  table.inner-grid td {
+    border: none !important;
+    background-color: #fff8ec !important;
+    color: #ffd66b !important;
+    padding: 6px !important;
+    vertical-align: top !important;
+  }
+
+  /* Zeilen, Listen */
+  .phase-table tbody tr {
+    page-break-after: auto;
+    page-break-inside: avoid;
+  }
+
+  .phase-table ul {
+    margin: 0 0 0.5em 1.5em !important;
+    padding-left: 1.5em !important;
+    page-break-inside: avoid;
+  }
+
+  .phase-table li {
+    page-break-inside: avoid !important;
+  }
+
+  /* Footer sichtbar machen */
+  #site-footer {
+    display: block !important;
+    position: relative;
+    page-break-inside: avoid;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
 }
