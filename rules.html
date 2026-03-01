@@ -7,12 +7,8 @@
 <!-- Bootstrap CSS (Online / CDN) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap Icons (CDN) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
 <!-- Bootstrap JS Bundle (mit Popper für Modal) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <!-- Dein Custom CSS -->
 <link rel="stylesheet" href="css/style.css">
@@ -20,7 +16,22 @@
 </head>
 <body>
 
-<h1 style="text-align:center;">Cactus Canyon Remake Gamerules</h1>
+<!-- Top-Bar -->
+<div id="top-bar">
+  🚀 Check out this project on 
+  <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">GitHub</a> |
+  Feel free to <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">contribute</a> 💡
+</div>
+
+<header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="rules.html">Rules</a>
+  </nav>
+</header>
+
+
+<h1 class="page-title">Cactus Canyon Remake Gamerules</h1>
 
 <table class="phase-table">
   <thead>
@@ -58,14 +69,14 @@
 
             <tr>
               <td>⚡</td>
-              <td>Light Quick Draw</td>
+              <td>Light <a href="#quickdraw">Quick Draw</a></td>
               <td>Activates Quick Draw mode</td>
-              <td>Helps progress toward <a href="#showdown">Showdown</a></td>
+              <td>Helps progress toward <a href="#Showdown">Showdown</a></td>
             </tr>
 
             <tr>
               <td>🔫</td>
-              <td>Light Gun Fight</td>
+              <td>Light <a href="#gunfight">Gun Fight</a></td>
               <td>Prepares Gunfight / Shootout mode</td>
               <td>Advances Topper progress</td>
             </tr>
@@ -100,7 +111,7 @@
 
             <tr>
               <td>🚂</td>
-              <td>Complete </td> 
+              <td>Complete <a href="#savepolly-train">Train mode</a></td> 
               <td>Completes Train Ramp objective</td>
               <td>Save Polly Train mode</td>
             </tr>
@@ -121,7 +132,7 @@
 
             <tr>
               <td>⭐</td>
-              <td>Increase Rank</td>
+              <td><a href="#ranking-up">Increase Rank</a></td>
               <td>Raises player rank</td>
               <td>Long-term bonus</td>
             </tr>
@@ -142,7 +153,7 @@
 
             <tr>
               <td>🔒</td>
-              <td>Light Lock</td>
+              <td><a href="#motherlode">Light Lock</a></td>
               <td>Activates Ball Lock</td>
               <td>If already lit → awards a lock</td>
             </tr>
@@ -153,7 +164,7 @@
       </td>
 
       <td>
-        <!-- <div class="playfield-img" data-img="images/skillshot_playfield1.png"></div> -->
+        <div class="playfield-img" data-img="images/skillshot_playfield.png"></div>
       </td>
     </tr>
 
@@ -293,23 +304,100 @@
                 <li>💰 Collect the Bounty under the Bart Brothers' heads</li>
                 <li>💡 Ways to activate Bounty Award:</li>
                 <ul>
-                    <li>🎯 Lasso Skill Shot</li>
-                    <li>🔫 Defeat Bad Guy in Quick Draw</li>
+                    <li>🎯 Lasso <a href="#skillshot">Skill Shot</a></li>
+                    <li>🔫 Defeat Bad Guy in <a href="#quickdraw">Quick Draw</a></li>
                 </ul>
                 <li>🏆 Possible Bounty Awards:</li>
                 <ul>
                     <li>➕ Light Extra Ball</li>
-                    <li>🔫 Light Gun Fight</li>
-                    <li>⚡ Light Quick Draw</li>
+                    <li>🔫 Light <a href="#gunfight">Gun Fight</a></li>
+                    <li>⚡ Light <a href="#quickdraw">Quick Draw</a></li>
                     <li>🔒 Light Lock (or Award Lock if already active)</li>
                     <li>✖️ +5 Bonus Multiplier</li>
-                    <li>⭐ Increase Rank</li>
+                    <li>⭐ <a href="#ranking-up">Increase Rank</a></li>
                     <li>💰 Points (250,000 – 500,000 – etc.)</li>
                     <li>💎 1 Million Bonus</li>
                 </ul>
             </ul>
         </td>
         <td><div class="playfield-img" data-img="images/bounty_playfield.png"></div></td>
+    </tr>
+
+    <!-- Ranking Up – Overview -->
+    <tr id="ranking-up">
+    <td>
+        <strong>⭐ Ranking Up – Overview</strong><br>
+        <ul>
+        <li>💡 Indicator: Light above the <a href="#high_noon">High Noon</a> Deputy Star shows current rank</li>
+        <li>🏆 Rank can increase through:</li>
+        <ul>
+            <li>💰 <a href="#bounty-award">Bounty Award</a></li>
+            <li>🎯 Lasso <a href="#skillshot">Skill Shot</a></li>
+            <li>🔫 Winning <a href="#gunfight">Gun Fight</a></li>
+        </ul>
+        <li>📈 Rank Levels:</li>
+        <ul>
+            <li>Stranger → Partner → Deputy → Sheriff → Marshall</li>
+        </ul>
+        <li>⚡ Effect: Your rank influences scoring in <a href="#quickdraw">Quick Draw</a> and <a href="#high_noon">High Noon</a></li>
+        </ul>
+    </td>
+    <td>
+        <div class="playfield-img" data-img="images/ranking_up_playfield.png"></div>
+    </td>
+    </tr>
+
+    <!-- Gun Fight – Overview -->
+    <tr id="gunfight">
+    <td>
+        <strong>⭐ Gun Fight – Overview</strong><br>
+        <ul>
+        <li>💡 Lights: Two Gun Fight LEDs under each Gun Target</li>
+        <li>🏆 Gun Fight can be activated by:</li>
+        <ul>
+            <li>Bounty Award</li>
+            <li>Left Outlane when lit</li>
+            <li>Defeating a Bart Brother</li>
+        </ul>
+        <li>🎮 Sequence:</li>
+        <ul>
+            <li>Ball lands in the <strong>Inlane</strong> → Gun Fight starts</li>
+            <li><strong>Bad Guy Target</strong> pops up → Ball is ready for your shot</li>
+            <li>Hit quickly, otherwise only a few seconds until next attempt</li>
+        </ul>
+        <li>🏆 Reward: <a href="#ranking-up">Rank increases</a> on victory</li>
+        <li>Extra lamp outside how to activate? Fix rule information open 01.03.2026</li>
+        </ul>
+    </td>
+    <td>
+        <div class="playfield-img" data-img="images/gunfight_playfield.png"></div>
+    </td>
+    </tr>
+
+    <!-- Quick Draw – Overview -->
+    <tr id="quickdraw">
+    <td>
+        <strong>⭐ Quick Draw – Overview</strong><br>
+        <ul>
+        <li>💡 LEDs: 2 per Inlane</li>
+        <li>🏆 Activation:</li>
+        <ul>
+            <li>Hit all left & right targets (color shows progress)</li>
+            <li>Lasso Skill Shot</li>
+        </ul>
+        <li>🎮 Sequence:</li>
+        <ul>
+            <li>Return Lane activates Quick Draw → Bad Guy Drop Target appears, ball keeps rolling</li>
+            <li>Hit Bad Guy → Bounty in Saloon activated</li>
+            <li>Points by rank: Stranger 500k → Marshal 2M (counting down to 50k)</li>
+            <li>Hit Bad Guys stay lit</li>
+            <li>Defeat all 4 Bad Guys → Showdown starts</li>
+        </ul>
+        </ul>
+    </td>
+    <td>
+        <div class="playfield-img" data-img="images/quickdraw_playfield.png"></div>
+    </td>
     </tr>
 
     <!-- Wild West Shootout – Topper Mini-Game -->
@@ -397,7 +485,7 @@
           <td>
               <strong>⭐ Star 2: Showdown Multiball</strong><br>
               <ul>
-                  <li>🎳 Guide ball over an inlane or special ramp → 💡 Left ramps light left Quick Draw lamps / Right ramps light right Quick Draw lamps → Some ramps / Drop Targets also trigger lamps</li>
+                  <li>🎳 Guide ball over an inlane or special ramp → 💡 Left ramps light left <a href="#quickdraw">Quick Draw</a> lamps / Right ramps light right Quick Draw lamps → Some ramps / Drop Targets also trigger lamps</li>
                   <li>💡 Quick Draw lamp blinks → 🎯 Hit the corresponding Bad Guy target → ✅ 1/4 Quick Draw complete</li>
                   <li>📍 Target positions:
                       <ul>
@@ -405,7 +493,7 @@
                           <li>2️⃣ Diagonally left of the left gun</li>
                           <li>3️⃣ To the left of the Bronco Loop</li>
                           <li>4️⃣ To the right of the Bank Robbery Ramp</li>
-                          <li>5️⃣ Below the Quick Draw light next to the Bank Robbery Ramp</li>
+                          <li>5️⃣ Below the <a href="#quickdraw">Quick Draw</a> light next to the Bank Robbery Ramp</li>
                       </ul>
                   </li>
                   <li>🔁 Repeat for all 4 Quick Draws → ⚡ Showdown Multiball triggers → ⭐ Progress Star 2</li>
@@ -471,6 +559,9 @@
   </tbody>
 </table>
 
+<!-- Commit Info unten -->
+<div id="commit-info">Loading commit info...</div>
+
 <!-- Modal einmalig am Ende der Seite -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -495,6 +586,19 @@
   });
 </script>
 
+<script>
+  fetch('commit.txt')
+    .then(response => response.text())
+    .then(text => {
+      // Nur die ersten 7 Zeichen verwenden
+      const shortHash = text.trim().slice(0, 7);
+      document.getElementById('commit-info').innerText = `Commit: ${shortHash}`;
+    })
+    .catch(err => {
+      console.error('Could not load commit.txt:', err);
+      document.getElementById('commit-info').innerText = 'Commit info not available';
+    });
+</script>
 
 </body>
 </html>

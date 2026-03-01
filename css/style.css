@@ -5,14 +5,16 @@ body {
   color: #3b2a1a;
 }
 
-/* Titel */
-h1 {
-  font-weight: bold;
-  margin-bottom: 30px;
+h1.page-title {
+  text-align: center;
+  font-size: 2.5rem;
   color: #5a3b1c;
-  text-shadow: 1px 1px 2px #fff;
-}
+  text-shadow: 2px 2px 4px #fbe9d7, 0 0 10px #ffecb3;
+  font-weight: bold;
+  margin: 40px 0 20px 0;
 
+  font-family: 'Lucida Console', 'Courier New', monospace;
+}
 /* Tabelle */
 .phase-table {
   width: 100%;
@@ -47,15 +49,6 @@ h1 {
   text-align: left;
 }
 
-/* Bilder */
-.phase-table img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  border: 2px solid #c9a35f;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-}
-
 /* Listen */
 .phase-table ul {
   padding-left: 20px;
@@ -77,57 +70,6 @@ h1 {
   transition: 0.2s;
 }
 
-/* Icons */
-.star-icon {
-  color: #d4a017;
-  margin-right: 5px;
-}
-
-/* Farbliche Icons für Western/Cactus Canyon */
-.icon-star {
-    color: #FFD700; /* Gold */
-    margin-right: 5px;
-}
-
-.icon-target {
-    color: #E74C3C; /* Rot */
-    margin-right: 5px;
-}
-
-.icon-multiball {
-    color: #3498DB; /* Blau */
-    margin-right: 5px;
-}
-
-.icon-bonus {
-    color: #F39C12; /* Orange */
-    margin-right: 5px;
-}
-
-.icon-interrupt {
-    color: #7F8C8D; /* Grau */
-    margin-right: 5px;
-}
-
-.icon-col {
-  width: 3%;
-  white-space: nowrap;
-  text-align: center;
-  font-size: 1.2em;
-}
-
-/* Standard Bootstrap Table Styling wie vorher */
-.phase-table td:first-child {
-    text-align: left;
-}
-
-.phase-table ul {
-    padding-left: 20px;
-}
-
-.phase-table li {
-    margin-bottom: 6px;
-}
 
 table.inner-grid {
     table-layout: fixed;
@@ -152,4 +94,79 @@ table.inner-grid {
 td img, td .playfield-img {
   display: block;
   margin: 0 auto; /* zentriert horizontal */
+}
+
+/* Top-Bar / Buttons */
+#top-bar {
+  background: linear-gradient(to right, #f5e6c8, #e0c097); /* Sandfarben */
+  border: 2px solid #c9a35f;      /* dunkler Holzrahmen */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  color: #3b2a1a;
+}
+
+#top-bar a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #7a4a22; /* dunkles Holz / Western-Braun */
+  margin: 0 5px;
+  transition: color 0.2s;
+}
+
+#top-bar a:hover {
+  color: #d4a017; /* Gold */
+  text-shadow: 0 0 3px #fff;
+}
+
+/* Commit Info Footer */
+#commit-info {
+  background: linear-gradient(to right, #fff8ec, #f5e6c8);
+  border: 2px solid #c9a35f;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #5a3b1c;
+  padding: 10px 15px;
+  margin: 30px auto 50px auto;
+  max-width: 400px;
+}
+
+
+/* Navigation innerhalb Header */
+/* Navigation Buttons als Holzplaketten */
+nav a {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff8e7;                   /* heller Sandton für Text */
+  background: linear-gradient(to bottom, #a25d23, #6b3f1d); /* Holz-Gradient */
+  border: 2px solid #d4a017;        /* Goldrahmen */
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  text-align: center;
+}
+
+nav a:hover {
+  background: linear-gradient(to bottom, #d4a017, #b57c35); /* goldiges Highlight beim Hover */
+  color: #3b2a1a; /* dunkles Holz */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.5);
+}
+
+.card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;      /* Rechteckig – kannst du auch 1/1 für quadratisch machen */
+  background-size: cover;    /* Bild füllt Container komplett */
+  background-position: center; /* Zentriert das Bild, mittiger Ausschnitt */
+  border-radius: 6px;        /* optional: abgerundete Ecken */
 }
