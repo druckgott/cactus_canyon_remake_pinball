@@ -109,6 +109,13 @@ h1 {
     margin-right: 5px;
 }
 
+.icon-col {
+  width: 3%;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 1.2em;
+}
+
 /* Standard Bootstrap Table Styling wie vorher */
 .phase-table td:first-child {
     text-align: left;

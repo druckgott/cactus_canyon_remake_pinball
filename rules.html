@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Cactus Canyon Remake Rules</title>
+
+<!-- Bootstrap CSS (Online / CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons (CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Bootstrap JS Bundle (mit Popper für Modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Dein Custom CSS -->
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<h1 style="text-align:center;">Cactus Canyon Remake Gamerules</h1>
+
+<table class="phase-table">
+  <thead>
+    <tr>
+      <th>original version</th>
+      <th>Playfield</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- Skill Shot / Hurry-Up at Plunge -->
+    <tr id="skillshot">
+      <td>
+        <strong>🚀 Skill Shot / Hurry-Up at Plunge</strong><br>
+
+        <ul>
+          <li>🎮 Start the ball → 👀 Display shows the active Skill Shot</li>
+          <li>🎯 Shoot directly at the indicated target</li>
+          <li>💰 Successful shot → Skill Shot award collected</li>
+        </ul>
+
+        <strong>🎯 Possible Skill Shot Awards</strong><br>
+
+        <table class="table table-borderless inner-grid mb-0">
+          <thead>
+            <tr>
+              <th class="icon-col">Icon</th>
+              <th style="width:25%;">Award</th>
+              <th style="width:25%;">Effect</th>
+              <th style="width:25%;">Notes</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>⚡</td>
+              <td>Light Quick Draw</td>
+              <td>Activates Quick Draw mode</td>
+              <td>Helps progress toward <a href="#showdown">Showdown</a></td>
+            </tr>
+
+            <tr>
+              <td>🔫</td>
+              <td>Light Gun Fight</td>
+              <td>Prepares Gunfight / Shootout mode</td>
+              <td>Advances Topper progress</td>
+            </tr>
+
+            <tr>
+              <td>➕</td>
+              <td>Light <a href="#extraball">Extra Ball</a></td>
+              <td>Activates <a href="#extraball">Extra Ball</a></td>
+              <td>Grants an additional ball</td>
+            </tr>
+
+            <tr>
+              <td>🏆</td>
+              <td>Light <a href="#bounty-award">Bounty Award</a></td>
+              <td>Enables Bounty collection</td>
+              <td>Bonus scoring mode</td>
+            </tr>
+
+            <tr>
+              <td>🐎</td>
+              <td>Complete <a href="#rideemcowboy">Bronco Loop</a></td>
+              <td>Completes Bronco Loop objective</td>
+              <td>Mode progression</td>
+            </tr>
+
+            <tr>
+              <td>🌊</td>
+              <td>Complete <a href="#savepolly-river">River Ramp</a></td> 
+              <td>Completes River Adventure</td>
+              <td>Save Polly objective</td>
+            </tr>
+
+            <tr>
+              <td>🚂</td>
+              <td>Complete </td> 
+              <td>Completes Train Ramp objective</td>
+              <td>Save Polly Train mode</td>
+            </tr>
+
+            <tr>
+              <td>🎯</td>
+              <td>Complete <a href="#combos">Trick Loop</a></td>
+              <td>Completes Trick Shooting Loop</td>
+              <td>Helps with combos</td>
+            </tr>
+
+            <tr>
+              <td>💰</td>
+              <td>Complete <a href="#savepolly-bank">Bank Ramp/a></td> 
+              <td>Completes Bank Robbery objective</td>
+              <td>Mode progression</td>
+            </tr>
+
+            <tr>
+              <td>⭐</td>
+              <td>Increase Rank</td>
+              <td>Raises player rank</td>
+              <td>Long-term bonus</td>
+            </tr>
+
+            <tr>
+              <td>✖️3</td>
+              <td><a href="#bonusx">Bonus x3</a></td>
+              <td>Bonus multiplier +3</td>
+              <td>Very valuable</td>
+            </tr>
+
+            <tr>
+              <td>💎</td>
+              <td>1 Million Points</td>
+              <td>Instant 1,000,000 points</td>
+              <td>Direct score boost</td>
+            </tr>
+
+            <tr>
+              <td>🔒</td>
+              <td>Light Lock</td>
+              <td>Activates Ball Lock</td>
+              <td>If already lit → awards a lock</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </td>
+
+      <td>
+        <!-- <div class="playfield-img" data-img="images/skillshot_playfield1.png"></div> -->
+      </td>
+    </tr>
+
+    <!-- Bonus X – Cactus Lanes -->
+    <tr id="bonusx">
+      <td>
+          <strong>⭐ Bonus X – Cactus Lanes</strong><br>
+          <ul>
+              <li>🎯 Guide the ball through the left or right Cactus Lane (back left)</li>
+              <li>💡 Each lane lights up a lamp</li>
+              <li>🌵 Both lanes activated → Bonus multiplier +1</li>
+              <li>🔄 Lanes reset afterward → can be collected again</li>
+          </ul>
+
+          <table class="table table-borderless inner-grid mb-0">
+              <thead>
+                  <tr>
+                      <th>Method</th>
+                      <th>Effect</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>🌵 Both Cactus Lanes</td>
+                      <td>+1 Bonus X</td>
+                  </tr>
+                  <tr>
+                      <td>🚀 <a href="#skillshot">Skill Shot</a> Bonus X</td>
+                      <td>+3 Bonus X</td>
+                  </tr>
+                  <tr>
+                      <td>🏆 <a href="#bounty-award">Bounty Award</a> Bonus X</td>
+                      <td>+X Bonus X</td>
+                  </tr>
+              </tbody>
+          </table>
+      </td>
+      <td><div class="playfield-img" data-img="images/cactus_lanes_backleft.png"></div></td>
+    </tr>
+
+
+    <!-- Save Polly Peril – Train -->
+    <tr id="savepolly-train">
+        <td>
+            <strong>⭐ Save Polly Peril – Train</strong><br>
+            <ul>
+                <li>🎯 Play the ball on the Center Train Ramp (middle of the playfield, between Gold Mine and Bart Brothers)</li>
+                <li>🔁 Hit Train Ramp 3x → mode starts</li>
+                <li>🚂 Mode active → train stops, Polly must be rescued</li>
+                <li>⏱️ Timer running → act quickly</li>
+                <li>🎯 Hit the following ramps during mode:</li>
+                <ul>
+                    <li>🎯 Train Ramp</li>
+                    <li>🎯 <a href="#savepolly-bank">Bank Ramp</a></li>
+                    <li>🎯 <a href="#savepolly-river">River Adventure Ramp</a></li>
+                </ul>
+                <li>🚦 Each hit slows down the train → Polly rescued</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/savepolly_train_playfield.png"></div></td>
+    </tr>
+
+    <!-- Save Polly Peril – River Adventure -->
+    <tr id="savepolly-river">
+        <td>
+            <strong>⭐ Save Polly Peril – River Adventure</strong><br>
+            <ul>
+                <li>🎯 Play the ball on the River Adventure / Left Ramp (left of the Horse Loop)</li>
+                <li>🔁 Hit River Adventure Ramp 3x → mode starts</li>
+                <li>🚰 Mode active → Polly must not fall over the waterfall</li>
+                <li>⏱️ Timer running → act quickly</li>
+                <li>🎯 Hit the following ramp during mode:</li>
+                <ul>
+                    <li>🎯 Whitewater / River Ramp</li>
+                </ul>
+                <li>🚦 Hitting Whitewater / River Ramp → Polly rescued</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/savepolly_river_playfield.png"></div></td>
+    </tr>
+
+    <!-- Save Polly Peril – Bank Robbery -->
+    <tr id="savepolly-bank">
+        <td>
+            <strong>⭐ Save Polly Peril – Bank Robbery</strong><br>
+            <ul>
+                <li>🎯 Play the ball on the Bank Robbery / Right Ramp (right side of the playfield)</li>
+                <li>🔁 Hit Bank Robbery Ramp 3x → mode starts</li>
+                <li>🏦 Mode active → Polly must be rescued from the bank robbers</li>
+                <li>💡 Shoot the lit targets / ramps → hit the bank robbers</li>
+                <li>⚡ Flashing shot indicates which robber holds Polly → hit that one</li>
+                <li>✅ Polly rescued → mode ends</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/savepolly_bank_playfield.png"></div></td>
+    </tr>
+
+    <!-- Ride 'Em Cowboy – Horse Loop -->
+    <tr id="rideemcowboy">
+        <td>
+            <strong>⭐ Ride 'Em Cowboy – Horse Loop</strong><br>
+            <ul>
+                <li>🎯 Play the ball on Horse Loop / Left Orbit (left side, in front of River Adventure / Right Ramp)</li>
+                <li>🔁 Hit Horse Loop 3x → mode starts</li>
+                <li>🐎 Mode active → hero demonstrates riding skill</li>
+                <li>🎯 Score points for hitting the jets over Marksman Right Orbit</li>
+                <li>⚠️ If started again through Horse Loop → rider falls off → mode ends</li>
+                <li>✅ Hit Horse Loop again → complete the mode</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/rideemcowboy_playfield.png"></div></td>
+    </tr>
+
+    <!-- Extra Ball -->
+    <tr id="extraball">
+        <td>
+            <strong>⭐ Extra Ball</strong><br>
+            <ul>
+                <li>💎 When Extra Ball lights up → shoot Gold Mine Ramp to collect the ball</li>
+                <li>💡 Ways to activate Extra Ball:</li>
+                <ul>
+                    <li>🎯 Complete Save Polly Peril <a href="#savepolly-train">Train</a> / <a href="#savepolly-river">River</a> / <a href="#savepolly-bank">Bank</a></li>
+                    <li>🚀 <a href="#skillshot">Skill Shot</a></li>
+                    <li>💥 Start <a href="#showdown">Showdown</a> Multiball</li>
+                    <li>🍺 Hit <a href="#wildwest-topper">Beer Mug Target</a></li> 
+                </ul>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/extraball_playfield.png"></div></td>
+    </tr>
+
+    <!-- Bounty Award -->
+    <tr id="bounty-award">
+        <td>
+            <strong>⭐ Bounty Award</strong><br>
+            <ul>
+                <li>💰 Collect the Bounty under the Bart Brothers' heads</li>
+                <li>💡 Ways to activate Bounty Award:</li>
+                <ul>
+                    <li>🎯 Lasso Skill Shot</li>
+                    <li>🔫 Defeat Bad Guy in Quick Draw</li>
+                </ul>
+                <li>🏆 Possible Bounty Awards:</li>
+                <ul>
+                    <li>➕ Light Extra Ball</li>
+                    <li>🔫 Light Gun Fight</li>
+                    <li>⚡ Light Quick Draw</li>
+                    <li>🔒 Light Lock (or Award Lock if already active)</li>
+                    <li>✖️ +5 Bonus Multiplier</li>
+                    <li>⭐ Increase Rank</li>
+                    <li>💰 Points (250,000 – 500,000 – etc.)</li>
+                    <li>💎 1 Million Bonus</li>
+                </ul>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/bounty_playfield.png"></div></td>
+    </tr>
+
+    <!-- Wild West Shootout – Topper Mini-Game -->
+    <tr id="wildwest-topper">
+        <td>
+            <strong>⭐ Wild West Shootout – Topper Mini-Game (only with Topper)</strong><br>
+            <ul>
+                <li>🍺 Hit 10 <a href="#extraball">Beer Glasses</a> → 🎯 Guide ball to Drop Target</li>
+                <li>💡 Topper lamp blinks → Display shows "Shootout Mode ready"</li>
+                <li>🟢 Normal ball play pauses briefly → 🎮 Flipper buttons control target</li>
+                <li>🔴 Light bar moves over enemies → ⏱️ Timing is crucial</li>
+                <li>👉 Press right flipper when light is under red enemy → ❌ Do nothing when under green enemy</li>
+                <li>✅ Hit all enemies → Shootout ends → 🏆 Points / Bonus / Star progress awarded</li>
+                <li>🟢 Normal ball play resumes</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/wildwest_playfield1.png"></div></td>
+    </tr>
+
+
+       <!-- High Noon Phase -->
+      <tr id="high_noon">
+          <td>
+              <strong>⭐ High Noon Overview</strong>
+              <table class="table table-borderless inner-grid mb-0">
+                  <thead>
+                      <tr>
+                          <th style="width:33%;">Action</th>
+                          <th style="width:33%;">Outcome</th>
+                          <th style="width:34%;">Goal</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>🔫 <a href="#bionic_bart">Defeat all 4 Bart brothers</a></td>
+                          <td>🏆 Bionic Bart phase unlock</td>
+                          <td>⭐ Progress Star 1</td>
+                      </tr>
+                      <tr>
+                          <td>🎯 <a href="#Showdown">Win all 4 Quick Draws</a></td>
+                          <td>🏆 Showdown unlock</td>
+                          <td>⭐ Progress Star 2</td>
+                      </tr>
+                      <tr>
+                          <td>⛏️ <a href="#motherlode">Complete the Mine</a></td>
+                          <td>⚡ Multiball triggered</td>
+                          <td>⭐ Progress Star 3</td>
+                      </tr>
+                      <tr>
+                          <td>🐂 <a href="#stampede">Complete the Stampede</a></td>
+                          <td>⚡ Multiball triggered</td>
+                          <td>⭐ Progress Star 4</td>
+                      </tr>
+                      <tr>
+                          <td>🎯 <a href="#combos">Execute 10 Combos</a></td>
+                          <td>🏆 Star activated</td>
+                          <td>⭐ Progress Star 5</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </td>
+          <td>
+            <div class="playfield-img" data-img="images/highnoon_playfield1.png"></div>
+          </td>
+          
+      </tr>
+
+      <!-- Bionic Bart -->
+      <tr id="bionic_bart">
+          <td>
+              <strong>⭐ Star 1: Bionic Bart</strong><br>
+              <ul>
+                  <li>🎯 Shoot Saloon door</li>
+                  <li>🚪 Enter Saloon → battle starts</li>
+                  <li>🏹 Hit Big Bart 3 times → brother defeated</li>
+                  <li>🔁 Repeat 4 times for Bubba, Bob, Bronco, and Baron</li>
+                  <li>🏆 Open Saloon on 5th attempt → Bionic Bart fight starts</li>
+              </ul>
+          </td>
+          <td><div class="playfield-img" data-img="images/bionicbart_playfield1.png"></div></td>
+      </tr>
+
+      <!-- Showdown Multiball -->
+      <tr id="Showdown">
+          <td>
+              <strong>⭐ Star 2: Showdown Multiball</strong><br>
+              <ul>
+                  <li>🎳 Guide ball over an inlane or special ramp → 💡 Left ramps light left Quick Draw lamps / Right ramps light right Quick Draw lamps → Some ramps / Drop Targets also trigger lamps</li>
+                  <li>💡 Quick Draw lamp blinks → 🎯 Hit the corresponding Bad Guy target → ✅ 1/4 Quick Draw complete</li>
+                  <li>📍 Target positions:
+                      <ul>
+                          <li>1️⃣ Diagonally right of the right gun</li>
+                          <li>2️⃣ Diagonally left of the left gun</li>
+                          <li>3️⃣ To the left of the Bronco Loop</li>
+                          <li>4️⃣ To the right of the Bank Robbery Ramp</li>
+                          <li>5️⃣ Below the Quick Draw light next to the Bank Robbery Ramp</li>
+                      </ul>
+                  </li>
+                  <li>🔁 Repeat for all 4 Quick Draws → ⚡ Showdown Multiball triggers → ⭐ Progress Star 2</li>
+              </ul>
+          </td>
+          <td><div class="playfield-img" data-img="images/showdown_playfield1.png"></div></td>
+          
+      </tr>
+
+    <!-- Motherlode / Mine Multiball -->
+    <tr id="motherlode">
+        <td>
+            <strong>⭐ Star 3: Motherlode / Mine Multiball</strong><br>
+            <ul>
+                <li>🎳 Lock 3 balls in the Mine → ⚡ Multiball starts → 💰 Collect jackpots (green)</li>
+                <li>💡 During Multiball: Hit lit lanes → ✅ Each counts as 1 jackpot → 🎯 Complete 5 jackpots (orange)</li>
+                <li>🏆 Hit Motherlode → 💥 Super Jackpot → ⭐ Max score / Star 3 complete</li>
+                <li>❌ Multiball ends when 1 ball remains → ⬅️ Return to normal play → 🔜 Prepare for next Star</li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/motherlode_playfield1.png"></div></td>
+        
+    </tr>
+
+    <!-- Stampede Multiball -->
+    <tr id="stampede">
+        <td>
+            <strong>⭐ Star 4: Stampede Multiball</strong><br>
+            <ul>
+                <li>🎳 Hit 3 ramps & 2 loops multiple times → ⚡ Stampede Multiball starts → 💰 Score points / Star 4 progress</li>
+                <li>🏆 Complete all 5 ramp/loop shots → ⭐ Star 4 complete</li>
+            </ul>
+        </td>
+        <td> <div class="playfield-img" data-img="images/stampede_playfield1.png"></div></td>
+      
+    </tr>
+
+    <!-- Combos -->
+    <tr id="combos">
+        <td>
+            <strong>⭐ Star 5: Combos</strong><br>
+            <ul>
+                <li>🎮 Execute 10 combos in sequence → 🏆 Star activated → ⭐ Complete Star 5</li>
+                <ul>
+                  <li>✔️ Linke Rampe → Rechte Rampe</li>
+                  <li>✔️ Linke Rampe → Loop</li>
+                  <li>✔️ Loop → Rechte Rampe</li>
+                </ul>
+                <li>❌ Combo interruptions:
+                    <ul>
+                        <li>⛔ Normal targets / Drop Targets</li>
+                        <li>⛔ Slingshots / Bumpers (unless ball lands on ramp/loop)</li>
+                        <li>⛔ Missed ramps/loops</li>
+                        <li>⛔ Timeout / multiball interference</li>
+                    </ul>
+                </li>
+            </ul>
+        </td>
+        <td><div class="playfield-img" data-img="images/combos_playfield1.png"></div></td>
+        
+    </tr>
+
+  </tbody>
+</table>
+
+<!-- Modal einmalig am Ende der Seite -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body p-0 text-center">
+        <img id="modalImage" src="" class="img-fluid" alt="Playfield">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Alle Bilder anklickbar machen
+  document.querySelectorAll('.playfield-img').forEach(function(div){
+    let imgUrl = div.dataset.img;
+    div.style.backgroundImage = `url(${imgUrl})`;
+    div.addEventListener('click', function(){
+      document.getElementById('modalImage').src = imgUrl;
+      let modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      modal.show();
+    });
+  });
+</script>
+
+
+</body>
+</html>
