@@ -21,6 +21,7 @@
   🚀 Check out this project on 
   <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">GitHub</a> |
   Feel free to <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">contribute</a> 💡
+  | 💖 <a href="https://ko-fi.com/druckgott" target="_blank">Support via Ko-fi (Paypal...)</a>
 </div>
 
 <header>
@@ -559,8 +560,28 @@
   </tbody>
 </table>
 
-<!-- Commit Info unten -->
-<div id="commit-info">Loading commit info...</div>
+<!-- Footer -->
+<footer id="site-footer">
+
+  <div class="footer-inner">
+
+    <div class="footer-left">
+      🌵 Cactus Canyon Remake Guide
+    </div>
+
+    <div class="footer-left" id="commit-info">
+      Loading commit...
+    </div>
+
+    <div class="footer-right">
+      © <span id="year"></span> druckgott |
+      <a href="LICENSE.md" target="_blank">License</a> |
+      <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">GitHub</a>
+    </div>
+
+  </div>
+
+</footer>
 
 <!-- Modal einmalig am Ende der Seite -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
@@ -587,17 +608,34 @@
 </script>
 
 <script>
+
+  document.getElementById('year').textContent = new Date().getFullYear();
   fetch('commit.txt')
     .then(response => response.text())
     .then(text => {
       // Nur die ersten 7 Zeichen verwenden
       const shortHash = text.trim().slice(0, 7);
-      document.getElementById('commit-info').innerText = `Commit: ${shortHash}`;
+      document.getElementById('commit-info').innerText = `🔧Commit: ${shortHash}`;
     })
     .catch(err => {
       console.error('Could not load commit.txt:', err);
       document.getElementById('commit-info').innerText = 'Commit info not available';
     });
+</script>
+
+<script>
+  // Für jede Tabellenzeile
+  document.querySelectorAll('.phase-table tbody tr').forEach(tr => {
+    const imgDiv = tr.querySelector('td:nth-child(2) .playfield-img');
+    const firstTd = tr.querySelector('td:first-child');
+
+    if(imgDiv && firstTd){
+      const printImg = document.createElement('img');
+      printImg.src = imgDiv.dataset.img;
+      printImg.classList.add('print-img');  // nur für Print sichtbar
+      firstTd.appendChild(printImg);
+    }
+  });
 </script>
 
 </body>

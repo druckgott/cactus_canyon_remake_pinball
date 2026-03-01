@@ -122,21 +122,61 @@ td img, td .playfield-img {
   text-shadow: 0 0 3px #fff;
 }
 
-/* Commit Info Footer */
-#commit-info {
+/* ===============================
+   Footer Box Style (Commit + Copyright)
+=============================== */
+
+#site-footer {
+  background: transparent; /* Außen nur Hintergrund */
+  padding: 40px 20px;
+}
+
+/* Innere Box */
+.footer-inner {
   background: linear-gradient(to right, #fff8ec, #f5e6c8);
   border: 2px solid #c9a35f;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  text-align: center;
+  border-radius: 14px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+
+  max-width: 900px;
+  margin: 0 auto;
+
+  padding: 15px 25px;
+
   font-family: 'Courier New', monospace;
   font-weight: bold;
   color: #5a3b1c;
-  padding: 10px 15px;
-  margin: 30px auto 50px auto;
-  max-width: 400px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
+/* Einzelne Bereiche */
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+/* Footer Links */
+#site-footer a {
+  color: #7a4a22;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+}
+
+#site-footer a:hover {
+  color: #d4a017;
+  text-shadow: 0 0 4px #fff;
+}
 
 /* Navigation innerhalb Header */
 /* Navigation Buttons als Holzplaketten */
@@ -169,4 +209,44 @@ nav a:hover {
   background-size: cover;    /* Bild füllt Container komplett */
   background-position: center; /* Zentriert das Bild, mittiger Ausschnitt */
   border-radius: 6px;        /* optional: abgerundete Ecken */
+}
+
+
+/* ===============================
+   Druckversion für Rules-Seite
+=============================== */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0;
+  }
+
+  /* Top-Bar, Navigation, Footer ausblenden */
+  #top-bar, nav, #site-footer, .modal {
+    display: none !important;
+  }
+
+  /* Tabelle weiterhin farbig */
+  .phase-table, .phase-table th, .phase-table td, table.inner-grid {
+    background-color: inherit !important;
+    color: inherit !important;
+    border: 1px solid #d6b98c !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-inside: avoid;
+  }
+
+  /* Zweite Spalte (Playfield) ausblenden */
+  .phase-table td:nth-child(2) {
+    display: none !important;
+  }
+
+  /* Bilder, die wir per JS klonen, sichtbar machen */
+  .phase-table td img.print-img {
+    display: block !important;
+    width: 500px; /* gewünschte Druckbreite */
+    height: auto;
+    margin: 10px auto 30px auto;
+  }
 }
