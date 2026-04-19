@@ -35,80 +35,87 @@ const playfieldCoords = {
 
 const nodes = [
     // --- TOP SECTION ---
-    { id: 'A', data: { label: 'Super Skill Shot', gameKey: 'skillshot' }, position: { x: 250, y: 0 }, style: { background: colors.skill, color: 'white' } },
-    { id: 'B', data: { label: 'Spinner', gameKey: 'spinner' }, position: { x: 450, y: 0 }, style: { background: colors.skill, color: 'white' } },
-    { id: 'C', data: { label: 'Saloon Fight', gameKey: 'saloon' }, position: { x: 580, y: 0 }, style: { background: colors.skill, color: 'white' } },
-    { id: 'D', data: { label: 'Gunfight Ball Save', gameKey: 'gunfight' }, position: { x: 800, y: 0 }, style: { background: colors.skill, color: 'white' } },
+    { id: 'skillshot', data: { label: 'Super Skill Shot', gameKey: 'skillshot' }, position: { x: 250, y: 0 }, style: { background: colors.skill, color: 'white' } },
+    { id: 'spinner', data: { label: 'Spinner', gameKey: 'spinner' }, position: { x: 450, y: 0 }, style: { background: colors.skill, color: 'white' } },
+    { id: 'saloon_fight', data: { label: 'Saloon Fight', gameKey: 'saloon' }, position: { x: 580, y: 0 }, style: { background: colors.skill, color: 'white' } },
+    { id: 'gunfight_save', data: { label: 'Gunfight Ball Save', gameKey: 'gunfight' }, position: { x: 800, y: 0 }, style: { background: colors.skill, color: 'white' } },
 
     // --- MARSHALL / GUNFIGHT PROGRESSION ---
-    { id: 'G', data: { label: 'Stranger' }, position: { x: 100, y: 100 }, style: { background: colors.gunfight } },
-    { id: 'J', data: { label: 'Partner' }, position: { x: 100, y: 150 }, style: { background: colors.gunfight } },
-    { id: 'M', data: { label: 'Deputy' }, position: { x: 100, y: 200 }, style: { background: colors.gunfight } },
-    { id: 'P', data: { label: 'Sheriff' }, position: { x: 100, y: 250 }, style: { background: colors.gunfight } },
-    { id: 'Q', data: { label: 'Marshall', gameKey: 'marshall' }, position: { x: 250, y: 175 }, style: { background: colors.gunfight } },
-    { id: 'R', data: { label: 'Save the Train', gameKey: 'train' }, position: { x: 400, y: 175 }, style: { background: colors.multiball, color: 'white' } },
-    { id: 'S', data: { label: 'Marshall Multiball', gameKey: 'marshall' }, position: { x: 550, y: 175 }, style: { background: colors.multiball, color: 'white' } },
+    { id: 'stranger', data: { label: 'Stranger' }, position: { x: 100, y: 100 }, style: { background: colors.gunfight } },
+    { id: 'partner', data: { label: 'Partner' }, position: { x: 100, y: 150 }, style: { background: colors.gunfight } },
+    { id: 'deputy', data: { label: 'Deputy' }, position: { x: 100, y: 200 }, style: { background: colors.gunfight } },
+    { id: 'sheriff', data: { label: 'Sheriff' }, position: { x: 100, y: 250 }, style: { background: colors.gunfight } },
+    { id: 'marshall', data: { label: 'Marshall', gameKey: 'marshall' }, position: { x: 250, y: 175 }, style: { background: colors.gunfight } },
+    { id: 'save_train', data: { label: 'Save the Train', gameKey: 'train' }, position: { x: 400, y: 175 }, style: { background: colors.multiball, color: 'white' } },
+    { id: 'marshall_multiball', data: { label: 'Marshall Multiball', gameKey: 'marshall' }, position: { x: 550, y: 175 }, style: { background: colors.multiball, color: 'white' } },
 
     // --- GOLD MINE SECTION ---
-    { id: 'T', data: { label: 'Lock 1', gameKey: 'lock1' }, position: { x: 400, y: 350 }, style: { background: colors.locks, color: 'white' } },
-    { id: 'U', data: { label: 'Lock 2', gameKey: 'lock2' }, position: { x: 550, y: 350 }, style: { background: colors.locks, color: 'white' } },
-    { id: 'V', data: { label: 'Lock 3', gameKey: 'lock3' }, position: { x: 700, y: 350 }, style: { background: colors.locks, color: 'white' } },
-    { id: 'W', data: { label: 'Gold Mine Multiball', gameKey: 'mine' }, position: { x: 550, y: 430 }, style: { background: colors.gunfight } },
-    { id: 'X', data: { label: 'Mother Lode', gameKey: 'mine' }, position: { x: 550, y: 500 }, style: { background: colors.gunfight } },
+    { id: 'lock1', data: { label: 'Lock 1', gameKey: 'lock1' }, position: { x: 400, y: 350 }, style: { background: colors.locks, color: 'white' } },
+    { id: 'lock2', data: { label: 'Lock 2', gameKey: 'lock2' }, position: { x: 550, y: 350 }, style: { background: colors.locks, color: 'white' } },
+    { id: 'lock3', data: { label: 'Lock 3', gameKey: 'lock3' }, position: { x: 700, y: 350 }, style: { background: colors.locks, color: 'white' } },
+    { id: 'mine_multiball', data: { label: 'Gold Mine Multiball', gameKey: 'mine' }, position: { x: 550, y: 430 }, style: { background: colors.gunfight } },
+    { id: 'mother_lode', data: { label: 'Mother Lode', gameKey: 'mine' }, position: { x: 550, y: 500 }, style: { background: colors.gunfight } },
 
-    // --- POLLY MISSIONS (Extended) ---
-    { id: 'A1', data: { label: 'Ride Em Cowboy' }, position: { x: 50, y: 400 }, style: { background: colors.gunfight } },
-    { id: 'Y',  data: { label: 'Buckn Bronco' }, position: { x: 50, y: 450 }, style: { background: colors.gunfight } },
-    { id: 'A4', data: { label: 'Save Polly (River)', gameKey: 'polly' }, position: { x: 50, y: 500 }, style: { background: colors.gunfight } },
-    { id: 'A2', data: { label: 'Whitewater' }, position: { x: 50, y: 550 }, style: { background: colors.gunfight } },
-    { id: 'A7', data: { label: 'Save Polly (Train)', gameKey: 'train' }, position: { x: 50, y: 600 }, style: { background: colors.gunfight } },
-    { id: 'A5', data: { label: 'Catch Train' }, position: { x: 50, y: 650 }, style: { background: colors.gunfight } },
-    { id: 'A14', data: { label: 'Stampede', gameKey: 'stampede' }, position: { x: 250, y: 550 }, style: { background: colors.gunfight } },
+    // --- POLLY MISSIONS ---
+    { id: 'ride_em', data: { label: 'Ride Em Cowboy' }, position: { x: 50, y: 400 }, style: { background: colors.gunfight } },
+    { id: 'buckn_bronco', data: { label: 'Buckn Bronco' }, position: { x: 50, y: 450 }, style: { background: colors.gunfight } },
+    { id: 'save_polly_river', data: { label: 'Save Polly (River)', gameKey: 'polly' }, position: { x: 50, y: 500 }, style: { background: colors.gunfight } },
+    { id: 'whitewater', data: { label: 'Whitewater' }, position: { x: 50, y: 550 }, style: { background: colors.gunfight } },
+    { id: 'save_polly_train', data: { label: 'Save Polly (Train)', gameKey: 'train' }, position: { x: 50, y: 600 }, style: { background: colors.gunfight } },
+    { id: 'catch_train', data: { label: 'Catch Train' }, position: { x: 50, y: 650 }, style: { background: colors.gunfight } },
+    { id: 'stampede', data: { label: 'Stampede', gameKey: 'stampede' }, position: { x: 250, y: 550 }, style: { background: colors.gunfight } },
 
-    // --- QUICK DRAW SECTION (New) ---
-    { id: 'A26', data: { label: 'Light Quick Draw' }, position: { x: 850, y: 100 }, style: { background: colors.gunfight } },
-    { id: 'A12', data: { label: 'Shootout', gameKey: 'gunfight' }, position: { x: 850, y: 150 }, style: { background: colors.multiball, color: 'white' } },
-    { id: 'A18', data: { label: 'Showdown', gameKey: 'showdown' }, position: { x: 850, y: 250 }, style: { background: colors.multiball, color: 'white' } },
+    // --- QUICK DRAW / SHOOTOUT ---
+    { id: 'light_quickdraw', data: { label: 'Light Quick Draw' }, position: { x: 850, y: 100 }, style: { background: colors.gunfight } },
+    { id: 'shootout', data: { label: 'Shootout', gameKey: 'gunfight' }, position: { x: 850, y: 150 }, style: { background: colors.multiball, color: 'white' } },
+    { id: 'showdown', data: { label: 'Showdown', gameKey: 'showdown' }, position: { x: 850, y: 250 }, style: { background: colors.multiball, color: 'white' } },
 
     // --- CENTER PIECE ---
-    { id: 'A15', data: { label: 'High Noon', gameKey: 'high_noon' }, position: { x: 550, y: 700 }, style: { background: colors.highNoon, color: 'white', fontWeight: 'bold' } },
+    { id: 'high_noon', data: { label: 'High Noon', gameKey: 'high_noon' }, position: { x: 550, y: 700 }, style: { background: colors.highNoon, color: 'white', fontWeight: 'bold' } },
 
-    // --- BART BROTHERS (Complete Family) ---
-    { id: 'A19', data: { label: 'Bart Brothers', gameKey: 'bart_bros' }, position: { x: 750, y: 500 }, style: { background: colors.gunfight } },
-    { id: 'A21', data: { label: 'Big Bart' }, position: { x: 900, y: 400 }, style: { background: colors.gunfight } },
-    { id: 'A22', data: { label: 'Bandolero Bart' }, position: { x: 900, y: 450 }, style: { background: colors.gunfight } },
-    { id: 'A23', data: { label: 'Bubba Bart' }, position: { x: 900, y: 500 }, style: { background: colors.gunfight } },
-    { id: 'A24', data: { label: 'Bionic Bart' }, position: { x: 900, y: 550 }, style: { background: colors.gunfight } },
-    { id: 'A25', data: { label: 'Bella Bart' }, position: { x: 900, y: 600 }, style: { background: '#800000', color: 'white' } },
-    { id: 'A20', data: { label: 'Saloon Party', gameKey: 'saloon' }, position: { x: 750, y: 600 }, style: { background: colors.multiball, color: 'white' } },
+    // --- BART BROTHERS ---
+    { id: 'bart_brothers', data: { label: 'Bart Brothers', gameKey: 'bart_bros' }, position: { x: 750, y: 500 }, style: { background: colors.gunfight } },
+    { id: 'big_bart', data: { label: 'Big Bart' }, position: { x: 900, y: 400 }, style: { background: colors.gunfight } },
+    { id: 'bandolero_bart', data: { label: 'Bandolero Bart' }, position: { x: 900, y: 450 }, style: { background: colors.gunfight } },
+    { id: 'bubba_bart', data: { label: 'Bubba Bart' }, position: { x: 900, y: 500 }, style: { background: colors.gunfight } },
+    { id: 'bionic_bart', data: { label: 'Bionic Bart' }, position: { x: 900, y: 550 }, style: { background: colors.gunfight } },
+    { id: 'bella_bart', data: { label: 'Bella Bart' }, position: { x: 900, y: 600 }, style: { background: '#800000', color: 'white' } },
+    { id: 'saloon_party', data: { label: 'Saloon Party', gameKey: 'saloon' }, position: { x: 750, y: 600 }, style: { background: colors.multiball, color: 'white' } },
 
-    // --- BEER MUGS SECTION ---
-    { id: 'A34', data: { label: '10 Beer Mugs' }, position: { x: 750, y: 800 }, style: { background: colors.locks } },
-    { id: 'A37', data: { label: 'Franks N Beans' }, position: { x: 900, y: 800 }, style: { background: colors.multiball, color: 'white' } },
-    { id: 'A35', data: { label: 'Shootout 2' }, position: { x: 750, y: 850 }, style: { background: colors.multiball, color: 'white' } },
-    { id: 'A39', data: { label: 'Drunken Multiball', gameKey: 'beer_mug' }, position: { x: 750, y: 950 }, style: { background: colors.multiball, color: 'white' } }
+    // --- BEER MUGS ---
+    { id: 'mugs_10', data: { label: '10 Beer Mugs' }, position: { x: 750, y: 800 }, style: { background: colors.locks } },
+    { id: 'franks_beans', data: { label: 'Franks N Beans' }, position: { x: 900, y: 800 }, style: { background: colors.multiball, color: 'white' } },
+    { id: 'shootout_2', data: { label: 'Shootout 2' }, position: { x: 750, y: 850 }, style: { background: colors.multiball, color: 'white' } },
+    { id: 'drunken_multiball', data: { label: 'Drunken Multiball', gameKey: 'beer_mug' }, position: { x: 750, y: 950 }, style: { background: colors.multiball, color: 'white' } }
 ];
 
 const edges = [
-    { id: 'eB-C', source: 'B', target: 'C' },
-    { id: 'eG-Q', source: 'G', target: 'Q' },
-    { id: 'eJ-Q', source: 'J', target: 'Q' },
-    { id: 'eM-Q', source: 'M', target: 'Q' },
-    { id: 'eP-Q', source: 'P', target: 'Q' },
-    { id: 'eQ-R', source: 'Q', target: 'R' },
-    { id: 'eR-S', source: 'R', target: 'S' },
-    { id: 'eT-W', source: 'T', target: 'W' },
-    { id: 'eU-W', source: 'U', target: 'W' },
-    { id: 'eV-W', source: 'V', target: 'W' },
-    { id: 'eW-X', source: 'W', target: 'X' },
-    { id: 'eX-A15', source: 'X', target: 'A15' },
-    { id: 'eA1-A14', source: 'A1', target: 'A14' },
-    { id: 'eA4-A14', source: 'A4', target: 'A14' },
-    { id: 'eA14-A15', source: 'A14', target: 'A15' },
-    { id: 'eA15-A19', source: 'A15', target: 'A19' },
-    { id: 'eA19-A20', source: 'A19', target: 'A20' },
-    { id: 'eA21-A20', source: 'A21', target: 'A20' },
-    { id: 'eA25-A20', source: 'A25', target: 'A20' }
+    { id: 'e-spinner-saloon', source: 'spinner', target: 'saloon_fight' },
+    // Marshall Pfad
+    { id: 'e-stranger-marshall', source: 'stranger', target: 'marshall' },
+    { id: 'e-partner-marshall', source: 'partner', target: 'marshall' },
+    { id: 'e-deputy-marshall', source: 'deputy', target: 'marshall' },
+    { id: 'e-sheriff-marshall', source: 'sheriff', target: 'marshall' },
+    { id: 'e-marshall-train', source: 'marshall', target: 'save_train' },
+    { id: 'e-train-multiball', source: 'save_train', target: 'marshall_multiball' },
+    // Mine Pfad
+    { id: 'e-l1-mine', source: 'lock1', target: 'mine_multiball' },
+    { id: 'e-l2-mine', source: 'lock2', target: 'mine_multiball' },
+    { id: 'e-l3-mine', source: 'lock3', target: 'mine_multiball' },
+    { id: 'e-mine-mother', source: 'mine_multiball', target: 'mother_lode' },
+    { id: 'e-mother-highnoon', source: 'mother_lode', target: 'high_noon' },
+    // Polly Pfad
+    { id: 'e-ride-stampede', source: 'ride_em', target: 'stampede' },
+    { id: 'e-pollyriver-stampede', source: 'save_polly_river', target: 'stampede' },
+    { id: 'e-stampede-highnoon', source: 'stampede', target: 'high_noon' },
+    // Bart Pfad
+    { id: 'e-highnoon-bartbros', source: 'high_noon', target: 'bart_brothers' },
+    { id: 'e-bartbros-saloonparty', source: 'bart_brothers', target: 'saloon_party' },
+    { id: 'e-bigbart-party', source: 'big_bart', target: 'saloon_party' },
+    { id: 'e-bellabart-party', source: 'bella_bart', target: 'saloon_party' },
+    // Quickdraw Pfad
+    { id: 'e-quick-shootout', source: 'light_quickdraw', target: 'shootout' },
+    { id: 'e-shootout-showdown', source: 'shootout', target: 'showdown' }
 ];
 
 function App() {
