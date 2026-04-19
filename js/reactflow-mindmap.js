@@ -5,15 +5,6 @@ const ReactFlow = ReactFlowLib.ReactFlow;
 const Background = ReactFlowLib.Background;
 const Controls = ReactFlowLib.Controls;
 
-const colors = {
-    gunfight: '#b8860b',
-    multiball: '#9400d3',
-    locks: '#008000',
-    highNoon: '#4b0082',
-    skill: '#c71585',
-    bart: '#b8860b'
-};
-
 // Zentrale Koordinaten-Definition
 const playfieldCoords = {
     skillshot:  { x: 50, y: 5 },
@@ -31,6 +22,15 @@ const playfieldCoords = {
     polly:      { x: 30, y: 55 },
     stampede:   { x: 40, y: 65 },
     high_noon:  { x: 50, y: 85 }
+};
+
+const colors = {
+    gunfight: '#b8860b',
+    multiball: '#9400d3',
+    locks: '#008000',
+    highNoon: '#4b0082',
+    skill: '#c71585',
+    bart: '#b8860b'
 };
 
 const nodes = [

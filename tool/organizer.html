@@ -2,32 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Stable React Flow Editor</title>
+  <title>Stable React Flow Editor - Color & Position Mode</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11/dist/style.css">
 
   <style>
-    body { margin:0; font-family: sans-serif; overflow: hidden; }
+    body { margin:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; background: #000; }
     #app { display:flex; height:100vh; }
+    
+    /* Left Panel Styles */
     #left {
-      width:30%;
-      background:#111;
-      color:white;
-      padding:10px;
+      width:350px;
+      background:#1a1a1a;
+      color:#eee;
+      padding:15px;
       box-sizing:border-box;
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #333;
     }
-    #right { width:70%; height:100vh; background: #f8f8f8; }
+    #right { flex-grow: 1; height:100vh; background: #222; }
+    
     textarea { 
       width:100%; 
-      height:60vh; 
-      background: #222; 
+      height: 250px;
+      background: #000; 
       color: #0f0; 
       border: 1px solid #444; 
-      font-family: monospace; 
+      font-family: 'Consolas', monospace; 
       box-sizing: border-box;
+      padding: 10px;
+      font-size: 11px;
     }
-    button { width:100%; margin-top:8px; padding:8px; cursor: pointer; }
+
+    /* Color Editor Styles */
+    .color-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 15px 0;
+      padding: 10px;
+      background: #252525;
+      border-radius: 4px;
+    }
+    .color-item { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+    .color-item input { width: 100%; height: 30px; cursor: pointer; border: none; background: none; }
+
+    .controls { margin-top: auto; }
+    button { 
+      width:100%; 
+      margin-top:8px; 
+      padding:12px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      border-radius: 4px;
+      border: none;
+      transition: 0.2s;
+    }
+    .btn-load { background: #444; color: white; }
+    .btn-save { background: #28a745; color: white; margin-top: 15px; }
+    button:hover { opacity: 0.8; }
+    
+    h3 { margin-top: 0; color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px; }
+    label { color: #888; font-weight: bold; text-transform: uppercase; font-size: 10px; }
   </style>
 
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -39,132 +77,167 @@
 <div id="root"></div>
 
 <script>
-const { useState, useCallback } = React;
+const { useState, useCallback, useMemo } = React;
 const e = React.createElement;
-
-// FIX: Die Library registriert sich global unter 'ReactFlow', nicht 'ReactFlowLib'
 const ReactFlowLib = window.ReactFlow;
 
 const {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  addEdge,
-  applyNodeChanges,
-  applyEdgeChanges
+  ReactFlow, Background, Controls, MiniMap, addEdge, applyNodeChanges, applyEdgeChanges
 } = ReactFlowLib;
 
-console.log("APP START");
+/**
+ * Hilfsfunktionen zum Parsen
+ */
+function parseColors(code) {
+  const match = code.match(/const colors\s*=\s*\{([\s\S]*?)\};/);
+  if (!match) return {};
+  const content = match[1];
+  const obj = {};
+  const pairs = content.matchAll(/([a-zA-Z0-9_]+)\s*:\s*['"](#[a-fA-F0-9]{3,6})['"]/g);
+  for (const m of pairs) {
+    obj[m[1]] = m[2];
+  }
+  return obj;
+}
 
-// SAFE PARSER
-function parseArray(code, name) {
+function parseArray(code, name, currentColors) {
   try {
     const start = code.indexOf(name);
     if (start === -1) return [];
-
     const slice = code.slice(start);
     const open = slice.indexOf("[");
-    
-    // Einfacher Klammer-Matcher für das Ende des Arrays
-    let count = 0;
-    let close = -1;
+    let count = 0, close = -1;
     for(let i = open; i < slice.length; i++) {
         if(slice[i] === '[') count++;
         if(slice[i] === ']') count--;
-        if(count === 0 && open !== -1) {
-            close = i;
-            break;
-        }
+        if(count === 0 && open !== -1) { close = i; break; }
     }
-
     if (open === -1 || close === -1) return [];
-
-    let arr = slice.slice(open, close + 1);
-
-    arr = arr.replace(/\/\/.*$/gm, "");
-    arr = arr.replace(/colors\.[a-zA-Z0-9_]+/g, '"#999"');
-
-    return new Function("return " + arr)();
+    let arrStr = slice.slice(open, close + 1);
+    
+    // Evaluiere das Array im Kontext der aktuellen Farben
+    // Wir übergeben 'colors' als Variable an die Function
+    return new Function("colors", "return " + arrStr)(currentColors);
   } catch (err) {
-    console.error("Parse Error:", err);
+    console.error("Parse Error in " + name, err);
     return [];
   }
 }
 
 function App() {
-  const [nodes, setNodes] = useState([
-    { id: '1', data: { label: 'Start hier' }, position: { x: 100, y: 100 } }
-  ]);
+  const [code, setCode] = useState("");
+  const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
-  const [code, setCode] = useState(`const nodes = [
-  { id: '1', data: { label: 'Node 1' }, position: { x: 250, y: 5 } },
-  { id: '2', data: { label: 'Node 2' }, position: { x: 100, y: 100 } }
-];
-const edges = [
-  { id: 'e1-2', source: '1', target: '2' }
-];`);
+  const [colors, setColors] = useState({});
 
+  // 1. LOAD: Alles einlesen
   function load() {
-    const parsedNodes = parseArray(code, "const nodes");
-    const parsedEdges = parseArray(code, "const edges");
-    if (parsedNodes.length > 0) setNodes(parsedNodes);
-    if (parsedEdges.length > 0) setEdges(parsedEdges);
-  }
-
-// --- HIER IST DIE ANPASSUNG ---
-  function exportData(type) {
-    const targetData = type === "nodes" ? nodes : edges;
+    const extractedColors = parseColors(code);
+    setColors(extractedColors);
     
-    // Wir bauen den String manuell: 
-    // Jedes Objekt wird in eine Zeile gepackt (JSON.stringify ohne Umbrüche)
-    const formattedRows = targetData.map(item => "  " + JSON.stringify(item)).join(",\n");
-    const finalString = "[\n" + formattedRows + "\n]";
-
-    navigator.clipboard.writeText(finalString);
-    alert(type + " copied in one-line-per-item format");
+    const parsedNodes = parseArray(code, "const nodes", extractedColors);
+    const parsedEdges = parseArray(code, "const edges", extractedColors);
+    
+    setNodes(parsedNodes);
+    setEdges(parsedEdges);
   }
-  // ------------------------------
 
-  // Event Handler gefixt (Callback Pattern)
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
-  );
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+  // 2. COLOR CHANGE: Live-Update der Nodes bei Farbwahl
+  const updateColorValue = (key, val) => {
+    const newColors = { ...colors, [key]: val };
+    setColors(newColors);
+    
+    // Nodes sofort visuell updaten
+    setNodes(nds => nds.map(node => {
+      if (node.style && node.style.background) {
+        // Wenn der Style im Code 'colors.key' war, ist er jetzt ein String
+        // Wir müssen prüfen, ob die Node diese Farbe nutzt
+        // Das ist im Editor etwas tricky, daher laden wir sie meist neu 
+        // oder nutzen CSS Variablen. Hier der einfache Weg:
+      }
+      return node;
+    }));
+  };
+
+  // 3. SYNC & COPY: Den Text chirurgisch ändern
+  function syncAndCopy() {
+    let updatedCode = code;
+
+    // A. Farben im Text ersetzen
+    Object.keys(colors).forEach(key => {
+      const colorRegex = new RegExp(`(${key}\\s*:\\s*['"])(#[a-fA-F0-9]{3,6})(['"])`, "g");
+      updatedCode = updatedCode.replace(colorRegex, `$1${colors[key]}$3`);
+    });
+
+    // B. Positionen im Text ersetzen
+    nodes.forEach(node => {
+      const id = node.id;
+      const newX = Math.round(node.position.x);
+      const newY = Math.round(node.position.y);
+      const nodeRegex = new RegExp(
+        `(\\{[^{]*id:\\s*['"]${id}['"].*?position:\\s*\\{\\s*x:)\\s*[-0-9.]+(\\s*,\\s*y:)\\s*[-0-9.]+(\\s*\\})`,
+        "g"
+      );
+      updatedCode = updatedCode.replace(nodeRegex, `$1 ${newX}$2 ${newY}$3`);
+    });
+
+    setCode(updatedCode);
+    navigator.clipboard.writeText(updatedCode);
+    alert("Alles synchronisiert! Code ist in der Zwischenablage.");
+  }
+
+  const onNodesChange = useCallback((chs) => setNodes((nds) => applyNodeChanges(chs, nds)), []);
+  const onEdgesChange = useCallback((chs) => setEdges((eds) => applyEdgeChanges(chs, eds)), []);
+  const onConnect = useCallback((p) => setEdges((eds) => addEdge(p, eds)), []);
 
   return e("div", { id: "app" },
     e("div", { id: "left" },
-      e("h3", null, "Paste Code"),
+      e("h3", null, "Pinball Flow Editor"),
+      
+      e("label", null, "1. Source Code"),
       e("textarea", {
         value: code,
         onChange: (ev) => setCode(ev.target.value),
-        placeholder: "const nodes = [...];"
+        placeholder: "Code hier einfügen..."
       }),
-      e("button", { onClick: load }, "Load Nodes + Edges"),
-      e("button", { onClick: () => exportData("nodes") }, "Export Nodes"),
-      e("button", { onClick: () => exportData("edges") }, "Export Edges")
+
+      e("button", { className: "btn-load", onClick: load }, "Load Data"),
+
+      Object.keys(colors).length > 0 && e("div", null, 
+        e("label", null, "2. Edit Colors"),
+        e("div", { className: "color-grid" },
+          Object.entries(colors).map(([key, val]) => 
+            e("div", { key, className: "color-item" },
+              e("span", null, key),
+              e("input", { 
+                type: "color", 
+                value: val, 
+                onChange: (ev) => updateColorValue(key, ev.target.value) 
+              })
+            )
+          )
+        )
+      ),
+
+      e("div", { className: "controls" },
+        e("button", { className: "btn-save", onClick: syncAndCopy }, "Sync & Copy Result")
+      )
     ),
 
     e("div", { id: "right" },
       e(ReactFlow, {
-        nodes,
+        nodes: nodes.map(n => ({...n, style: {...n.style, background: n.style?.background?.includes('colors.') ? colors[n.style.background.split('.')[1]] : n.style?.background}})),
         edges,
         onNodesChange,
         onEdgesChange,
         onConnect,
-        fitView: true
+        fitView: true,
+        // Dark Mode für React Flow
+        style: { background: '#222' }
       },
-        e(MiniMap),
+        e(MiniMap, { maskColor: 'rgba(0,0,0,0.3)', bgcolor: '#333' }),
         e(Controls),
-        e(Background)
+        e(Background, { color: '#444', gap: 20 })
       )
     )
   );
@@ -173,6 +246,5 @@ const edges = [
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(e(App));
 </script>
-
 </body>
 </html>
