@@ -17,6 +17,11 @@
     padding: 10px;
 }
 
+#reactflow-root {
+    width: 100%;
+    height: 100%;
+}
+
 /* Hier ist der schwarze Hintergrund zurück */
 .playfield-section {
     flex: 0 0 auto;
