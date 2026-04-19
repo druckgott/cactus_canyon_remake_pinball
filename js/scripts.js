@@ -1,77 +1,35 @@
-// js/scripts.js
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  // ===============================
-  // 1️⃣ Alle Playfield-Bilder anklickbar machen (Modal)
-  // ===============================
-  document.querySelectorAll('.playfield-img').forEach(div => {
-    const imgUrl = div.dataset.img;
-    div.style.backgroundImage = `url(${imgUrl})`;
-    div.addEventListener('click', () => {
-      const modalImg = document.getElementById('modalImage');
-      modalImg.src = imgUrl;
-      const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-      modal.show();
-    });
-  });
-
-
-  // ===============================
-  // 2️⃣ Commit-Info + aktuelles Jahr
-  // ===============================
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  fetch('commit.txt')
-    .then(response => response.text())
-    .then(text => {
-      const shortHash = text.trim().slice(0, 7);
-      document.getElementById('commit-info').innerText = `🔧Commit: ${shortHash}`;
-    })
-    .catch(err => {
-      console.error('Could not load commit.txt:', err);
-      document.getElementById('commit-info').innerText = 'Commit info not available';
-    });
-
-
-  // ===============================
-  // 3️⃣ Druckbilder unter Tabellenzeilen einfügen
-  // ===============================
-  document.querySelectorAll('.phase-table tbody tr').forEach(tr => {
-    const imgDiv = tr.querySelector('td:nth-child(2) .playfield-img');
-    const firstTd = tr.querySelector('td:first-child');
-
-    if (imgDiv && firstTd) {
-      const printImg = document.createElement('img');
-      printImg.src = imgDiv.dataset.img;
-      printImg.classList.add('print-img'); // nur für Druck
-      firstTd.appendChild(printImg);
-    }
-  });
-
-
-  // ===============================
-  // 4️⃣ Bildskalierung über Input steuern
-  // ===============================
-  const imgScaleInput = document.getElementById('img-scale');
-
-  function updatePrintScale() {
-    const val = imgScaleInput.value;
-    document.documentElement.style.setProperty('--print-img-scale', val + 'vh');
-  }
-
-  if (imgScaleInput) {
-    imgScaleInput.addEventListener('input', updatePrintScale);
-    updatePrintScale(); // initial
-  }
-
-
-  // ===============================
-  // 5️⃣ Druckbutton
-  // ===============================
-  const printBtn = document.getElementById('print-btn');
-  if (printBtn) {
-    printBtn.addEventListener('click', () => window.print());
-  }
-
-});
+// 1. Mermaid mit den ausgelagerten Daten füllen
+const container = document.getElementById('mermaid-container');
+if (container) {
+    container.textContent = GameData.mermaidDefinition;
+}
+// 2. Slider Logik (unverändert)
+const slider = document.getElementById('comparison-slider');
+const overlay = document.getElementById('overlay-div');
+if(slider) {
+    slider.addEventListener('input', (e) => {
+        overlay.style.width = e.target.value + "%";
+    });
+}
+// 3. Marker Logik (nutzt jetzt GameData)
+function onNodeClick(nodeId) {
+    const data = GameData.coordinates[nodeId]; // Greift auf data.js zu
+    const marker = document.getElementById('marker');
+   
+    if (data && marker) {
+        marker.style.left = data.x + "%";
+        marker.style.top = data.y + "%";
+       
+        marker.classList.remove('hidden');
+        marker.classList.remove('pulse-animation');
+       
+        void marker.offsetWidth; // Trigger Reflow für Neustart der Animation
+       
+        marker.classList.add('pulse-animation');
+       
+        setTimeout(() => {
+            marker.classList.add('hidden');
+        }, 3000);
+    }
+}
+ 
