@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pinball Flow Editor Pro</title>
+  <title>Pinball Flow Editor - Full Control</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11/dist/style.css">
   <style>
     body { margin:0; font-family: 'Segoe UI', sans-serif; overflow: hidden; background: #111; color: #eee; }
@@ -13,15 +13,19 @@
     }
     #right { flex-grow: 1; height:100vh; background: #222; }
     textarea { 
-      width:100%; height: 200px; background: #000; color: #0f0; 
+      width:100%; height: 180px; background: #000; color: #0f0; 
       border: 1px solid #444; font-family: monospace; font-size: 11px; padding: 10px;
     }
-    .color-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; 
-      margin: 10px 0; padding: 10px; background: #252525; border-radius: 4px;
-    }
+    .section { margin-bottom: 20px; padding: 10px; background: #252525; border-radius: 4px; border: 1px solid #333; }
+    .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
     .color-item { display: flex; flex-direction: column; font-size: 11px; }
     .color-item input { width: 100%; height: 25px; cursor: pointer; border: none; background: none; }
+    
+    input[type="text"], select { 
+      width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; 
+      margin-top: 5px; box-sizing: border-box; border-radius: 4px;
+    }
+    
     button { 
       width:100%; margin-top:8px; padding:10px; cursor: pointer; 
       font-weight: bold; border-radius: 4px; border: none; transition: 0.2s;
@@ -30,8 +34,10 @@
     .btn-add { background: #007bff; color: white; }
     .btn-save { background: #28a745; color: white; margin-top: 15px; font-size: 1.1em; }
     button:hover { opacity: 0.8; }
-    .info { font-size: 11px; color: #888; margin: 10px 0; line-height: 1.4; }
+    
     label { color: #888; font-weight: bold; text-transform: uppercase; font-size: 10px; }
+    h3 { margin-top: 0; color: #007bff; font-size: 16px; }
+    .node-edit-box { border-left: 4px solid #007bff; }
   </style>
 
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -42,10 +48,11 @@
 <div id="root"></div>
 
 <script>
-const { useState, useCallback } = React;
+const { useState, useCallback, useEffect } = React;
 const e = React.createElement;
 const { ReactFlow, Background, Controls, MiniMap, addEdge, applyNodeChanges, applyEdgeChanges } = window.ReactFlow;
 
+// --- HELPERS ---
 function parseColors(code) {
   const match = code.match(/const colors\s*=\s*\{([\s\S]*?)\};/);
   if (!match) return {};
@@ -68,7 +75,9 @@ function parseArray(code, name, currentColors) {
     }
     if (open === -1 || close === -1) return [];
     let arrStr = slice.slice(open, close + 1);
-    return new Function("colors", "return " + arrStr)(currentColors);
+    // Ersetze colors.X durch die Hex-Werte für die Anzeige, aber speichere den String für später
+    const nodes = new Function("colors", "return " + arrStr)(currentColors);
+    return nodes;
   } catch (err) { return []; }
 }
 
@@ -77,6 +86,7 @@ function App() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [colors, setColors] = useState({});
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
 
   const load = () => {
     const c = parseColors(code);
@@ -85,77 +95,145 @@ function App() {
     setEdges(parseArray(code, "const edges", c));
   };
 
+  const selectedNode = nodes.find(n => n.id === selectedNodeId);
+
+  // Node updaten (Label/Farbe)
+  const updateSelectedNode = (key, value) => {
+    setNodes(nds => nds.map(n => {
+      if (n.id === selectedNodeId) {
+        if (key === 'label') return { ...n, data: { ...n.data, label: value } };
+        if (key === 'gameKey') return { ...n, data: { ...n.data, gameKey: value } }; // Neu
+        if (key === 'background') return { ...n, style: { ...n.style, background: value } };
+        if (key === 'textColor') return { ...n, style: { ...n.style, color: value } }; // Neu
+      }
+      return n;
+    }));
+  };
+
   const addNode = () => {
     const id = "node_" + Math.random().toString(36).substr(2, 5);
-    const newNode = { id, data: { label: 'New Node' }, position: { x: 0, y: 0 }, style: { background: '#999' } };
-    setNodes(nds => [...nds, newNode]);
+    setNodes(nds => [...nds, { id, data: { label: 'Neue Mission' }, position: { x: 100, y: 100 }, style: { background: '#999' } }]);
   };
 
   const syncAndCopy = () => {
     let updatedCode = code;
 
-    // 1. Update Colors
+    // 1. Colors aktualisieren
     Object.keys(colors).forEach(k => {
       const reg = new RegExp(`(${k}\\s*:\\s*['"])(#[a-fA-F0-9]{3,6})(['"])`, "g");
       updatedCode = updatedCode.replace(reg, `$1${colors[k]}$3`);
     });
 
-    // 2. Sync Nodes (Update existing, Delete removed, Add new)
+    // 2. Nodes synchronisieren (Surgical Replace)
     let nodeBlockMatch = updatedCode.match(/(const nodes\s*=\s*\[)([\s\S]*?)(\];)/);
     if (nodeBlockMatch) {
       let nodeContent = nodeBlockMatch[2];
-      const existingNodeIdsInText = [];
+      const processedIds = [];
 
-      // Update & Track
       nodes.forEach(n => {
-        const idRegex = new RegExp(`(\\{[^{]*id:\\s*['"]${n.id}['"].*?position:\\s*\\{\\s*x:)\\s*[-0-9.]+(\\s*,\\s*y:)\\s*[-0-9.]+(\\s*\\})`, "g");
-        if (idRegex.test(nodeContent)) {
-          nodeContent = nodeContent.replace(idRegex, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
-          existingNodeIdsInText.push(n.id);
+        // Regex sucht nach dem gesamten Node-Objekt anhand der ID
+        const nodeObjRegex = new RegExp(`(\\{[^{]*id:\\s*['"]${n.id}['"][^}]*\\})`, "g");
+        
+        // Farbe bestimmen (entweder Variable oder Hex)
+        let colorVal = n.style?.background || '#999';
+        // Wenn die Farbe exakt einem Hex-Wert aus unserem colors-Objekt entspricht, nehmen wir die Variable
+        const varName = Object.keys(colors).find(k => colors[k] === colorVal);
+        const finalColorStr = varName ? `colors.${varName}` : `'${colorVal}'`;
+
+        if (nodeObjRegex.test(nodeContent)) {
+          nodeContent = nodeContent.replace(nodeObjRegex, (match) => {
+            let m = match;
+            // Update Label
+            m = m.replace(/(label:\s*['"])([^'"]*)(['"])/, `$1${n.data.label}$3`);
+            // Update Position
+            m = m.replace(/(position:\s*\{\s*x:)\s*[-0-9.]+(\s*,\s*y:)\s*[-0-9.]+(\s*\})/, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
+            // Update Background
+            m = m.replace(/(background:\s*)(colors\.[a-zA-Z0-9_]+|'#[a-fA-F0-9]{3,6}')/, `$1${finalColorStr}`);
+            return m;
+          });
+          processedIds.push(n.id);
         }
       });
 
-      // Delete removed nodes from text
-      const allLines = nodeContent.split('\n');
-      nodeContent = allLines.filter(line => {
-        const m = line.match(/id:\s*['"]([^'"]+)['"]/);
+      // Löschen was nicht mehr da ist
+      const lines = nodeContent.split('\n');
+      nodeContent = lines.filter(l => {
+        const m = l.match(/id:\s*['"]([^'"]+)['"]/);
         return !m || nodes.find(n => n.id === m[1]);
       }).join('\n');
 
-      // Append new nodes
-      nodes.filter(n => !existingNodeIdsInText.includes(n.id)).forEach(n => {
-        const nodeStr = `    { id: '${n.id}', data: { label: '${n.data.label}' }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: '#999' } },`;
-        nodeContent = nodeContent.trimEnd() + "\n" + nodeStr + "\n";
+      // Neue Nodes hinzufügen
+      nodes.filter(n => !processedIds.includes(n.id)).forEach(n => {
+        const varName = Object.keys(colors).find(k => colors[k] === n.style?.background);
+        const col = varName ? `colors.${varName}` : `'${n.style?.background || '#999'}'`;
+        nodeContent = nodeContent.trimEnd() + `\n    { id: '${n.id}', data: { label: '${n.data.label}' }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col} } },\n`;
       });
+
       updatedCode = updatedCode.replace(/(const nodes\s*=\s*\[)([\s\S]*?)(\];)/, `$1${nodeContent}$3`);
     }
 
-    // 3. Sync Edges (Simple Rewrite for safety)
+    // 3. Edges einfach neu schreiben
     const edgeStrings = edges.map(e => `    { id: '${e.id}', source: '${e.source}', target: '${e.target}' }`).join(',\n');
     updatedCode = updatedCode.replace(/(const edges\s*=\s*\[)([\s\S]*?)(\];)/, `$1\n${edgeStrings}\n$3`);
 
     setCode(updatedCode);
     navigator.clipboard.writeText(updatedCode);
-    alert("Code synchronisiert & kopiert!");
+    alert("Code exportiert & kopiert!");
   };
 
   const onNodesChange = useCallback((chs) => setNodes((nds) => applyNodeChanges(chs, nds)), []);
   const onEdgesChange = useCallback((chs) => setEdges((eds) => applyEdgeChanges(chs, eds)), []);
-  const onConnect = useCallback((p) => setEdges((eds) => addEdge(p, eds)), []);
+  const onConnect = useCallback((p) => setEdges((eds) => addEdge({ ...p, id: `e-${p.source}-${p.target}` }, eds)), []);
 
   return e("div", { id: "app" },
     e("div", { id: "left" },
-      e("h3", null, "Pinball Flow Pro"),
-      e("label", null, "1. Source"),
-      e("textarea", { value: code, onChange: (ev) => setCode(ev.target.value) }),
+      e("h3", null, "Pinball Flow Editor"),
+      e("label", null, "1. Source Code"),
+      e("textarea", { value: code, onChange: (ev) => setCode(ev.target.value), placeholder: "Paste code..." }),
       e("button", { className: "btn-load", onClick: load }, "Load Data"),
       
-      e("div", { className: "info" }, "🖱️ Drag to connect\n⌨️ Select + DEL to delete"),
+      selectedNode && e("div", { className: "section node-edit-box" },
+      e("h3", { style: { color: '#007bff', fontSize: '14px'} }, "Edit Selected Node"),
       
-      e("button", { className: "btn-add", onClick: addNode }, "+ Add Node"),
+      // Label Feld
+      e("label", null, "Label"),
+      e("input", { type: "text", value: selectedNode.data.label, onChange: (ev) => updateSelectedNode('label', ev.target.value) }),
+      
+      // NEU: Game Key Feld
+      e("label", { style: {marginTop: '10px', display: 'block'} }, "Game Key"),
+      e("input", { type: "text", value: selectedNode.data.gameKey || '', onChange: (ev) => updateSelectedNode('gameKey', ev.target.value) }),
 
-      Object.keys(colors).length > 0 && e("div", null, 
-        e("label", { style: {marginTop: '15px', display: 'block'} }, "2. Colors"),
+      // Hintergrundfarbe
+      e("label", { style: {marginTop: '10px', display: 'block'} }, "Background Color"),
+      e("select", { 
+        value: Object.keys(colors).find(k => colors[k] === selectedNode.style?.background) || "custom",
+        onChange: (ev) => {
+          if(ev.target.value !== "custom") updateSelectedNode('background', colors[ev.target.value]);
+        }
+      },
+        e("option", { value: "custom" }, "Custom Hex..."),
+        Object.keys(colors).map(k => e("option", { key: k, value: k }, k))
+      ),
+      e("input", { 
+        type: "color", 
+        value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#999999', 
+        onChange: (ev) => updateSelectedNode('background', ev.target.value) 
+      }),
+
+      // NEU: Schriftfarbe (z.B. 'white' oder '#ffffff')
+      e("label", { style: {marginTop: '10px', display: 'block'} }, "Text Color"),
+      e("input", { 
+        type: "text", 
+        value: selectedNode.style?.color || 'white', 
+        placeholder: "e.g. white or #ffffff",
+        onChange: (ev) => updateSelectedNode('textColor', ev.target.value) 
+      })
+    ),
+
+      e("button", { className: "btn-add", onClick: addNode }, "+ New Mission Node"),
+
+      Object.keys(colors).length > 0 && e("div", { className: "section" },
+        e("label", null, "Global Colors"),
         e("div", { className: "color-grid" },
           Object.entries(colors).map(([k, v]) => 
             e("div", { key: k, className: "color-item" },
@@ -165,15 +243,32 @@ function App() {
           )
         )
       ),
+
       e("button", { className: "btn-save", onClick: syncAndCopy }, "Sync & Copy All")
     ),
+
     e("div", { id: "right" },
       e(ReactFlow, {
-        nodes: nodes.map(n => ({...n, style: {...n.style, background: n.style?.background?.includes('colors.') ? colors[n.style.background.split('.')[1]] : n.style?.background}})),
-        edges, onNodesChange, onEdgesChange, onConnect, fitView: true, style: { background: '#222' }
+        nodes: nodes.map(n => {
+           // Mapping der Hintergrundfarbe von Variable auf Hex für die Anzeige
+           let bg = n.style?.background;
+           if (bg && bg.startsWith('colors.')) {
+              bg = colors[bg.split('.')[1]];
+           }
+           return { ...n, style: { ...n.style, background: bg } };
+        }),
+        edges, 
+        onNodesChange, 
+        onEdgesChange, 
+        onConnect, 
+        onNodeClick: (_, node) => setSelectedNodeId(node.id),
+        onPaneClick: () => setSelectedNodeId(null),
+        fitView: true, 
+        style: { background: '#111' }
       },
-        e(MiniMap, { maskColor: 'rgba(0,0,0,0.3)', bgcolor: '#333' }),
-        e(Controls), e(Background, { color: '#444', gap: 20 })
+        e(MiniMap, { maskColor: 'rgba(0,0,0,0.4)', bgcolor: '#222' }),
+        e(Controls), 
+        e(Background, { color: '#333', gap: 20 })
       )
     )
   );
