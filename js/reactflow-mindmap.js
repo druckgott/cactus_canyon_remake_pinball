@@ -89,6 +89,7 @@ const nodes = [
     { id: 'drunken_multiball', data: { label: 'Drunken Multiball', gameKey: 'beer_mug' }, position: { x: 750, y: 950 }, style: { background: colors.multiball, color: 'white' } }
 ];
 
+
 const edges = [
     { id: 'e-spinner-saloon', source: 'spinner', target: 'saloon_fight' },
     // Marshall Pfad

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stable React Flow Editor</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11/dist/style.css">
+
+  <style>
+    body { margin:0; font-family: sans-serif; overflow: hidden; }
+    #app { display:flex; height:100vh; }
+    #left {
+      width:30%;
+      background:#111;
+      color:white;
+      padding:10px;
+      box-sizing:border-box;
+      z-index: 10;
+    }
+    #right { width:70%; height:100vh; background: #f8f8f8; }
+    textarea { 
+      width:100%; 
+      height:60vh; 
+      background: #222; 
+      color: #0f0; 
+      border: 1px solid #444; 
+      font-family: monospace; 
+      box-sizing: border-box;
+    }
+    button { width:100%; margin-top:8px; padding:8px; cursor: pointer; }
+  </style>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/reactflow@11/dist/umd/index.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script>
+const { useState, useCallback } = React;
+const e = React.createElement;
+
+// FIX: Die Library registriert sich global unter 'ReactFlow', nicht 'ReactFlowLib'
+const ReactFlowLib = window.ReactFlow;
+
+const {
+  ReactFlow,
+  Background,
+  Controls,
+  MiniMap,
+  addEdge,
+  applyNodeChanges,
+  applyEdgeChanges
+} = ReactFlowLib;
+
+console.log("APP START");
+
+// SAFE PARSER
+function parseArray(code, name) {
+  try {
+    const start = code.indexOf(name);
+    if (start === -1) return [];
+
+    const slice = code.slice(start);
+    const open = slice.indexOf("[");
+    
+    // Einfacher Klammer-Matcher für das Ende des Arrays
+    let count = 0;
+    let close = -1;
+    for(let i = open; i < slice.length; i++) {
+        if(slice[i] === '[') count++;
+        if(slice[i] === ']') count--;
+        if(count === 0 && open !== -1) {
+            close = i;
+            break;
+        }
+    }
+
+    if (open === -1 || close === -1) return [];
+
+    let arr = slice.slice(open, close + 1);
+
+    arr = arr.replace(/\/\/.*$/gm, "");
+    arr = arr.replace(/colors\.[a-zA-Z0-9_]+/g, '"#999"');
+
+    return new Function("return " + arr)();
+  } catch (err) {
+    console.error("Parse Error:", err);
+    return [];
+  }
+}
+
+function App() {
+  const [nodes, setNodes] = useState([
+    { id: '1', data: { label: 'Start hier' }, position: { x: 100, y: 100 } }
+  ]);
+  const [edges, setEdges] = useState([]);
+  const [code, setCode] = useState(`const nodes = [
+  { id: '1', data: { label: 'Node 1' }, position: { x: 250, y: 5 } },
+  { id: '2', data: { label: 'Node 2' }, position: { x: 100, y: 100 } }
+];
+const edges = [
+  { id: 'e1-2', source: '1', target: '2' }
+];`);
+
+  function load() {
+    const parsedNodes = parseArray(code, "const nodes");
+    const parsedEdges = parseArray(code, "const edges");
+    if (parsedNodes.length > 0) setNodes(parsedNodes);
+    if (parsedEdges.length > 0) setEdges(parsedEdges);
+  }
+
+// --- HIER IST DIE ANPASSUNG ---
+  function exportData(type) {
+    const targetData = type === "nodes" ? nodes : edges;
+    
+    // Wir bauen den String manuell: 
+    // Jedes Objekt wird in eine Zeile gepackt (JSON.stringify ohne Umbrüche)
+    const formattedRows = targetData.map(item => "  " + JSON.stringify(item)).join(",\n");
+    const finalString = "[\n" + formattedRows + "\n]";
+
+    navigator.clipboard.writeText(finalString);
+    alert(type + " copied in one-line-per-item format");
+  }
+  // ------------------------------
+
+  // Event Handler gefixt (Callback Pattern)
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
+  );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  );
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
+
+  return e("div", { id: "app" },
+    e("div", { id: "left" },
+      e("h3", null, "Paste Code"),
+      e("textarea", {
+        value: code,
+        onChange: (ev) => setCode(ev.target.value),
+        placeholder: "const nodes = [...];"
+      }),
+      e("button", { onClick: load }, "Load Nodes + Edges"),
+      e("button", { onClick: () => exportData("nodes") }, "Export Nodes"),
+      e("button", { onClick: () => exportData("edges") }, "Export Edges")
+    ),
+
+    e("div", { id: "right" },
+      e(ReactFlow, {
+        nodes,
+        edges,
+        onNodesChange,
+        onEdgesChange,
+        onConnect,
+        fitView: true
+      },
+        e(MiniMap),
+        e(Controls),
+        e(Background)
+      )
+    )
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(e(App));
+</script>
+
+</body>
+</html>
