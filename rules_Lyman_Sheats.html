@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cactus Canyon Remake - Interactive Rules</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/interactive.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+<div id="top-bar">
+    🚀 Check out this project on 
+    <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">GitHub</a> |
+    <a href="https://ko-fi.com/druckgott" target="_blank">Support via Ko-fi</a>
+</div>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="rules.html">Rules</a>
+    </nav>
+</header>
+
+<h1 class="page-title">Interactive Rule Explorer</h1>
+
+<div class="container mb-5">
+    <div class="p-4 rounded-4 shadow-sm" style="background: #fff8ec; border: 2px solid #d4a017;">
+        <h3 style="color: #5a3b1c; font-family: 'Lucida Console', monospace; margin-bottom: 20px;">
+            Strategy & Playfield Mapping
+        </h3>
+        
+        <div class="main-interactive-container">
+            
+           
+            <div class="mindmap-section">
+                <div id="mermaid-container" class="mermaid">
+                </div>
+            </div>
+
+            <div class="playfield-section">
+                <div class="comparison-slider-wrapper" id="slider-wrapper">
+                    <img src="images/playfield_only_interactive.png" id="img-bottom">
+                    
+                    <div class="image-overlay" id="overlay-div">
+                        <img src="images/playfield_only_interactive.png" id="img-top">
+                    </div>
+                    
+                    <input type="range" min="0" max="100" value="50" class="slider-input" id="comparison-slider">
+                    
+                    <div id="marker" class="hidden"></div>
+                </div>
+            </div>
+
+        </div>
+        <p class="mt-4 small italic">
+            * Click a node in the Mindmap to see the target location on the playfield. Use the slider to reveal the hardware under the ramps.
+        </p>
+    </div>
+</div>
+
+<footer id="site-footer">
+    <div class="footer-inner">
+        <div class="footer-left">🌵 Cactus Canyon Remake Guide</div>
+        <div class="footer-right">© 2026 druckgott</div>
+    </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/interactive-logic.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+</script>
+</body>
+</html>
