@@ -87,6 +87,8 @@ function App() {
   const [edges, setEdges] = useState([]);
   const [colors, setColors] = useState({});
   const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [snapEnabled, setSnapEnabled] = useState(true);
+  const [snapGridSize, setSnapGridSize] = useState(50);
 
   const load = () => {
     const c = parseColors(code);
@@ -278,23 +280,46 @@ function App() {
 
       e("button", { className: "btn-add", onClick: addNode }, "+ New Mission Node"),
 
-      Object.keys(colors).length > 0 && e("div", { className: "section" },
-        e("label", null, "Global Colors"),
-        e("div", { className: "color-grid" },
-          Object.entries(colors).map(([k, v]) => 
-            e("div", { key: k, className: "color-item" },
-              e("span", null, k),
-              e("input", { type: "color", value: v, onChange: (ev) => setColors({...colors, [k]: ev.target.value}) })
+        Object.keys(colors).length > 0 && e("div", { className: "section" },
+          e("label", null, "Global Colors"),
+          e("div", { className: "color-grid" },
+            Object.entries(colors).map(([k, v]) => 
+              e("div", { key: k, className: "color-item" },
+                e("span", null, k),
+                e("input", { type: "color", value: v, onChange: (ev) => setColors({...colors, [k]: ev.target.value}) })
+              )
             )
           )
-        )
-      ),
+        ),
+
+        // === NEU: Snap / Raster Steuerung ===
+        e("div", { className: "section" },
+          e("label", null, "Node Raster (Snap)"),
+          e("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "8px" } },
+            e("input", {
+              type: "checkbox",
+              checked: snapEnabled,
+              onChange: (ev) => setSnapEnabled(ev.target.checked)
+            }),
+            e("span", { style: { fontSize: "13px", color: "#ddd" } }, "Raster aktivieren")
+          ),
+          e("label", { style: { marginTop: "12px", display: "block" } }, "Raster-Größe (px)"),
+          e("input", {
+            type: "number",
+            value: snapGridSize,
+            min: 10,
+            max: 200,
+            step: 5,
+            onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 50),
+            style: { width: "100%", padding: "8px", background: "#111", color: "#fff", border: "1px solid #444", borderRadius: "4px" }
+          })
+        ),
 
       e("button", { className: "btn-save", onClick: syncAndCopy }, "Sync & Copy All")
     ),
 
     e("div", { id: "right" },
-      e(ReactFlow, {
+        e(ReactFlow, {
         nodes: nodes.map(n => {
            // Mapping der Hintergrundfarbe von Variable auf Hex für die Anzeige
            let bg = n.style?.background;
@@ -310,11 +335,14 @@ function App() {
         onNodeClick: (_, node) => setSelectedNodeId(node.id),
         onPaneClick: () => setSelectedNodeId(null),
         fitView: true, 
-        style: { background: '#111' }
+        style: { background: '#111' },
+        // === NEU: Snap / Raster ===
+        snapToGrid: snapEnabled,
+        snapGrid: [snapGridSize, snapGridSize]
       },
         e(MiniMap, { maskColor: 'rgba(0,0,0,0.4)', bgcolor: '#222' }),
         e(Controls), 
-        e(Background, { color: '#333', gap: 20 })
+        e(Background, { color: '#333', gap: snapGridSize })
       )
     )
   );
