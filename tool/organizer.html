@@ -98,21 +98,46 @@ function App() {
   const selectedNode = nodes.find(n => n.id === selectedNodeId);
 
   // Node updaten (Label/Farbe)
+  // Node updaten (Label/Farbe)
   const updateSelectedNode = (key, value) => {
     setNodes(nds => nds.map(n => {
       if (n.id === selectedNodeId) {
-        if (key === 'label') return { ...n, data: { ...n.data, label: value } };
-        if (key === 'gameKey') return { ...n, data: { ...n.data, gameKey: value } }; // Neu
+        if (key === 'label') {
+          const newLabel = value.trim();
+          const newId = newLabel
+            .toLowerCase()
+            .replace(/[^a-z0-9\s]/g, '')   // alle Sonderzeichen entfernen
+            .trim()
+            .replace(/\s+/g, '_');         // Leerzeichen → Unterstrich
+
+          return {
+            ...n,
+            id: newId || n.id,                     // neue ID nur wenn gültig
+            data: { ...n.data, label: newLabel }
+          };
+        }
+        if (key === 'gameKey') return { ...n, data: { ...n.data, gameKey: value } };
         if (key === 'background') return { ...n, style: { ...n.style, background: value } };
-        if (key === 'textColor') return { ...n, style: { ...n.style, color: value } }; // Neu
+        if (key === 'textColor') return { ...n, style: { ...n.style, color: value } };
       }
       return n;
     }));
   };
 
-  const addNode = () => {
-    const id = "node_" + Math.random().toString(36).substr(2, 5);
-    setNodes(nds => [...nds, { id, data: { label: 'Neue Mission' }, position: { x: 100, y: 100 }, style: { background: '#999' } }]);
+    const addNode = () => {
+    const tempId = "node_" + Math.random().toString(36).substr(2, 8);
+    const newNode = {
+      id: tempId,
+      data: { 
+        label: 'Neue Mission',
+        gameKey: 'beer_mug'          // ← hier kannst du später einen anderen Default setzen
+      },
+      position: { x: 100, y: 100 },
+      style: { background: '#eb34e1', color: 'white' }
+    };
+    setNodes(nds => [...nds, newNode]);
+    // Optional: direkt den neuen Node auswählen
+    setTimeout(() => setSelectedNodeId(tempId), 50);
   };
 
   const syncAndCopy = () => {
@@ -130,43 +155,64 @@ function App() {
       let nodeContent = nodeBlockMatch[2];
       const processedIds = [];
 
+      // Zeilen-basiertes Update (100% zuverlässig)
+      let lines = nodeContent.split('\n');
       nodes.forEach(n => {
-        // Regex sucht nach dem gesamten Node-Objekt anhand der ID
-        const nodeObjRegex = new RegExp(`(\\{[^{]*id:\\s*['"]${n.id}['"][^}]*\\})`, "g");
-        
-        // Farbe bestimmen (entweder Variable oder Hex)
-        let colorVal = n.style?.background || '#999';
-        // Wenn die Farbe exakt einem Hex-Wert aus unserem colors-Objekt entspricht, nehmen wir die Variable
-        const varName = Object.keys(colors).find(k => colors[k] === colorVal);
-        const finalColorStr = varName ? `colors.${varName}` : `'${colorVal}'`;
+        const lineIndex = lines.findIndex(l => l.includes(`id: '${n.id}'`) || l.includes(`id: "${n.id}"`));
+        if (lineIndex !== -1) {
+          let m = lines[lineIndex];
 
-        if (nodeObjRegex.test(nodeContent)) {
-          nodeContent = nodeContent.replace(nodeObjRegex, (match) => {
-            let m = match;
-            // Update Label
-            m = m.replace(/(label:\s*['"])([^'"]*)(['"])/, `$1${n.data.label}$3`);
-            // Update Position
-            m = m.replace(/(position:\s*\{\s*x:)\s*[-0-9.]+(\s*,\s*y:)\s*[-0-9.]+(\s*\})/, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
-            // Update Background
-            m = m.replace(/(background:\s*)(colors\.[a-zA-Z0-9_]+|'#[a-fA-F0-9]{3,6}')/, `$1${finalColorStr}`);
-            return m;
-          });
+          // Update Label
+          m = m.replace(/(label:\s*['"])([^'"]*)(['"])/, `$1${n.data.label}$3`);
+
+          // Update gameKey (update oder einfügen)
+          if (n.data.gameKey !== undefined) {
+            if (m.includes('gameKey:')) {
+              m = m.replace(/(gameKey:\s*['"])([^'"]*)(['"])/, `$1${n.data.gameKey}$3`);
+            } else {
+              m = m.replace(/(label:\s*['"][^'"]*['"]\s*)/, `$1, gameKey: '${n.data.gameKey}' `);
+            }
+          }
+
+          // Update Position
+          m = m.replace(/(position:\s*\{\s*x:)\s*[-0-9.]+(\s*,\s*y:)\s*[-0-9.]+(\s*\})/, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
+
+          // Update Background
+          let colorVal = n.style?.background || '#999';
+          const varName = Object.keys(colors).find(k => colors[k] === colorVal);
+          const finalColorStr = varName ? `colors.${varName}` : `'${colorVal}'`;
+          m = m.replace(/(background:\s*)(colors\.[a-zA-Z0-9_]+|'#[a-fA-F0-9]{3,6}')/, `$1${finalColorStr}`);
+
+          // Update Text Color (update oder einfügen)
+          if (n.style?.color !== undefined) {
+            if (m.includes('color:')) {
+              m = m.replace(/(color:\s*['"])([^'"]*)(['"])/, `$1${n.style.color}$3`);
+            } else {
+              m = m.replace(/(style:\s*\{[^}]*)(})/, `$1, color: '${n.style.color}'$2`);
+            }
+          }
+
+          lines[lineIndex] = m;
           processedIds.push(n.id);
         }
       });
 
       // Löschen was nicht mehr da ist
-      const lines = nodeContent.split('\n');
-      nodeContent = lines.filter(l => {
+      lines = lines.filter(l => {
         const m = l.match(/id:\s*['"]([^'"]+)['"]/);
         return !m || nodes.find(n => n.id === m[1]);
-      }).join('\n');
+      });
+
+      nodeContent = lines.join('\n');
 
       // Neue Nodes hinzufügen
       nodes.filter(n => !processedIds.includes(n.id)).forEach(n => {
         const varName = Object.keys(colors).find(k => colors[k] === n.style?.background);
-        const col = varName ? `colors.${varName}` : `'${n.style?.background || '#999'}'`;
-        nodeContent = nodeContent.trimEnd() + `\n    { id: '${n.id}', data: { label: '${n.data.label}' }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col} } },\n`;
+        const col = varName ? `colors.${varName}` : `'${n.style?.background || '#eb34e1'}'`;
+        const gameKeyStr = n.data.gameKey ? `, gameKey: '${n.data.gameKey}'` : '';
+        const colorStr = n.style?.color ? `, color: '${n.style.color}'` : '';
+        const newNodeStr = `    { id: '${n.id}', data: { label: '${n.data.label}'${gameKeyStr} }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col}${colorStr} } },\n`;
+        nodeContent = nodeContent.trimEnd() + `\n${newNodeStr}`;
       });
 
       updatedCode = updatedCode.replace(/(const nodes\s*=\s*\[)([\s\S]*?)(\];)/, `$1${nodeContent}$3`);
@@ -216,7 +262,7 @@ function App() {
       ),
       e("input", { 
         type: "color", 
-        value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#999999', 
+        value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#eb34e1', 
         onChange: (ev) => updateSelectedNode('background', ev.target.value) 
       }),
 
