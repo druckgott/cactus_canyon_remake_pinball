@@ -100,21 +100,17 @@ function App() {
   const selectedNode = nodes.find(n => n.id === selectedNodeId);
 
   // Node updaten (Label/Farbe)
-  // Node updaten (Label/Farbe)
   const updateSelectedNode = (key, value) => {
     setNodes(nds => nds.map(n => {
       if (n.id === selectedNodeId) {
         if (key === 'label') {
-          const newLabel = value.trim();
-          const newId = newLabel
-            .toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')   // alle Sonderzeichen entfernen
-            .trim()
-            .replace(/\s+/g, '_');         // Leerzeichen → Unterstrich
+          const newLabel = value; // .trim() erst beim Sync/Blur, damit während Tippen nichts springt
+          let newId = n.id; // Standard: ID NICHT sofort ändern
 
+          // ID nur aktualisieren, wenn der User Enter drückt oder das Feld verlässt (nicht bei jedem Tastendruck)
+          // Hier: vorerst nur Label updaten, ID bleibt stabil während der Eingabe
           return {
             ...n,
-            id: newId || n.id,                     // neue ID nur wenn gültig
             data: { ...n.data, label: newLabel }
           };
         }
@@ -244,8 +240,31 @@ function App() {
       e("h3", { style: { color: '#007bff', fontSize: '14px'} }, "Edit Selected Node"),
       
       // Label Feld
+            // Label Feld
       e("label", null, "Label"),
-      e("input", { type: "text", value: selectedNode.data.label, onChange: (ev) => updateSelectedNode('label', ev.target.value) }),
+      e("input", { 
+        type: "text", 
+        value: selectedNode.data.label, 
+        onChange: (ev) => updateSelectedNode('label', ev.target.value),
+        onBlur: (ev) => {
+          const newLabel = ev.target.value.trim();
+          const newId = newLabel
+            .toLowerCase()
+            .replace(/[^a-z0-9\s]/g, '')
+            .trim()
+            .replace(/\s+/g, '_');
+
+          if (newId && newId !== selectedNodeId) {
+            // ID ändern + selectedNodeId aktualisieren, damit der Edit-Bereich nicht springt
+            setNodes(nds => nds.map(n => 
+              n.id === selectedNodeId 
+                ? { ...n, id: newId, data: { ...n.data, label: newLabel } }
+                : n
+            ));
+            setSelectedNodeId(newId);
+          }
+        }
+      }),
       
       // NEU: Game Key Feld
       e("label", { style: {marginTop: '10px', display: 'block'} }, "Game Key"),
@@ -310,7 +329,7 @@ function App() {
             min: 10,
             max: 200,
             step: 5,
-            onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 50),
+            onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 20),
             style: { width: "100%", padding: "8px", background: "#111", color: "#fff", border: "1px solid #444", borderRadius: "4px" }
           })
         ),
