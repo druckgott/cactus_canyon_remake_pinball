@@ -217,7 +217,9 @@ function App() {
             borderRadius: 3,
             border: "1px solid #1a192b",
             textAlign: "center",
-            boxSizing: "border-box"
+            boxSizing: "border-box",
+            cursor: "grab",
+            userSelect: "none"
           }
         },
 
@@ -231,7 +233,8 @@ function App() {
         e(Handle, { type: "source", position: Position.Right, id: "s-right" }),
         e(Handle, { type: "source", position: Position.Bottom, id: "s-bottom" }),
 
-        data.label
+        // 👇 WICHTIG: Text nicht "interaktiv" machen
+        e("div", { style: { pointerEvents: "none", userSelect: "none" } }, data.label)
       );
     };
 
@@ -323,13 +326,23 @@ function App() {
         onNodesChange,
         onEdgesChange,
         onConnect,
-        onNodeClick: (_, node) => setSelectedNodeId(node.id),
+        //onNodeClick: (_, node) => setSelectedNodeId(node.id),
+        onSelectionChange: ({ nodes }) => {
+          if (nodes.length === 1) {
+            setSelectedNodeId(nodes[0].id);
+          } else {
+            setSelectedNodeId(null);
+          }
+},
         onPaneClick: () => setSelectedNodeId(null),
         fitView: true,
         style: { background: '#111' },
         snapToGrid: snapEnabled,
         snapGrid: [snapGridSize, snapGridSize],
         defaultEdgeOptions: edgeOptions,
+        selectionOnDrag: true,
+        selectionMode: "partial",
+        multiSelectionKeyCode: "Shift",
       },
         e(MiniMap, { maskColor: 'rgba(0,0,0,0.4)', bgcolor: '#222' }),
         e(Controls),
