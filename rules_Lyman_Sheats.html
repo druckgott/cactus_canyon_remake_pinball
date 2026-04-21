@@ -29,8 +29,8 @@
 <header>
     <nav>
         <a href="index.html">Home</a>
-        <a href="rules.html">Rules</a>
-        <a href="rules_Lyman_Sheats.html">Lyman Sheats Rules</a>
+        <a href="rules.html">Rules Extended</a>
+        <a href="rules_Lyman_Sheats.html">Lyman Sheats Guide (in work)</a>
     </nav>
 </header>
 
@@ -49,7 +49,7 @@
                 <div id="reactflow-root" style="width:100%; height:100%; min-height:700px;"></div>
             </div>
 
-            <div class="playfield-section">
+            <!--<div class="playfield-section">
                 <div class="comparison-slider-wrapper" id="slider-wrapper">
                     <img src="images/playfield_only_interactive.png" id="img-bottom">
                     
@@ -61,21 +61,48 @@
                     
                     <div id="marker" class="hidden"></div>
                 </div>
-            </div>
+            </div>-->
 
         </div>
-        <p class="mt-4 small italic">
+        <!--<p class="mt-4 small italic">
             * Click a node in the Mindmap to see the target location on the playfield. Use the slider to reveal the hardware under the ramps.
-        </p>
+        </p>-->
     </div>
 </div>
 
+<!-- Footer -->
 <footer id="site-footer">
-    <div class="footer-inner">
-        <div class="footer-left">🌵 Cactus Canyon Remake Guide</div>
-        <div class="footer-right">© 2026 druckgott</div>
+
+  <div class="footer-inner">
+
+    <div class="footer-left">
+      🌵 Cactus Canyon Remake Guide
     </div>
+
+    <div class="footer-left" id="commit-info">
+      Loading commit...
+    </div>
+
+    <div class="footer-right">
+      © <span id="year"></span> druckgott |
+      <a href="https://github.com/druckgott/cactus_canyon_remake_pinball/blob/main/LICENSE.md" target="_blank">License</a> |
+      <a href="https://github.com/druckgott/cactus_canyon_remake_pinball" target="_blank">GitHub</a>
+    </div>
+
+  </div>
+
 </footer>
+
+<!-- Modal for Images -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body p-0 text-center">
+        <img id="modalImage" src="" class="img-fluid" alt="Playfield">
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/data.js"></script>
 <script src="js/interactive-logic.js"></script>

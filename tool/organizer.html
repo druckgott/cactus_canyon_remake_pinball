@@ -1,0 +1,358 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pinball Flow Editor - Full Control</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11/dist/style.css">
+  <style>
+    body { margin:0; font-family: 'Segoe UI', sans-serif; overflow: hidden; background: #111; color: #eee; }
+    #app { display:flex; height:100vh; }
+    #left {
+      width:380px; background:#1a1a1a; padding:15px; border-right: 1px solid #333;
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    #right { flex-grow: 1; height:100vh; background: #222; }
+    textarea {
+      width:100%; height: 180px; background: #000; color: #0f0;
+      border: 1px solid #444; font-family: monospace; font-size: 11px; padding: 10px;
+    }
+    .section { margin-bottom: 20px; padding: 10px; background: #252525; border-radius: 4px; border: 1px solid #333; }
+    .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .color-item { display: flex; flex-direction: column; font-size: 11px; }
+    .color-item input { width: 100%; height: 25px; cursor: pointer; border: none; background: none; }
+    
+    input[type="text"], select {
+      width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444;
+      margin-top: 5px; box-sizing: border-box; border-radius: 4px;
+    }
+    
+    button {
+      width:100%; margin-top:8px; padding:10px; cursor: pointer;
+      font-weight: bold; border-radius: 4px; border: none; transition: 0.2s;
+    }
+    .btn-load { background: #444; color: white; }
+    .btn-add { background: #007bff; color: white; }
+    .btn-save { background: #28a745; color: white; margin-top: 15px; font-size: 1.1em; }
+    button:hover { opacity: 0.8; }
+    
+    label { color: #888; font-weight: bold; text-transform: uppercase; font-size: 10px; }
+    h3 { margin-top: 0; color: #007bff; font-size: 16px; }
+    .node-edit-box { border-left: 4px solid #007bff; }
+  </style>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/reactflow@11/dist/umd/index.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const { useState, useCallback, useEffect } = React;
+const e = React.createElement;
+const { ReactFlow, Background, Controls, MiniMap, addEdge, applyNodeChanges, applyEdgeChanges, Handle, Position } = window.ReactFlow;
+
+// --- HELPERS ---
+function parseColors(code) {
+  const match = code.match(/const colors\s*=\s*\{([\s\S]*?)\};/);
+  if (!match) return {};
+  const obj = {};
+  const pairs = match[1].matchAll(/([a-zA-Z0-9_]+)\s*:\s*['"](#[a-fA-F0-9]{3,6})['"]/g);
+  for (const m of pairs) obj[m[1]] = m[2];
+  return obj;
+}
+
+function parseArray(code, name, currentColors) {
+  try {
+    const start = code.indexOf(name);
+    if (start === -1) return [];
+    const slice = code.slice(start);
+    const open = slice.indexOf("[");
+    let count = 0, close = -1;
+    for(let i = open; i < slice.length; i++) {
+        if(slice[i] === '[') count++; else if(slice[i] === ']') count--;
+        if(count === 0 && open !== -1) { close = i; break; }
+    }
+    if (open === -1 || close === -1) return [];
+    let arrStr = slice.slice(open, close + 1);
+    const nodes = new Function("colors", "return " + arrStr)(currentColors);
+    return nodes;
+  } catch (err) { return []; }
+}
+
+function App() {
+  const [code, setCode] = useState("");
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
+  const [colors, setColors] = useState({});
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [snapEnabled, setSnapEnabled] = useState(true);
+  const [snapGridSize, setSnapGridSize] = useState(20);
+
+  const load = () => {
+    const c = parseColors(code);
+    setColors(c);
+    setNodes(parseArray(code, "const nodes", c));
+    setEdges(parseArray(code, "const edges", c));
+  };
+
+  const selectedNode = nodes.find(n => n.id === selectedNodeId);
+
+  const updateSelectedNode = (key, value) => {
+    setNodes(nds => nds.map(n => {
+      if (n.id === selectedNodeId) {
+        if (key === 'label') {
+          return { ...n, data: { ...n.data, label: value } };
+        }
+        if (key === 'gameKey') return { ...n, data: { ...n.data, gameKey: value } };
+        if (key === 'background') return { ...n, style: { ...n.style, background: value } };
+        if (key === 'textColor') return { ...n, style: { ...n.style, color: value } };
+      }
+      return n;
+    }));
+  };
+
+  const addNode = () => {
+    const tempId = "node_" + Math.random().toString(36).substr(2, 8);
+    const newNode = {
+      id: tempId,
+      type: 'custom',
+      data: { label: 'Neue Mission', gameKey: 'beer_mug' },
+      position: { x: 100, y: 100 },
+      style: { background: '#eb34e1', color: 'white' }
+    };
+    setNodes(nds => [...nds, newNode]);
+    setTimeout(() => setSelectedNodeId(tempId), 50);
+  };
+
+  const syncAndCopy = () => {
+    let updatedCode = code;
+    Object.keys(colors).forEach(k => {
+      const reg = new RegExp(`(${k}\\s*:\\s*['"])(#[a-fA-F0-9]{3,6})(['"])`, "g");
+      updatedCode = updatedCode.replace(reg, `$1${colors[k]}$3`);
+    });
+
+    let nodeBlockMatch = updatedCode.match(/(const nodes\s*=\s*\[)([\s\S]*?)(\s*\];)/);
+    if (nodeBlockMatch) {
+      let nodeContent = nodeBlockMatch[2];
+      const processedIds = [];
+      let lines = nodeContent.split('\n');
+      nodes.forEach(n => {
+        const lineIndex = lines.findIndex(l => l.includes(`id: '${n.id}'`) || l.includes(`id: "${n.id}"`));
+        if (lineIndex !== -1) {
+          let m = lines[lineIndex];
+          m = m.replace(/(label:\s*['"])([^'"]*)(['"])/, `$1${n.data.label}$3`);
+          if (n.data.gameKey !== undefined) {
+            if (m.includes('gameKey:')) {
+              m = m.replace(/(gameKey:\s*['"])([^'"]*)(['"])/, `$1${n.data.gameKey}$3`);
+            } else {
+              m = m.replace(/(label:\s*['"][^'"]*['"]\s*)/, `$1, gameKey: '${n.data.gameKey}' `);
+            }
+          }
+          m = m.replace(/(position:\s*\{\s*x:)\s*[-0-9.]+(\s*,\s*y:)\s*[-0-9.]+(\s*\})/, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
+          let colorVal = n.style?.background || '#999';
+          const varName = Object.keys(colors).find(k => colors[k] === colorVal);
+          const finalColorStr = varName ? `colors.${varName}` : `'${colorVal}'`;
+          m = m.replace(/(background:\s*)(colors\.[a-zA-Z0-9_]+|'#[a-fA-F0-9]{3,6}')/, `$1${finalColorStr}`);
+          if (n.style?.color !== undefined) {
+            if (m.includes('color:')) {
+              m = m.replace(/(color:\s*['"])([^'"]*)(['"])/, `$1${n.style.color}$3`);
+            } else {
+              m = m.replace(/(style:\s*\{[^}]*)(})/, `$1, color: '${n.style.color}'$2`);
+            }
+          }
+          lines[lineIndex] = m;
+          processedIds.push(n.id);
+        }
+      });
+      lines = lines.filter(l => {
+        const m = l.match(/id:\s*['"]([^'"]+)['"]/);
+        return !m || nodes.find(n => n.id === m[1]);
+      });
+      nodeContent = lines.join('\n');
+      nodes.filter(n => !processedIds.includes(n.id)).forEach(n => {
+        const varName = Object.keys(colors).find(k => colors[k] === n.style?.background);
+        const col = varName ? `colors.${varName}` : `'${n.style?.background || '#eb34e1'}'`;
+        const gameKeyStr = n.data.gameKey ? `, gameKey: '${n.data.gameKey}'` : '';
+        const colorStr = n.style?.color ? `, color: '${n.style.color}'` : '';
+        const newNodeStr = `    { id: '${n.id}', type: 'custom', data: { label: '${n.data.label}'${gameKeyStr} }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col}${colorStr} } },\n`;
+        nodeContent = nodeContent.trimEnd() + `\n${newNodeStr}`;
+      });
+      updatedCode = updatedCode.replace(/(const nodes\s*=\s*\[)([\s\S]*?)(\s*\];)/, `$1${nodeContent}$3`);
+    }
+
+    // --- FIX HIER: Edges mit Handles speichern ---
+    const edgeStrings = edges.map(e => {
+        const sH = e.sourceHandle ? `, sourceHandle: '${e.sourceHandle}'` : '';
+        const tH = e.targetHandle ? `, targetHandle: '${e.targetHandle}'` : '';
+        return `    { id: '${e.id}', source: '${e.source}', target: '${e.target}'${sH}${tH} }`;
+    }).join(',\n');
+    
+    updatedCode = updatedCode.replace(/(const edges\s*=\s*\[)([\s\S]*?)(\s*\];)/, `$1\n${edgeStrings}\n$3`);
+    setCode(updatedCode);
+    navigator.clipboard.writeText(updatedCode);
+    alert("Code exportiert & kopiert!");
+  };
+
+  const onNodesChange = useCallback((chs) => setNodes((nds) => applyNodeChanges(chs, nds)), []);
+  const onEdgesChange = useCallback((chs) => setEdges((eds) => applyEdgeChanges(chs, eds)), []);
+  
+  // --- FIX HIER: onConnect übernimmt Handle-Informationen ---
+  const onConnect = useCallback((params) => {
+    setEdges((eds) => addEdge({ ...params, id: `e-${params.source}-${params.target}-${params.sourceHandle}-${params.targetHandle}` }, eds));
+  }, []);
+
+  const edgeOptions = {
+    type: 'step',
+    style: { strokeWidth: 3 },
+    markerEnd: { type: 'arrowclosed', color: '#999' },
+    animated: false
+  };
+
+    const CustomNode = ({ data }) => {
+      return e(
+        "div",
+        {
+          style: {
+            width: 150,
+            padding: 10,
+            fontSize: 12,
+            borderRadius: 3,
+            border: "1px solid #1a192b",
+            textAlign: "center",
+            boxSizing: "border-box",
+            cursor: "grab",
+            userSelect: "none"
+          }
+        },
+
+        e(Handle, { type: "target", position: Position.Top, id: "t-top" }),
+        e(Handle, { type: "target", position: Position.Left, id: "t-left" }),
+        e(Handle, { type: "target", position: Position.Right, id: "t-right" }),
+        e(Handle, { type: "target", position: Position.Bottom, id: "t-bottom" }),
+
+        e(Handle, { type: "source", position: Position.Top, id: "s-top" }),
+        e(Handle, { type: "source", position: Position.Left, id: "s-left" }),
+        e(Handle, { type: "source", position: Position.Right, id: "s-right" }),
+        e(Handle, { type: "source", position: Position.Bottom, id: "s-bottom" }),
+
+        // 👇 WICHTIG: Text nicht "interaktiv" machen
+        e("div", { style: { pointerEvents: "none", userSelect: "none" } }, data.label)
+      );
+    };
+
+  const nodeTypes = { custom: CustomNode };
+
+  return e("div", { id: "app" },
+    e("div", { id: "left" },
+      e("h3", null, "Pinball Flow Editor"),
+      e("label", null, "1. Source Code"),
+      e("textarea", { value: code, onChange: (ev) => setCode(ev.target.value), placeholder: "Paste code..." }),
+      e("button", { className: "btn-load", onClick: load }, "Load Data"),
+      
+      selectedNode && e("div", { className: "section node-edit-box" },
+        e("h3", { style: { color: '#007bff', fontSize: '14px'} }, "Edit Selected Node"),
+        e("label", null, "Label"),
+        e("input", {
+          type: "text",
+          value: selectedNode.data.label,
+          onChange: (ev) => updateSelectedNode('label', ev.target.value),
+          onBlur: (ev) => {
+            const newLabel = ev.target.value.trim();
+            const newId = newLabel.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+            if (newId && newId !== selectedNodeId) {
+              setNodes(nds => nds.map(n => n.id === selectedNodeId ? { ...n, id: newId, data: { ...n.data, label: newLabel } } : n));
+              setSelectedNodeId(newId);
+            }
+          }
+        }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Game Key"),
+        e("input", { type: "text", value: selectedNode.data.gameKey || '', onChange: (ev) => updateSelectedNode('gameKey', ev.target.value) }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Background Color"),
+        e("select", {
+          value: Object.keys(colors).find(k => colors[k] === selectedNode.style?.background) || "custom",
+          onChange: (ev) => { if(ev.target.value !== "custom") updateSelectedNode('background', colors[ev.target.value]); }
+        },
+          e("option", { value: "custom" }, "Custom Hex..."),
+          Object.keys(colors).map(k => e("option", { key: k, value: k }, k))
+        ),
+        e("input", {
+          type: "color",
+          value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#eb34e1',
+          onChange: (ev) => updateSelectedNode('background', ev.target.value)
+        }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Text Color"),
+        e("input", {
+          type: "text",
+          value: selectedNode.style?.color || 'white',
+          onChange: (ev) => updateSelectedNode('textColor', ev.target.value)
+        })
+      ),
+      e("button", { className: "btn-add", onClick: addNode }, "+ New Mission Node"),
+      Object.keys(colors).length > 0 && e("div", { className: "section" },
+        e("label", null, "Global Colors"),
+        e("div", { className: "color-grid" },
+          Object.entries(colors).map(([k, v]) =>
+            e("div", { key: k, className: "color-item" },
+              e("span", null, k),
+              e("input", { type: "color", value: v, onChange: (ev) => setColors({...colors, [k]: ev.target.value}) })
+            )
+          )
+        )
+      ),
+      e("div", { className: "section" },
+        e("label", null, "Node Raster (Snap)"),
+        e("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "8px" } },
+          e("input", { type: "checkbox", checked: snapEnabled, onChange: (ev) => setSnapEnabled(ev.target.checked) }),
+          e("span", { style: { fontSize: "13px", color: "#ddd" } }, "Raster aktivieren")
+        ),
+        e("label", { style: { marginTop: "12px", display: "block" } }, "Raster-Größe (px)"),
+        e("input", {
+          type: "number",
+          value: snapGridSize,
+          onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 20),
+          style: { width: "100%", padding: "8px", background: "#111", color: "#fff", border: "1px solid #444", borderRadius: "4px" }
+        })
+      ),
+      e("button", { className: "btn-save", onClick: syncAndCopy }, "Sync & Copy All")
+    ),
+    e("div", { id: "right" },
+      e(ReactFlow, {
+        nodes: nodes.map(n => {
+           let bg = n.style?.background;
+           if (bg && bg.startsWith('colors.')) bg = colors[bg.split('.')[1]];
+           return { ...n, type: 'custom', style: { ...n.style, background: bg } };
+        }),
+        connectionMode: "loose",
+        nodeTypes: nodeTypes,
+        edges,
+        onNodesChange,
+        onEdgesChange,
+        onConnect,
+        //onNodeClick: (_, node) => setSelectedNodeId(node.id),
+        onSelectionChange: ({ nodes }) => {
+          if (nodes.length === 1) {
+            setSelectedNodeId(nodes[0].id);
+          } else {
+            setSelectedNodeId(null);
+          }
+},
+        onPaneClick: () => setSelectedNodeId(null),
+        fitView: true,
+        style: { background: '#111' },
+        snapToGrid: snapEnabled,
+        snapGrid: [snapGridSize, snapGridSize],
+        defaultEdgeOptions: edgeOptions,
+        selectionOnDrag: true,
+        selectionMode: "partial",
+        multiSelectionKeyCode: "Shift",
+      },
+        e(MiniMap, { maskColor: 'rgba(0,0,0,0.4)', bgcolor: '#222' }),
+        e(Controls),
+        e(Background, { color: '#333', gap: snapGridSize })
+      )
+    )
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(e(App));
+</script>
+</body>
+</html>
