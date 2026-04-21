@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,8 +11,8 @@
       display: flex; flex-direction: column; overflow-y: auto;
     }
     #right { flex-grow: 1; height:100vh; background: #222; }
-    textarea { 
-      width:100%; height: 180px; background: #000; color: #0f0; 
+    textarea {
+      width:100%; height: 180px; background: #000; color: #0f0;
       border: 1px solid #444; font-family: monospace; font-size: 11px; padding: 10px;
     }
     .section { margin-bottom: 20px; padding: 10px; background: #252525; border-radius: 4px; border: 1px solid #333; }
@@ -21,13 +20,13 @@
     .color-item { display: flex; flex-direction: column; font-size: 11px; }
     .color-item input { width: 100%; height: 25px; cursor: pointer; border: none; background: none; }
     
-    input[type="text"], select { 
-      width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; 
+    input[type="text"], select {
+      width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444;
       margin-top: 5px; box-sizing: border-box; border-radius: 4px;
     }
     
-    button { 
-      width:100%; margin-top:8px; padding:10px; cursor: pointer; 
+    button {
+      width:100%; margin-top:8px; padding:10px; cursor: pointer;
       font-weight: bold; border-radius: 4px; border: none; transition: 0.2s;
     }
     .btn-load { background: #444; color: white; }
@@ -39,18 +38,16 @@
     h3 { margin-top: 0; color: #007bff; font-size: 16px; }
     .node-edit-box { border-left: 4px solid #007bff; }
   </style>
-
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/reactflow@11/dist/umd/index.js"></script>
 </head>
 <body>
 <div id="root"></div>
-
 <script>
 const { useState, useCallback, useEffect } = React;
 const e = React.createElement;
-const { ReactFlow, Background, Controls, MiniMap, addEdge, applyNodeChanges, applyEdgeChanges } = window.ReactFlow;
+const { ReactFlow, Background, Controls, MiniMap, addEdge, applyNodeChanges, applyEdgeChanges, Handle, Position } = window.ReactFlow;
 
 // --- HELPERS ---
 function parseColors(code) {
@@ -75,7 +72,6 @@ function parseArray(code, name, currentColors) {
     }
     if (open === -1 || close === -1) return [];
     let arrStr = slice.slice(open, close + 1);
-    // Ersetze colors.X durch die Hex-Werte für die Anzeige, aber speichere den String für später
     const nodes = new Function("colors", "return " + arrStr)(currentColors);
     return nodes;
   } catch (err) { return []; }
@@ -88,7 +84,7 @@ function App() {
   const [colors, setColors] = useState({});
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [snapEnabled, setSnapEnabled] = useState(true);
-  const [snapGridSize, setSnapGridSize] = useState(50);
+  const [snapGridSize, setSnapGridSize] = useState(20);
 
   const load = () => {
     const c = parseColors(code);
@@ -99,20 +95,11 @@ function App() {
 
   const selectedNode = nodes.find(n => n.id === selectedNodeId);
 
-  // Node updaten (Label/Farbe)
   const updateSelectedNode = (key, value) => {
     setNodes(nds => nds.map(n => {
       if (n.id === selectedNodeId) {
         if (key === 'label') {
-          const newLabel = value; // .trim() erst beim Sync/Blur, damit während Tippen nichts springt
-          let newId = n.id; // Standard: ID NICHT sofort ändern
-
-          // ID nur aktualisieren, wenn der User Enter drückt oder das Feld verlässt (nicht bei jedem Tastendruck)
-          // Hier: vorerst nur Label updaten, ID bleibt stabil während der Eingabe
-          return {
-            ...n,
-            data: { ...n.data, label: newLabel }
-          };
+          return { ...n, data: { ...n.data, label: value } };
         }
         if (key === 'gameKey') return { ...n, data: { ...n.data, gameKey: value } };
         if (key === 'background') return { ...n, style: { ...n.style, background: value } };
@@ -122,48 +109,36 @@ function App() {
     }));
   };
 
-    const addNode = () => {
+  const addNode = () => {
     const tempId = "node_" + Math.random().toString(36).substr(2, 8);
     const newNode = {
       id: tempId,
-      data: { 
-        label: 'Neue Mission',
-        gameKey: 'beer_mug'          // ← hier kannst du später einen anderen Default setzen
-      },
+      type: 'custom',
+      data: { label: 'Neue Mission', gameKey: 'beer_mug' },
       position: { x: 100, y: 100 },
       style: { background: '#eb34e1', color: 'white' }
     };
     setNodes(nds => [...nds, newNode]);
-    // Optional: direkt den neuen Node auswählen
     setTimeout(() => setSelectedNodeId(tempId), 50);
   };
 
   const syncAndCopy = () => {
     let updatedCode = code;
-
-    // 1. Colors aktualisieren
     Object.keys(colors).forEach(k => {
       const reg = new RegExp(`(${k}\\s*:\\s*['"])(#[a-fA-F0-9]{3,6})(['"])`, "g");
       updatedCode = updatedCode.replace(reg, `$1${colors[k]}$3`);
     });
 
-    // 2. Nodes synchronisieren (Surgical Replace)
-    let nodeBlockMatch = updatedCode.match(/(const nodes\s*=\s*\[)([\s\S]*?)(\];)/);
+    let nodeBlockMatch = updatedCode.match(/(const nodes\s*=\s*\[)([\s\S]*?)(\s*\];)/);
     if (nodeBlockMatch) {
       let nodeContent = nodeBlockMatch[2];
       const processedIds = [];
-
-      // Zeilen-basiertes Update (100% zuverlässig)
       let lines = nodeContent.split('\n');
       nodes.forEach(n => {
         const lineIndex = lines.findIndex(l => l.includes(`id: '${n.id}'`) || l.includes(`id: "${n.id}"`));
         if (lineIndex !== -1) {
           let m = lines[lineIndex];
-
-          // Update Label
           m = m.replace(/(label:\s*['"])([^'"]*)(['"])/, `$1${n.data.label}$3`);
-
-          // Update gameKey (update oder einfügen)
           if (n.data.gameKey !== undefined) {
             if (m.includes('gameKey:')) {
               m = m.replace(/(gameKey:\s*['"])([^'"]*)(['"])/, `$1${n.data.gameKey}$3`);
@@ -171,17 +146,11 @@ function App() {
               m = m.replace(/(label:\s*['"][^'"]*['"]\s*)/, `$1, gameKey: '${n.data.gameKey}' `);
             }
           }
-
-          // Update Position
           m = m.replace(/(position:\s*\{\s*x:)\s*[-0-9.]+(\s*,\s*y:)\s*[-0-9.]+(\s*\})/, `$1 ${Math.round(n.position.x)}$2 ${Math.round(n.position.y)}$3`);
-
-          // Update Background
           let colorVal = n.style?.background || '#999';
           const varName = Object.keys(colors).find(k => colors[k] === colorVal);
           const finalColorStr = varName ? `colors.${varName}` : `'${colorVal}'`;
           m = m.replace(/(background:\s*)(colors\.[a-zA-Z0-9_]+|'#[a-fA-F0-9]{3,6}')/, `$1${finalColorStr}`);
-
-          // Update Text Color (update oder einfügen)
           if (n.style?.color !== undefined) {
             if (m.includes('color:')) {
               m = m.replace(/(color:\s*['"])([^'"]*)(['"])/, `$1${n.style.color}$3`);
@@ -189,37 +158,34 @@ function App() {
               m = m.replace(/(style:\s*\{[^}]*)(})/, `$1, color: '${n.style.color}'$2`);
             }
           }
-
           lines[lineIndex] = m;
           processedIds.push(n.id);
         }
       });
-
-      // Löschen was nicht mehr da ist
       lines = lines.filter(l => {
         const m = l.match(/id:\s*['"]([^'"]+)['"]/);
         return !m || nodes.find(n => n.id === m[1]);
       });
-
       nodeContent = lines.join('\n');
-
-      // Neue Nodes hinzufügen
       nodes.filter(n => !processedIds.includes(n.id)).forEach(n => {
         const varName = Object.keys(colors).find(k => colors[k] === n.style?.background);
         const col = varName ? `colors.${varName}` : `'${n.style?.background || '#eb34e1'}'`;
         const gameKeyStr = n.data.gameKey ? `, gameKey: '${n.data.gameKey}'` : '';
         const colorStr = n.style?.color ? `, color: '${n.style.color}'` : '';
-        const newNodeStr = `    { id: '${n.id}', data: { label: '${n.data.label}'${gameKeyStr} }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col}${colorStr} } },\n`;
+        const newNodeStr = `    { id: '${n.id}', type: 'custom', data: { label: '${n.data.label}'${gameKeyStr} }, position: { x: ${Math.round(n.position.x)}, y: ${Math.round(n.position.y)} }, style: { background: ${col}${colorStr} } },\n`;
         nodeContent = nodeContent.trimEnd() + `\n${newNodeStr}`;
       });
-
-      updatedCode = updatedCode.replace(/(const nodes\s*=\s*\[)([\s\S]*?)(\];)/, `$1${nodeContent}$3`);
+      updatedCode = updatedCode.replace(/(const nodes\s*=\s*\[)([\s\S]*?)(\s*\];)/, `$1${nodeContent}$3`);
     }
 
-    // 3. Edges einfach neu schreiben
-    const edgeStrings = edges.map(e => `    { id: '${e.id}', source: '${e.source}', target: '${e.target}' }`).join(',\n');
-    updatedCode = updatedCode.replace(/(const edges\s*=\s*\[)([\s\S]*?)(\];)/, `$1\n${edgeStrings}\n$3`);
-
+    // --- FIX HIER: Edges mit Handles speichern ---
+    const edgeStrings = edges.map(e => {
+        const sH = e.sourceHandle ? `, sourceHandle: '${e.sourceHandle}'` : '';
+        const tH = e.targetHandle ? `, targetHandle: '${e.targetHandle}'` : '';
+        return `    { id: '${e.id}', source: '${e.source}', target: '${e.target}'${sH}${tH} }`;
+    }).join(',\n');
+    
+    updatedCode = updatedCode.replace(/(const edges\s*=\s*\[)([\s\S]*?)(\s*\];)/, `$1\n${edgeStrings}\n$3`);
     setCode(updatedCode);
     navigator.clipboard.writeText(updatedCode);
     alert("Code exportiert & kopiert!");
@@ -227,7 +193,49 @@ function App() {
 
   const onNodesChange = useCallback((chs) => setNodes((nds) => applyNodeChanges(chs, nds)), []);
   const onEdgesChange = useCallback((chs) => setEdges((eds) => applyEdgeChanges(chs, eds)), []);
-  const onConnect = useCallback((p) => setEdges((eds) => addEdge({ ...p, id: `e-${p.source}-${p.target}` }, eds)), []);
+  
+  // --- FIX HIER: onConnect übernimmt Handle-Informationen ---
+  const onConnect = useCallback((params) => {
+    setEdges((eds) => addEdge({ ...params, id: `e-${params.source}-${params.target}-${params.sourceHandle}-${params.targetHandle}` }, eds));
+  }, []);
+
+  const edgeOptions = {
+    type: 'step',
+    style: { strokeWidth: 3 },
+    markerEnd: { type: 'arrowclosed', color: '#999' },
+    animated: false
+  };
+
+    const CustomNode = ({ data }) => {
+      return e(
+        "div",
+        {
+          style: {
+            width: 150,
+            padding: 10,
+            fontSize: 12,
+            borderRadius: 3,
+            border: "1px solid #1a192b",
+            textAlign: "center",
+            boxSizing: "border-box"
+          }
+        },
+
+        e(Handle, { type: "target", position: Position.Top, id: "t-top" }),
+        e(Handle, { type: "target", position: Position.Left, id: "t-left" }),
+        e(Handle, { type: "target", position: Position.Right, id: "t-right" }),
+        e(Handle, { type: "target", position: Position.Bottom, id: "t-bottom" }),
+
+        e(Handle, { type: "source", position: Position.Top, id: "s-top" }),
+        e(Handle, { type: "source", position: Position.Left, id: "s-left" }),
+        e(Handle, { type: "source", position: Position.Right, id: "s-right" }),
+        e(Handle, { type: "source", position: Position.Bottom, id: "s-bottom" }),
+
+        data.label
+      );
+    };
+
+  const nodeTypes = { custom: CustomNode };
 
   return e("div", { id: "app" },
     e("div", { id: "left" },
@@ -237,136 +245,99 @@ function App() {
       e("button", { className: "btn-load", onClick: load }, "Load Data"),
       
       selectedNode && e("div", { className: "section node-edit-box" },
-      e("h3", { style: { color: '#007bff', fontSize: '14px'} }, "Edit Selected Node"),
-      
-      // Label Feld
-            // Label Feld
-      e("label", null, "Label"),
-      e("input", { 
-        type: "text", 
-        value: selectedNode.data.label, 
-        onChange: (ev) => updateSelectedNode('label', ev.target.value),
-        onBlur: (ev) => {
-          const newLabel = ev.target.value.trim();
-          const newId = newLabel
-            .toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')
-            .trim()
-            .replace(/\s+/g, '_');
-
-          if (newId && newId !== selectedNodeId) {
-            // ID ändern + selectedNodeId aktualisieren, damit der Edit-Bereich nicht springt
-            setNodes(nds => nds.map(n => 
-              n.id === selectedNodeId 
-                ? { ...n, id: newId, data: { ...n.data, label: newLabel } }
-                : n
-            ));
-            setSelectedNodeId(newId);
+        e("h3", { style: { color: '#007bff', fontSize: '14px'} }, "Edit Selected Node"),
+        e("label", null, "Label"),
+        e("input", {
+          type: "text",
+          value: selectedNode.data.label,
+          onChange: (ev) => updateSelectedNode('label', ev.target.value),
+          onBlur: (ev) => {
+            const newLabel = ev.target.value.trim();
+            const newId = newLabel.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+            if (newId && newId !== selectedNodeId) {
+              setNodes(nds => nds.map(n => n.id === selectedNodeId ? { ...n, id: newId, data: { ...n.data, label: newLabel } } : n));
+              setSelectedNodeId(newId);
+            }
           }
-        }
-      }),
-      
-      // NEU: Game Key Feld
-      e("label", { style: {marginTop: '10px', display: 'block'} }, "Game Key"),
-      e("input", { type: "text", value: selectedNode.data.gameKey || '', onChange: (ev) => updateSelectedNode('gameKey', ev.target.value) }),
-
-      // Hintergrundfarbe
-      e("label", { style: {marginTop: '10px', display: 'block'} }, "Background Color"),
-      e("select", { 
-        value: Object.keys(colors).find(k => colors[k] === selectedNode.style?.background) || "custom",
-        onChange: (ev) => {
-          if(ev.target.value !== "custom") updateSelectedNode('background', colors[ev.target.value]);
-        }
-      },
-        e("option", { value: "custom" }, "Custom Hex..."),
-        Object.keys(colors).map(k => e("option", { key: k, value: k }, k))
+        }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Game Key"),
+        e("input", { type: "text", value: selectedNode.data.gameKey || '', onChange: (ev) => updateSelectedNode('gameKey', ev.target.value) }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Background Color"),
+        e("select", {
+          value: Object.keys(colors).find(k => colors[k] === selectedNode.style?.background) || "custom",
+          onChange: (ev) => { if(ev.target.value !== "custom") updateSelectedNode('background', colors[ev.target.value]); }
+        },
+          e("option", { value: "custom" }, "Custom Hex..."),
+          Object.keys(colors).map(k => e("option", { key: k, value: k }, k))
+        ),
+        e("input", {
+          type: "color",
+          value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#eb34e1',
+          onChange: (ev) => updateSelectedNode('background', ev.target.value)
+        }),
+        e("label", { style: {marginTop: '10px', display: 'block'} }, "Text Color"),
+        e("input", {
+          type: "text",
+          value: selectedNode.style?.color || 'white',
+          onChange: (ev) => updateSelectedNode('textColor', ev.target.value)
+        })
       ),
-      e("input", { 
-        type: "color", 
-        value: selectedNode.style?.background?.startsWith('#') ? selectedNode.style.background : '#eb34e1', 
-        onChange: (ev) => updateSelectedNode('background', ev.target.value) 
-      }),
-
-      // NEU: Schriftfarbe (z.B. 'white' oder '#ffffff')
-      e("label", { style: {marginTop: '10px', display: 'block'} }, "Text Color"),
-      e("input", { 
-        type: "text", 
-        value: selectedNode.style?.color || 'white', 
-        placeholder: "e.g. white or #ffffff",
-        onChange: (ev) => updateSelectedNode('textColor', ev.target.value) 
-      })
-    ),
-
       e("button", { className: "btn-add", onClick: addNode }, "+ New Mission Node"),
-
-        Object.keys(colors).length > 0 && e("div", { className: "section" },
-          e("label", null, "Global Colors"),
-          e("div", { className: "color-grid" },
-            Object.entries(colors).map(([k, v]) => 
-              e("div", { key: k, className: "color-item" },
-                e("span", null, k),
-                e("input", { type: "color", value: v, onChange: (ev) => setColors({...colors, [k]: ev.target.value}) })
-              )
+      Object.keys(colors).length > 0 && e("div", { className: "section" },
+        e("label", null, "Global Colors"),
+        e("div", { className: "color-grid" },
+          Object.entries(colors).map(([k, v]) =>
+            e("div", { key: k, className: "color-item" },
+              e("span", null, k),
+              e("input", { type: "color", value: v, onChange: (ev) => setColors({...colors, [k]: ev.target.value}) })
             )
           )
+        )
+      ),
+      e("div", { className: "section" },
+        e("label", null, "Node Raster (Snap)"),
+        e("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "8px" } },
+          e("input", { type: "checkbox", checked: snapEnabled, onChange: (ev) => setSnapEnabled(ev.target.checked) }),
+          e("span", { style: { fontSize: "13px", color: "#ddd" } }, "Raster aktivieren")
         ),
-
-        // === NEU: Snap / Raster Steuerung ===
-        e("div", { className: "section" },
-          e("label", null, "Node Raster (Snap)"),
-          e("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "8px" } },
-            e("input", {
-              type: "checkbox",
-              checked: snapEnabled,
-              onChange: (ev) => setSnapEnabled(ev.target.checked)
-            }),
-            e("span", { style: { fontSize: "13px", color: "#ddd" } }, "Raster aktivieren")
-          ),
-          e("label", { style: { marginTop: "12px", display: "block" } }, "Raster-Größe (px)"),
-          e("input", {
-            type: "number",
-            value: snapGridSize,
-            min: 10,
-            max: 200,
-            step: 5,
-            onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 20),
-            style: { width: "100%", padding: "8px", background: "#111", color: "#fff", border: "1px solid #444", borderRadius: "4px" }
-          })
-        ),
-
+        e("label", { style: { marginTop: "12px", display: "block" } }, "Raster-Größe (px)"),
+        e("input", {
+          type: "number",
+          value: snapGridSize,
+          onChange: (ev) => setSnapGridSize(parseInt(ev.target.value) || 20),
+          style: { width: "100%", padding: "8px", background: "#111", color: "#fff", border: "1px solid #444", borderRadius: "4px" }
+        })
+      ),
       e("button", { className: "btn-save", onClick: syncAndCopy }, "Sync & Copy All")
     ),
-
     e("div", { id: "right" },
-        e(ReactFlow, {
+      e(ReactFlow, {
         nodes: nodes.map(n => {
-           // Mapping der Hintergrundfarbe von Variable auf Hex für die Anzeige
            let bg = n.style?.background;
-           if (bg && bg.startsWith('colors.')) {
-              bg = colors[bg.split('.')[1]];
-           }
-           return { ...n, style: { ...n.style, background: bg } };
+           if (bg && bg.startsWith('colors.')) bg = colors[bg.split('.')[1]];
+           return { ...n, type: 'custom', style: { ...n.style, background: bg } };
         }),
-        edges, 
-        onNodesChange, 
-        onEdgesChange, 
-        onConnect, 
+        connectionMode: "loose",
+        nodeTypes: nodeTypes,
+        edges,
+        onNodesChange,
+        onEdgesChange,
+        onConnect,
         onNodeClick: (_, node) => setSelectedNodeId(node.id),
         onPaneClick: () => setSelectedNodeId(null),
-        fitView: true, 
+        fitView: true,
         style: { background: '#111' },
-        // === NEU: Snap / Raster ===
         snapToGrid: snapEnabled,
-        snapGrid: [snapGridSize, snapGridSize]
+        snapGrid: [snapGridSize, snapGridSize],
+        defaultEdgeOptions: edgeOptions,
       },
         e(MiniMap, { maskColor: 'rgba(0,0,0,0.4)', bgcolor: '#222' }),
-        e(Controls), 
+        e(Controls),
         e(Background, { color: '#333', gap: snapGridSize })
       )
     )
   );
 }
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(e(App));
 </script>
