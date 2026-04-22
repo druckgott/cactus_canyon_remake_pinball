@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cactus Canyon Rule Map</title>
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- React -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<!-- Babel JSX Compiler -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+body{
+  background:#1c1205;
+}
+::-webkit-scrollbar{
+  width:10px;
+}
+::-webkit-scrollbar-thumb{
+  background:#8b5e12;
+  border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const {useState, useMemo} = React;
+
+const nodes = [
+{id:'skill',cat:'Core',title:'🚀 Skill Shot',desc:'Shoot indicated target at plunge for awards.'},
+{id:'bonus',cat:'Core',title:'⭐ Bonus X',desc:'Complete both Cactus Lanes for +1 Bonus X.'},
+{id:'polly1',cat:'Modes',title:'🚂 Save Polly Train',desc:'Hit Train Ramp 3x to start, then Train / Bank / River shots.'},
+{id:'polly2',cat:'Modes',title:'🌊 Save Polly River',desc:'Hit River Ramp 3x, then Whitewater shot rescues Polly.'},
+{id:'polly3',cat:'Modes',title:'🏦 Save Polly Bank',desc:'Hit Bank Ramp 3x, shoot flashing robber.'},
+{id:'cowboy',cat:'Modes',title:'🐎 Ride Em Cowboy',desc:'Horse Loop 3x starts mode.'},
+{id:'bounty',cat:'Awards',title:'🏆 Bounty Award',desc:'Collect under Bart Brothers heads.'},
+{id:'quick',cat:'Combat',title:'⚡ Quick Draw',desc:'Hit lit bad guy targets. Defeat 4 starts Showdown.'},
+{id:'gun',cat:'Combat',title:'🔫 Gun Fight',desc:'Starts from inlane when lit.'},
+{id:'high',cat:'Wizard',title:'⭐ High Noon',desc:'Complete all 5 stars.'},
+{id:'star1',cat:'Wizard',title:'1️⃣ Bionic Bart',desc:'Defeat Bart brothers in saloon.'},
+{id:'star2',cat:'Wizard',title:'2️⃣ Showdown MB',desc:'Complete 4 Quick Draws.'},
+{id:'star3',cat:'Wizard',title:'3️⃣ Motherlode',desc:'Mine multiball jackpots.'},
+{id:'star4',cat:'Wizard',title:'4️⃣ Stampede',desc:'Complete ramps / loops multiball.'},
+{id:'star5',cat:'Wizard',title:'5️⃣ Combos',desc:'Execute 10 combos.'}
+];
+
+const edges = [
+['skill','bounty'],
+['skill','quick'],
+['quick','star2'],
+['gun','high'],
+['bounty','high'],
+['high','star1'],
+['high','star2'],
+['high','star3'],
+['high','star4'],
+['high','star5']
+];
+
+function categoryColor(cat){
+  if(cat==="Core") return "from-yellow-800 to-amber-700";
+  if(cat==="Modes") return "from-orange-800 to-red-700";
+  if(cat==="Awards") return "from-blue-800 to-sky-700";
+  if(cat==="Combat") return "from-red-900 to-rose-700";
+  if(cat==="Wizard") return "from-purple-900 to-fuchsia-700";
+  return "from-stone-700 to-stone-600";
+}
+
+function App(){
+
+  const [q,setQ] = useState("");
+  const [done,setDone] = useState({});
+  const [sel,setSel] = useState(nodes[0]);
+
+  const filtered = useMemo(()=>{
+    return nodes.filter(n =>
+      n.title.toLowerCase().includes(q.toLowerCase()) ||
+      n.desc.toLowerCase().includes(q.toLowerCase()) ||
+      n.cat.toLowerCase().includes(q.toLowerCase())
+    );
+  },[q]);
+
+  function toggle(id){
+    setDone({...done,[id]:!done[id]});
+  }
+
+  const progress = Math.round(
+    (Object.values(done).filter(Boolean).length / nodes.length) * 100
+  );
+
+  return (
+    <div className="min-h-screen text-amber-100 p-3 md:p-6">
+
+      <h1 className="text-3xl md:text-5xl font-bold mb-2">
+        🌵 Cactus Canyon Rule Map
+      </h1>
+
+      <p className="opacity-80 mb-4">
+        No-Build Version • Direkt auf dem Server lauffähig
+      </p>
+
+      <div className="mb-4">
+        <div className="flex justify-between text-sm mb-1">
+          <span>Fortschritt</span>
+          <span>{progress}%</span>
+        </div>
+        <div className="w-full bg-black/40 rounded-full h-3 overflow-hidden">
+          <div
+            className="h-3 bg-amber-400"
+            style={{width: progress + "%"}}
+          ></div>
+        </div>
+      </div>
+
+      <input
+        value={q}
+        onChange={e=>setQ(e.target.value)}
+        placeholder="Suchen..."
+        className="w-full mb-4 p-3 rounded-xl bg-amber-100 text-black"
+      />
+
+      <div className="grid md:grid-cols-3 gap-4">
+
+        <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+          {filtered.map(n => (
+            <button
+              key={n.id}
+              onClick={()=>setSel(n)}
+              className={`text-left p-4 rounded-2xl border border-amber-600 bg-gradient-to-br ${categoryColor(n.cat)} shadow-xl hover:scale-[1.02] transition`}
+            >
+
+              <div className="flex justify-between gap-2 items-start">
+                <div className="font-bold text-lg">{n.title}</div>
+
+                <input
+                  type="checkbox"
+                  checked={!!done[n.id]}
+                  onChange={(e)=>{
+                    e.stopPropagation();
+                    toggle(n.id);
+                  }}
+                  className="w-5 h-5"
+                />
+              </div>
+
+              <div className="text-xs opacity-80 mt-1">{n.cat}</div>
+              <div className="text-sm mt-3 opacity-95">{n.desc}</div>
+
+            </button>
+          ))}
+
+        </div>
+
+
+        <div className="p-4 rounded-2xl bg-black/40 border border-amber-700 h-fit md:sticky md:top-3">
+
+          <div className="text-2xl font-bold mb-2">{sel.title}</div>
+
+          <p className="text-sm leading-relaxed opacity-95">
+            {sel.desc}
+          </p>
+
+          <div className="mt-5 text-xs uppercase tracking-widest opacity-60">
+            Kategorie
+          </div>
+
+          <div className="mt-1 font-semibold">
+            {sel.cat}
+          </div>
+
+          <div className="mt-5 text-xs uppercase tracking-widest opacity-60">
+            Verbindungen
+          </div>
+
+          <ul className="mt-2 space-y-1 text-sm">
+            {edges
+              .filter(e => e[0]===sel.id || e[1]===sel.id)
+              .map((e,i)=>(
+                <li key={i} className="opacity-90">
+                  {e[0]} ➜ {e[1]}
+                </li>
+              ))
+            }
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
+

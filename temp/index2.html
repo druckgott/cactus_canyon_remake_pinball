@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FULL Cactus Canyon Mindmap</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  background:#120b02;
+  font-family:Arial, Helvetica, sans-serif;
+}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{
+  background:#ca8a04;
+  border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const {useMemo,useState}=React;
+
+// ===================== FULL RULE MINDMAP =====================
+const nodes=[
+{id:'root',x:600,y:60,c:'root',title:'🌵 Cactus Canyon Remake',desc:'Complete rules mindmap (full system)'},
+
+{id:'skill',x:200,y:180,c:'core',title:'🚀 Skill Shot',desc:'Plunge awards: modes, EB, lock, bounty, rank, points, bonus X, progression'},
+{id:'lanes',x:200,y:320,c:'core',title:'🌵 Cactus Lanes',desc:'Left/Right lanes → Bonus X system'},
+{id:'combo',x:200,y:460,c:'core',title:'🔗 Combos System',desc:'10 combos required for Star 5'},
+
+{id:'bronco',x:60,y:320,c:'core',title:'🐴 Bronco Loop',desc:'Skill shot + mode objective + combo path'},
+{id:'trick',x:60,y:460,c:'core',title:'🎯 Trick Loop',desc:'Skill shot objective + combo loop'},
+{id:'beer',x:60,y:600,c:'core',title:'🍺 Beer Mug Target',desc:'Extra Ball activation'},
+
+{id:'modes',x:600,y:180,c:'mode',title:'🎯 Mode System',desc:'Polly rescue progression modes'},
+{id:'train',x:520,y:320,c:'mode',title:'🚂 Train Mode',desc:'Ramp x3 → Train / Bank / River shots'},
+{id:'river',x:420,y:460,c:'mode',title:'🌊 River Mode',desc:'Ramp x3 → Whitewater rescue'},
+{id:'bank',x:700,y:460,c:'mode',title:'🏦 Bank Mode',desc:'Ramp x3 → flashing robber shot'},
+{id:'cowboy',x:600,y:600,c:'mode',title:'🐎 Ride Em Cowboy',desc:'Horse Loop x3 challenge'},
+
+{id:'award',x:200,y:540,c:'award',title:'🏆 Bounty Award',desc:'Random rewards system'},
+{id:'extra',x:200,y:680,c:'award',title:'💎 Extra Ball',desc:'Collected via modes / skill / beer mug / showdown'},
+{id:'lock',x:200,y:800,c:'award',title:'🔒 Ball Lock',desc:'Lit via skill shot / bounty'},
+{id:'bonus3',x:60,y:800,c:'award',title:'✖️ 3x Bonus',desc:'Instant multiplier reward'},
+{id:'million',x:60,y:920,c:'award',title:'💎 1M Points',desc:'Instant score reward'},
+
+{id:'combat',x:900,y:180,c:'combat',title:'🔫 Combat System',desc:'Quick Draw / Gun Fight / Shootout'},
+{id:'quick',x:860,y:320,c:'combat',title:'⚡ Quick Draw',desc:'4 enemies → unlock Showdown'},
+{id:'gun',x:1040,y:320,c:'combat',title:'🔫 Gun Fight',desc:'Inlane / outlane / bounty / baron kill triggers'},
+{id:'shootout',x:920,y:460,c:'combat',title:'🎯 Shootout Topper',desc:'Beer glasses → timing minigame'},
+{id:'outlane',x:1040,y:460,c:'combat',title:'🚪 Outlane Trigger',desc:'Can start Gun Fight when lit'},
+
+{id:'high',x:600,y:780,c:'wizard',title:'⭐ High Noon',desc:'Final wizard progression'},
+{id:'s1',x:360,y:920,c:'wizard',title:'⭐ Star 1 - Bionic Bart',desc:'Defeat 5 Bart brothers via saloon'},
+{id:'s2',x:520,y:920,c:'wizard',title:'⭐ Star 2 - Showdown MB',desc:'Complete Quick Draw set'},
+{id:'s3',x:680,y:920,c:'wizard',title:'⭐ Star 3 - Mine MB',desc:'Lock 3 balls → Motherlode'},
+{id:'s4',x:840,y:920,c:'wizard',title:'⭐ Star 4 - Stampede',desc:'Ramp + loop multiball'},
+{id:'s5',x:1000,y:920,c:'wizard',title:'⭐ Star 5 - Combos',desc:'10 combo chain'},
+
+{id:'rank',x:900,y:620,c:'wizard',title:'⭐ Rank System',desc:'Stranger → Marshal affects scoring'},
+{id:'saloon',x:360,y:780,c:'wizard',title:'🚪 Saloon / Bart Bros',desc:'Star 1 battle system'},
+{id:'mine',x:680,y:780,c:'wizard',title:'⛏️ Mine Multiball',desc:'Motherlode jackpot system'}
+];
+
+// ===================== EDGES =====================
+const edges=[
+['root','skill'],['root','lanes'],['root','combo'],['root','modes'],['root','combat'],['root','award'],['root','high'],['root','rank'],
+
+['skill','award'],['skill','quick'],['skill','bronco'],['skill','trick'],
+['lanes','award'],['combo','high'],
+['bronco','combo'],['trick','combo'],
+
+['modes','train'],['modes','river'],['modes','bank'],['modes','cowboy'],
+['train','river'],['river','bank'],['bank','cowboy'],
+
+['combat','quick'],['combat','gun'],['combat','shootout'],['gun','outlane'],
+
+['quick','high'],['gun','high'],['shootout','extra'],
+
+['award','extra'],['award','lock'],['award','bonus3'],['award','million'],['award','rank'],
+
+['extra','high'],['lock','high'],['rank','high'],
+
+['high','s1'],['high','s2'],['high','s3'],['high','s4'],['high','s5'],
+['high','saloon'],['high','mine']
+];
+
+const colors={
+root:'bg-yellow-700',
+core:'bg-lime-700',
+mode:'bg-orange-700',
+combat:'bg-red-700',
+award:'bg-blue-700',
+wizard:'bg-purple-700'
+};
+
+function Node({n,onClick}){
+return(
+<button
+onClick={()=>onClick(n)}
+className={`absolute rounded-xl px-2 py-2 text-[10px] md:text-xs shadow-xl border border-yellow-200/30 ${colors[n.c]} text-white w-36 hover:scale-105 transition`}
+style={{left:n.x,top:n.y}}
+>
+<div className="font-bold">{n.title}</div>
+</button>
+);
+}
+
+function App(){
+
+const [sel,setSel]=useState(nodes[0]);
+const [q,setQ]=useState('');
+
+const filtered=useMemo(()=>{
+return nodes.filter(n =>
+n.title.toLowerCase().includes(q.toLowerCase()) ||
+n.desc.toLowerCase().includes(q.toLowerCase())
+);
+},[q]);
+
+return(
+<div className="min-h-screen bg-gradient-to-b from-amber-950 via-yellow-950 to-stone-900 text-white p-2 md:p-4">
+
+<div className="text-2xl md:text-4xl font-bold mb-2">
+🤠 FULL Cactus Canyon Mindmap
+</div>
+
+<input
+value={q}
+onChange={e=>setQ(e.target.value)}
+placeholder="Search rules..."
+className="w-full p-3 rounded-xl text-black mb-3"
+/>
+
+<div className="grid md:grid-cols-4 gap-3">
+
+<div className="md:col-span-3 overflow-auto rounded-2xl border border-yellow-700 bg-black/30 h-[80vh] relative">
+
+<div className="relative" style={{width:1400,height:1100}}>
+
+<svg className="absolute inset-0 w-full h-full">
+
+{edges.map((e,i)=>{
+const a=nodes.find(n=>n.id===e[0]);
+const b=nodes.find(n=>n.id===e[1]);
+
+if(!filtered.find(n=>n.id===a.id)) return null;
+if(!filtered.find(n=>n.id===b.id)) return null;
+
+return(
+<line
+key={i}
+x1={a.x+72}
+y1={a.y+22}
+x2={b.x+72}
+y2={b.y+22}
+stroke="#facc15"
+strokeWidth="1.2"
+/>
+);
+})}
+
+</svg>
+
+{filtered.map(n=><Node key={n.id} n={n} onClick={setSel}/>)}
+
+</div>
+</div>
+
+<div className="rounded-2xl border border-yellow-700 bg-black/40 p-4 h-fit">
+
+<div className="text-lg font-bold mb-2">
+{sel.title}
+</div>
+
+<div className="text-xs md:text-sm leading-relaxed">
+{sel.desc}
+</div>
+
+<div className="mt-3 text-xs opacity-70">
+Category: {sel.c}
+</div>
+
+</div>
+
+</div>
+
+</div>
+);
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
+
