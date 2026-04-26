@@ -1,189 +1,221 @@
 
 :root {
-    --bg-parchment: #eecda3;
-    --box-bg: #f9e9d2;
-    --border-color: #3e2723;
-    --blue-bg: #e3f2fd;
-    --blue-border: #1565c0;
-    --red-bg: #ffebee;
-    --red-border: #c62828;
-    --yellow-bg: #fffde7;
-    --yellow-border: #f9a825;
-    --green-bg: #e8f5e9;
-    --green-border: #2e7d32;
-    --orange-bg: #fff3e0;
-    --orange-border: #ef6c00;
+    --bg-base: #e0bc8f;
+    --box-bg: #eddac3;
+    --border-dark: #2a1610;
+    --text-dark: #1a0d08;
+    
+    --blue-bullet: #42a5f5;
+    --orange-bullet: #ff9800;
+    --green-bullet: #66bb6a;
+    --red-bullet: #ef5350;
+    --yellow-bullet: #ffee58;
+
+    --blue-box: #e3f2fd;
+    --red-box: #ffebee;
+    --yellow-box: #fffde7;
+    --green-box: #e8f5e9;
+    --orange-box: #fff3e0;
 }
 
 body {
     margin: 0;
     padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom right, #f4d093, #d9a05b);
-    color: #212121;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-base);
+    /* Simple parchment texture simulation */
+    background-image: radial-gradient(circle, transparent 20%, #d4ac7d 120%), 
+                      url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+    color: var(--text-dark);
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1550px;
     margin: 0 auto;
 }
 
-.header {
-    text-align: center;
+.header-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     margin-bottom: 20px;
 }
 
-.header h1 {
+.header-bar h1 {
+    font-family: 'Anton', sans-serif;
     font-size: 2.5rem;
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.lang-switch {
-    margin-top: 10px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0px #fff;
 }
 
 .lang-switch button {
-    background-color: var(--border-color);
+    background-color: var(--border-dark);
     color: white;
-    border: none;
-    padding: 8px 16px;
-    margin: 0 5px;
+    border: 2px solid white;
+    padding: 5px 15px;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.2rem;
     cursor: pointer;
     border-radius: 4px;
-    font-weight: bold;
 }
 
-.lang-switch button:hover {
-    background-color: #5d4037;
-}
-
-/* Layout Grid */
+/* Grid Layouts */
 .main-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
+    grid-template-columns: 380px 1fr 380px;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .left-col, .right-col {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .center-col {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .bottom-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+    gap: 12px;
 }
 
-/* Box Styles */
+/* Box General Styling */
 .box {
     background-color: var(--box-bg);
-    border: 3px solid var(--border-color);
+    border: 4px solid var(--border-dark);
     border-radius: 12px;
-    padding: 15px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    padding: 12px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    position: relative;
 }
 
 .box h2 {
-    margin-top: 0;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
     text-align: center;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 3px solid var(--border-dark);
     padding-bottom: 5px;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .box h3 {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    margin: 5px 0;
+    text-decoration: underline;
 }
 
+.box p {
+    font-size: 0.85rem;
+    margin: 0 0 5px 0;
+}
+
+/* Custom Lists */
 ul {
+    list-style: none;
+    padding-left: 5px;
     margin: 0;
-    padding-left: 20px;
-    font-size: 0.9rem;
 }
 
 li {
+    font-size: 0.85rem;
+    line-height: 1.3;
     margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
 }
 
+li::before {
+    content: '';
+    display: inline-block;
+    min-width: 10px;
+    min-height: 10px;
+    margin-right: 8px;
+    margin-top: 3px;
+    border-radius: 50%;
+    border: 1px solid var(--border-dark);
+}
+
+/* Bullet Colors */
+.bullet-blue li::before { background-color: var(--blue-bullet); }
+.bullet-orange li::before { background-color: var(--orange-bullet); }
+.bullet-green li::before { background-color: var(--green-bullet); }
+.bullet-red li::before { background-color: var(--red-bullet); }
+.bullet-yellow li::before { background-color: var(--yellow-bullet); }
+
+/* Bottom Box Colors */
+.box-blue { background-color: var(--blue-box); }
+.box-red { background-color: var(--red-box); }
+.box-yellow { background-color: var(--yellow-box); }
+.box-green { background-color: var(--green-box); }
+.box-orange { background-color: var(--orange-box); }
+
+.bottom-grid .box h2 { font-size: 1.2rem; }
+
+/* Specific internal layouts */
 .flex-row {
     display: flex;
-    gap: 10px;
     justify-content: space-between;
-}
-
-/* Colored Bottom Boxes */
-.box-blue { background-color: var(--blue-bg); border-color: var(--blue-border); }
-.box-blue h2 { border-color: var(--blue-border); }
-
-.box-red { background-color: var(--red-bg); border-color: var(--red-border); }
-.box-red h2 { border-color: var(--red-border); }
-
-.box-yellow { background-color: var(--yellow-bg); border-color: var(--yellow-border); }
-.box-yellow h2 { border-color: var(--yellow-border); }
-
-.box-green { background-color: var(--green-bg); border-color: var(--green-border); }
-.box-green h2 { border-color: var(--green-border); }
-
-.box-orange { background-color: var(--orange-bg); border-color: var(--orange-border); }
-.box-orange h2 { border-color: var(--orange-border); }
-
-/* The Star */
-.star-container {
-    background: radial-gradient(circle, #ffeb3b 0%, #ff9800 70%, #e65100 100%);
-    border: 5px solid #ffcc00;
-    border-radius: 50%;
-    width: 350px;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(255, 152, 0, 0.8);
-    position: relative;
 }
 
-.star-container::after {
-    content: '';
-    position: absolute;
+/* Stars for Ranking */
+.star-progression {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+/* Connectors / Visual Flourishes */
+.collect-arrow {
+    font-weight: bold;
+    font-family: 'Anton', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.winner-logic {
+    border: 2px solid var(--border-dark);
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.central-star-wrapper {
+    position: relative;
     width: 100%;
     height: 100%;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23d84315" opacity="0.3"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>') no-repeat center center;
-    background-size: 120%;
-    z-index: 1;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.star-content {
+/* Bottom Arrows linking to Star */
+.arrow-up {
+    text-align: center;
+    margin-bottom: -15px;
     position: relative;
-    z-index: 2;
-    background: rgba(255,255,255,0.85);
-    padding: 15px;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
+    z-index: 10;
 }
-
-.star-content h2 {
-    margin: 0 0 10px 0;
-    color: #d84315;
-}
-
-.star-content p, .star-content ul {
-    font-size: 0.85rem;
-    text-align: left;
+.arrow-up svg {
+    width: 40px;
+    height: 40px;
 }
