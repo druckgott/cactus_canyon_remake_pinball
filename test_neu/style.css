@@ -1,7 +1,7 @@
 
 :root {
-    --bg-base: #e0bc8f;
-    --box-bg: #eddac3;
+    --bg-base: #eecda3;
+    --box-bg: #f5dfc6;
     --border-dark: #2a1610;
     --text-dark: #1a0d08;
     
@@ -20,133 +20,130 @@
 
 body {
     margin: 0;
-    padding: 20px;
+    padding: 0;
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg-base);
-    /* Simple parchment texture simulation */
     background-image: radial-gradient(circle, transparent 20%, #d4ac7d 120%), 
                       url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
     color: var(--text-dark);
+    display: flex;
+    justify-content: center;
 }
 
-.container {
-    max-width: 1550px;
-    margin: 0 auto;
+/* The Main Canvas - Fixed aspect ratio to match the image perfectly */
+.canvas {
+    width: 1600px;
+    height: 1000px;
+    position: relative;
+    background-size: cover;
+    overflow: hidden; /* Keep it clean */
+    transform-origin: top center;
 }
 
+/* --- SPRITE SHEET LOGIC --- 
+   Um die Icons aus Gemini_Generated_Image_6so6sa6so6sa6so6.jpg zu nutzen, 
+   benenne das Bild in "sprites.jpg" um und lege es in diesen Ordner.
+   Die px-Werte hier "schneiden" das jeweilige Icon aus.
+*/
+.sprite {
+    background-image: url('sprites.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    /* Passe diese Breite an die Originalauflösung deines Bildes an, z.B. 2000px */
+    background-size: 1380px auto; 
+}
+/* Geschätzte Koordinaten - passe background-position an, wenn es verschoben ist */
+.s-cowboy { width: 180px; height: 180px; background-position: -1040px -40px; transform-origin: center center;}
+.s-beer { width: 170px; height: 140px; background-position: -600px -270px; transform-origin: center center; }
+.s-main-star { width: 420px; height: 420px; background-position: -60px -70px; transform-origin: center center; transform: scale(0.8); }
+/* Kleine Range-Sterne */
+.s-star-blue { width: 60px; height: 60px; background-position: -930px -283px; transform-origin: center center; }
+.s-star-red { width: 60px; height: 60px; background-position: -1016px -283px; transform-origin: center center; }
+.s-star-bronze { width: 60px; height: 60px; background-position: -1105px -283px; transform-origin: center center; }
+.s-star-yellow { width: 60px; height: 60px; background-position: -1192px -283px; transform-origin: center center; }
+.s-star-orange { width: 60px; height: 60px; background-position: -1280px -283px; transform-origin: center center; }
+
+.sprite {
+    background-image: url('sprites.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-size: 1380px auto; 
+    
+    /* --- NEU: Der Rahmen um jedes einzelne Sprite-Bild --- */
+    border: 2px solid red; 
+}
+
+/* Header & Lang Switch */
 .header-bar {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-bottom: 20px;
+    z-index: 100;
 }
-
 .header-bar h1 {
     font-family: 'Anton', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin: 0;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 0px #fff;
 }
-
 .lang-switch button {
     background-color: var(--border-dark);
     color: white;
     border: 2px solid white;
-    padding: 5px 15px;
+    padding: 3px 10px;
     font-family: 'Anton', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
-}
-
-/* Grid Layouts */
-.main-grid {
-    display: grid;
-    grid-template-columns: 380px 1fr 380px;
-    gap: 20px;
-    margin-bottom: 15px;
-}
-
-.left-col, .right-col {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.center-col {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.bottom-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
 }
 
 /* Box General Styling */
 .box {
     background-color: var(--box-bg);
-    border: 4px solid var(--border-dark);
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
-    position: relative;
+    border: 3px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+    position: absolute; /* Absolute for 1:1 positioning */
 }
 
 .box h2 {
     font-family: 'Anton', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin: 0 0 5px 0;
     text-align: center;
-    border-bottom: 3px solid var(--border-dark);
-    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border-dark);
+    padding-bottom: 3px;
     letter-spacing: 0.5px;
 }
-
 .box h3 {
     font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 5px 0;
     text-decoration: underline;
 }
-
-.box p {
-    font-size: 0.85rem;
-    margin: 0 0 5px 0;
-}
+.box p, .box span, .box div { font-size: 0.8rem; line-height: 1.2; }
 
 /* Custom Lists */
-ul {
-    list-style: none;
-    padding-left: 5px;
-    margin: 0;
-}
-
+ul { list-style: none; padding-left: 5px; margin: 0; }
 li {
-    font-size: 0.85rem;
-    line-height: 1.3;
-    margin-bottom: 4px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    margin-bottom: 3px;
     display: flex;
     align-items: flex-start;
 }
-
 li::before {
-    content: '';
-    display: inline-block;
-    min-width: 10px;
-    min-height: 10px;
-    margin-right: 8px;
-    margin-top: 3px;
-    border-radius: 50%;
-    border: 1px solid var(--border-dark);
+    content: ''; display: inline-block;
+    min-width: 8px; min-height: 8px;
+    margin-right: 6px; margin-top: 3px;
+    border-radius: 50%; border: 1px solid var(--border-dark);
 }
-
-/* Bullet Colors */
 .bullet-blue li::before { background-color: var(--blue-bullet); }
 .bullet-orange li::before { background-color: var(--orange-bullet); }
 .bullet-green li::before { background-color: var(--green-bullet); }
@@ -160,62 +157,72 @@ li::before {
 .box-green { background-color: var(--green-box); }
 .box-orange { background-color: var(--orange-box); }
 
-.bottom-grid .box h2 { font-size: 1.2rem; }
+/* --- SPECIFIC POSITIONS (Matching the image) --- */
+.bounty-box { top: 60px; left: 30px; width: 420px; }
+.gun-fight-box { top: 380px; left: 30px; width: 280px; }
+.ranking-up-box { top: 640px; left: 30px; width: 300px; }
 
-/* Specific internal layouts */
-.flex-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.skill-shot-box { top: 40px; right: 20px; width: 250px; }
+.extra-ball-box { top: 180px; right: 280px; width: 240px; }
+.bonus-box { top: 330px; right: 20px; width: 240px; }
+.bierkrug-box { top: 490px; right: 20px; width: 240px; }
 
-/* Stars for Ranking */
-.star-progression {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.75rem;
-}
-
-/* Connectors / Visual Flourishes */
-.collect-arrow {
-    font-weight: bold;
-    font-family: 'Anton', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.winner-logic {
-    border: 2px solid var(--border-dark);
-    padding: 5px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.8rem;
-    background-color: white;
-    border-radius: 5px;
-}
-
-.central-star-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
+/* The Center Main Star Area */
+.center-star-area {
+    position: absolute;
+    top: 100px;
+    left: 450px;
+    width: 480px;
+    height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-/* Bottom Arrows linking to Star */
-.arrow-up {
+.center-star-text {
+    position: absolute;
+    width: 200px;
     text-align: center;
-    margin-bottom: -15px;
-    position: relative;
+    background: rgba(255,255,255,0.85);
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--border-dark);
     z-index: 10;
 }
-.arrow-up svg {
-    width: 40px;
-    height: 40px;
+.center-star-text h2 { border: none; font-size: 1.1rem; line-height: 1.1; margin-bottom: 5px; color: #d84315; }
+.center-star-text li { font-size: 0.65rem; justify-content: center; text-align: center;}
+.center-star-text li::before { display: none; } /* Remove bullets for center text */
+
+/* Bottom 5 Boxes Area */
+.bottom-boxes-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
 }
+.bottom-box {
+    position: relative;
+    width: 200px;
+}
+.bottom-box h2 { font-size: 1rem; }
+.subtext { font-size: 0.65rem; font-style: italic; text-align: center; display: block; margin-bottom: 5px; }
+
+/* Layout Connectors & Flows inside boxes */
+.flex-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.collect-arrow { font-weight: bold; font-family: 'Anton', sans-serif; display: flex; align-items: center; font-size: 1.2rem; }
+.winner-logic { border: 2px solid var(--border-dark); padding: 5px; text-align: center; font-weight: bold; font-size: 0.75rem; background-color: white; border-radius: 5px; }
+.star-progression { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; text-align: center; font-weight: bold; font-size: 0.7rem; }
+
+/* --- Absolute position lines/arrows --- */
+.flow-arrow-down { position: absolute; top: 570px; left: 150px; width: 2px; height: 70px; background: var(--border-dark); }
+.flow-arrow-down::after { content: '▼'; position: absolute; bottom: -10px; left: -5px; font-size: 12px;}
+
+/* Sprite Arrows pointing to center star */
+.arr-blue { position: absolute; bottom: 260px; left: 450px; transform: rotate(15deg); }
+.arr-red { position: absolute; bottom: 230px; left: 580px; transform: rotate(10deg); }
+.arr-yellow { position: absolute; bottom: 210px; left: 750px; }
+.arr-green { position: absolute; bottom: 230px; right: 580px; transform: rotate(-10deg); }
+.arr-orange { position: absolute; bottom: 250px; right: 430px; transform: rotate(-15deg); }
+
+/* Beer icon absolute */
+.abs-beer { position: absolute; top: 400px; right: 280px; }
