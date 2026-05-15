@@ -124,7 +124,6 @@ const nodes = [
 ];
 
 const edges = [
-    { id: 'e-spinner-saloon', source: 'spinner', target: 'saloon_fight' },
     { id: 'e-bart_brothers-high_noon-s-top-t-right', source: 'bart_brothers', target: 'high_noon', sourceHandle: 's-top', targetHandle: 't-right' },
     { id: 'e-showdown-high_noon-s-top-t-left', source: 'showdown', target: 'high_noon', sourceHandle: 's-top', targetHandle: 't-left' },
     { id: 'e-combo-high_noon-s-left-t-right', source: 'combo', target: 'high_noon', sourceHandle: 's-left', targetHandle: 't-right' },
