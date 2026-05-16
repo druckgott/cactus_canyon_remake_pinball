@@ -66,6 +66,14 @@
             print-color-adjust: exact !important;
         }
 
+        /* --- PANNING CURSORS --- */
+        .map-wrapper-container {
+            cursor: grab; /* Zeigt eine offene Hand an */
+        }
+        .map-wrapper-container:active {
+            cursor: grabbing; /* Zeigt eine geschlossene Hand an beim Klicken */
+        }
+
         /* --- ZOOM CONTROLS --- */
         #zoom-controls {
             position: absolute; top: 10px; right: 10px; background: #3d2210; padding: 10px;
@@ -127,6 +135,15 @@
         .ptr-yellow { color: #fde047; text-shadow: 3px 3px 0 #a16207, 4px 5px 8px rgba(0,0,0,0.6); }
         .ptr-orange { color: #f97316; text-shadow: 3px 3px 0 #9a3412, 4px 5px 8px rgba(0,0,0,0.6); }
         .normal-pointer { position: absolute; font-size: 45px; color: #241205; font-weight: bold; text-shadow: 3px 3px 5px rgba(0,0,0,0.5); z-index: 10; left: var(--ptr-x); top: var(--ptr-y); transform: translate(-50%, -50%) rotate(var(--ptr-rot)); }
+
+        /* Macht alle Bilder auf der Karte als anklickbar erkennbar */
+        .board-container img {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .board-container img:hover {
+            transform: scale(1.03); /* Kleiner Hover-Effekt */
+        }
 
         /* --- PAPER BOXES --- */
         .paper-box {
@@ -391,12 +408,12 @@
                         <div class="box-title">MOTHER LODE (GOLD MINE)</div>
                         <div class="flex-row">
                             <div style="display:flex; gap: 8px;">
-                                <div class="img-placeholder" style="width: 65px; height: 85px; background: #e6b873; border: 2px solid #5c1e06; font-family: 'Rye'; color:#111; flex-direction: column;">LOCK<br><span style="font-size:0.45em; font-family:sans-serif;">Light Lock 1</span></div>
-                                <div class="img-placeholder" style="width: 65px; height: 85px; background: #e6b873; border: 2px solid #5c1e06; font-family: 'Rye'; color:#111; flex-direction: column;">LOCK<br><span style="font-size:0.45em; font-family:sans-serif;">Light Lock 2</span></div>
+                                <img src="images/lock_is_lit.png" style="width: 65px; height: 85px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px;">
+                                <img src="images/ball_1_locked.png" style="width: 65px; height: 85px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px;">
                                 <div class="img-placeholder" style="width: 65px; height: 85px; background: #e6b873; border: 2px solid #5c1e06; font-family: 'Rye'; color:#111; flex-direction: column;">LOCK<br><span style="font-size:0.45em; font-family:sans-serif;">Light Lock 3</span></div>
                             </div>
                             <div style="text-align: center;">
-                                <div class="img-placeholder" style="width: 170px; height: 75px; background: #e3f2fd;">Train Image</div>
+                                <img src="images/gold_mine_mulitball.png" style="width: 170px; height: 75px; object-fit: cover; border: 1px solid #3d2210; border-radius: 4px;">
                                 <b style="font-size: 0.9em; display:block; margin-top:8px;">GOLD MINE MULTIBALL</b>
                             </div>
                         </div>
@@ -423,7 +440,7 @@
                         <div class="chain-row"><span>Sound Alarm</span> <span>➔</span> <span>Shootout</span> <span>➔</span> <span>Save Polly</span></div>
                         
                         <div style="display: flex; justify-content: center; align-items: center; margin-top: 30px; padding-top: 20px;">
-                            <div class="img-placeholder" style="width: 210px; height: 80px; margin-right: 25px;">Stampede Art Placeholder</div>
+                            <img src="images/buckn_bronco.png" id="stampede-random-img" data-gallery='["images/buckn_bronco.png", "images/marksman_175.png", "images/save_polly_river.png"]' style="width: 210px; height: 80px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px; margin-right: 25px;">
                             <div style="text-align: center;">
                                 <b style="font-family: 'Rye'; font-size: 2.2em; color: #5c1e06;">➔ STAMPEDE</b>
                             </div>
@@ -493,7 +510,7 @@
                     <div class="paper-box scroll-box gunfight-system no-inner-border">
                         <div class="info-ribbon">NEW: Gunfight Value grows as you complete shot modes and defeat Bart Bros</div>
                         <div class="box-title" style="font-size: 2.2em; border-bottom: none; margin-bottom: 0; padding-top: 30px; color: #5c1e06;">GUNFIGHT SYSTEM</div>
-                        <img src="images/gunfight_1.jpg" style="width: 100%; height: 90px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px; margin-bottom: 10px;">
+                        <img src="images/gunfight_is_lit.png" style="width: 100%; height: 90px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px; margin-bottom: 10px;">
                         <div style="text-align: center; font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #3d2210; padding-bottom: 15px;">
                             <span style="color: #a21a36; font-family: 'Rye'; font-size: 1.9em;">Gunfight is Lit</span>
                         </div>
@@ -519,9 +536,9 @@
                         <div class="flex-row">
                             <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Big</div>
                             <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Bandolero</div>
-                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Bubba</div>
+                            <div class="wanted-poster">WANTED<br><img src="images/bubba_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #8a4b08; margin: 4px 0;"><br>Bubba</div>
                             <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Bionic</div>
-                            <div class="wanted-poster wanted-red">WANTED<br><img src="images/bella_bart_2.jpg" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #a31818; margin: 4px 0;"><br><b>NEW<br>BELLA</b></div>
+                            <div class="wanted-poster wanted-red">WANTED<br><img src="images/bella_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #a31818; margin: 4px 0;"><br><b>NEW<br>BELLA</b></div>
                         </div>
                         <div class="paper-tooltip tooltip-left">
                             <b>Bart Brothers Details:</b><br>
@@ -557,7 +574,7 @@
                     <div class="paper-box spinner-box theme-saloon">
                         <div class="pin"></div>
                         <div class="box-title" style="font-size: 1.35em;">SPINNER & SALOON FIGHT</div>
-                        <img src="images/saloon_figh_1.jpg" style="width: 100%; height: 60px; object-fit: cover; border: 1px solid #4a217a; border-radius: 4px; margin-top: 5px;">
+                        <img src="images/saloon_fight_lit.png" style="width: 100%; height: 60px; object-fit: cover; border: 1px solid #4a217a; border-radius: 4px; margin-top: 5px;">
                         <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 25px;">
                             <div class="purple-node" style="width: 42%; font-size: 1.05em; background:#fff;">200 Spins<br>➔ Saloon</div>
                             <b style="font-size: 2em; color:#4a217a;">➔</b>
@@ -783,66 +800,208 @@
 </footer>
 
 <script>
+    const container = document.querySelector('.map-wrapper-container');
     const wrapper = document.getElementById('board-wrapper');
-    const boardWidth = 2000; 
-    let currentZoom = 1;
+    const boardWidth = 2000;
+    const boardHeight = 2000; // Entspricht deiner --board-height
 
-    function setInitialZoom() {
-        const container = document.querySelector('.map-wrapper-container');
-        const availableWidth = container.clientWidth - 40; 
-        currentZoom = availableWidth / boardWidth;
-        
-        if(currentZoom > 1.2) currentZoom = 1.2; 
-        
-        wrapper.style.transform = `scale(${currentZoom})`;
-        
-        // HÖHE DER BOX BERECHNEN UND SETZEN
-        const boardHeight = 2000; // Deine --board-height
-        const marginTop = 80;     // Platz für die Zoom-Buttons oben
-        const paddingBottom = 20; // Etwas Puffer unten
-        
-        const scaledHeight = (boardHeight * currentZoom) + marginTop + paddingBottom;
-        container.style.height = scaledHeight + 'px';
-    }
+    // Startwerte
+    let currentScale = 1;
+    let pointX = 0;
+    let pointY = 0;
+    
+    // Hilfsvariablen für das Ziehen
+    let isPanning = false;
+    let startX = 0;
+    let startY = 0;
 
-    function changeZoom(delta) {
-        currentZoom += delta;
-        if(currentZoom < 0.2) currentZoom = 0.2;
-        if(currentZoom > 1.5) currentZoom = 1.5;
+    // Zentrale Funktion, die das Zoomen UND das Verschieben anwendet
+    function updateTransform() {
+        wrapper.style.transform = `translate(${pointX}px, ${pointY}px) scale(${currentScale})`;
         
-        wrapper.style.transform = `scale(${currentZoom})`;
-        
-        // HÖHE DER BOX AUCH BEIM KLICKEN AUF +/- ANPASSEN
-        const container = document.querySelector('.map-wrapper-container');
-        const boardHeight = 1800; 
-        const marginTop = 80; 
+        // Höhe des Containers anpassen, damit nichts abgeschnitten wird
+        const marginTop = 80;
         const paddingBottom = 20;
-        
-        const scaledHeight = (boardHeight * currentZoom) + marginTop + paddingBottom;
+        const scaledHeight = (boardHeight * currentScale) + marginTop + paddingBottom;
         container.style.height = scaledHeight + 'px';
     }
 
-    function resetZoom() {
-        setInitialZoom();
+    // --- AUTO-ZOOM (beim Laden & Resize) ---
+    function setInitialZoom() {
+        const availableWidth = container.clientWidth - 40; 
+        currentScale = availableWidth / boardWidth;
+        
+        if (currentScale > 1.2) currentScale = 1.2; 
+        
+        // Beim Auto-Fit setzen wir auch die Verschiebung wieder auf 0 zurück
+        pointX = 0;
+        pointY = 0;
+        
+        wrapper.style.transition = "transform 0.2s ease-out";
+        updateTransform();
     }
 
+    // --- BUTTON ZOOM LOGIK ---
+    window.changeZoom = function(step) {
+        currentScale += step;
+        if (currentScale < 0.2) currentScale = 0.2;
+        if (currentScale > 3.0) currentScale = 3.0; // Max zoom
+        
+        wrapper.style.transition = "transform 0.2s ease-out"; 
+        updateTransform();
+    };
+
+    window.resetZoom = function() {
+        setInitialZoom();
+    };
+
+    // --- PANNING / DRAG LOGIK ---
+    container.addEventListener('mousedown', function(e) {
+        e.preventDefault(); 
+        isPanning = true;
+        
+        startX = e.clientX - pointX;
+        startY = e.clientY - pointY;
+        
+        wrapper.style.transition = "none"; // Animation aus, damit es an der Maus klebt
+    });
+
+    // Benutze window für mousemove/mouseup, damit es nicht stockt, wenn man schnell zieht
+    window.addEventListener('mousemove', function(e) {
+        if (!isPanning) return; 
+        
+        pointX = e.clientX - startX;
+        pointY = e.clientY - startY;
+        
+        updateTransform();
+    });
+
+    window.addEventListener('mouseup', function() {
+        isPanning = false;
+    });
+
+    // Initiale Events
     window.addEventListener('DOMContentLoaded', setInitialZoom);
     window.addEventListener('resize', setInitialZoom); 
+
+    // --- HIER NEU: BILDER-MODAL LOGIK MIT GALERIE ---
+    window.addEventListener('DOMContentLoaded', function() {
+        const imageModalEl = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const prevBtn = document.getElementById('modalPrevBtn');
+        const nextBtn = document.getElementById('modalNextBtn');
+        
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        if (imageModalEl && modalImage) {
+            const bsModal = new bootstrap.Modal(imageModalEl);
+
+            function updateModalImage() {
+                modalImage.style.opacity = 0.3; // Kurzer Fade-Effekt
+                setTimeout(() => {
+                    modalImage.setAttribute('src', currentGallery[currentIndex]);
+                    modalImage.style.opacity = 1;
+                }, 150);
+
+                // Buttons nur anzeigen, wenn es mehr als 1 Bild gibt
+                if (currentGallery.length > 1) {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            }
+
+            // Klick auf Map-Bilder
+            wrapper.addEventListener('click', function(e) {
+                if (e.target.tagName === 'IMG') {
+                    const clickedSrc = e.target.getAttribute('src');
+                    if (!clickedSrc) return;
+
+                    // 1. Prüfen ob "data-gallery" existiert (z. B. für Stampede Zufallsbilder)
+                    const dataGallery = e.target.getAttribute('data-gallery');
+                    if (dataGallery) {
+                        try {
+                            currentGallery = JSON.parse(dataGallery);
+                            // Falls das angeklickte Bild nicht im Array ist, fügen wir es temporär hinzu
+                            currentIndex = currentGallery.indexOf(clickedSrc);
+                            if(currentIndex === -1) {
+                                currentGallery.unshift(clickedSrc);
+                                currentIndex = 0;
+                            }
+                        } catch(err) {
+                            currentGallery = [clickedSrc];
+                            currentIndex = 0;
+                        }
+                    } else {
+                        // 2. Automatisches Gruppieren innerhalb der gleichen .paper-box
+                        const parentBox = e.target.closest('.paper-box');
+                        if (parentBox) {
+                            // Sammelt alle <img> src Attribute aus dieser Box
+                            const imgs = Array.from(parentBox.querySelectorAll('img')).map(img => img.getAttribute('src'));
+                            currentGallery = imgs;
+                            currentIndex = currentGallery.indexOf(clickedSrc);
+                        } else {
+                            // Fallback, falls das Bild außerhalb einer Box liegt
+                            currentGallery = [clickedSrc];
+                            currentIndex = 0;
+                        }
+                    }
+
+                    updateModalImage();
+                    bsModal.show();
+                }
+            });
+
+            // Klick auf Zurück
+            prevBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+                updateModalImage();
+            });
+
+            // Klick auf Weiter
+            nextBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex + 1) % currentGallery.length;
+                updateModalImage();
+            });
+            
+            // Tastatur-Steuerung (Pfeil links / Pfeil rechts)
+            document.addEventListener('keydown', function(e) {
+                if (imageModalEl.classList.contains('show') && currentGallery.length > 1) {
+                    if (e.key === 'ArrowLeft') prevBtn.click();
+                    if (e.key === 'ArrowRight') nextBtn.click();
+                }
+            });
+        }
+    });
+
+
 </script>
 
-<!-- Modal for Images -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content bg-transparent border-0">
-      <div class="modal-body p-0 text-center">
-        <img id="modalImage" src="" class="img-fluid" alt="Playfield">
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" style="z-index: 10500;">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content" style="background: #fdfaf2; border: 3px solid #3d2210; border-radius: 8px; position: relative;">
+      <div class="modal-header" style="border-bottom: 2px solid #3d2210;">
+        <h5 class="modal-title" id="imageModalLabel" style="font-family: 'Rye', serif; color: #2b1708;">Detailansicht</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #e2a84a; opacity: 1;"></button>
+      </div>
+      <div class="modal-body text-center p-4 position-relative">
+        
+        <button id="modalPrevBtn" class="btn position-absolute top-50 start-0 translate-middle-y ms-2" style="z-index: 1055; background: #3d2210; color: #e2a84a; font-size: 24px; border: 2px solid #e2a84a; display: none;">&#10094;</button>
+        
+        <img id="modalImage" src="" alt="Großansicht" style="max-width: 100%; max-height: 80vh; object-fit: contain; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #3d2210; transition: opacity 0.2s ease-in-out;">
+        
+        <button id="modalNextBtn" class="btn position-absolute top-50 end-0 translate-middle-y me-2" style="z-index: 1055; background: #3d2210; color: #e2a84a; font-size: 24px; border: 2px solid #e2a84a; display: none;">&#10095;</button>
+
       </div>
     </div>
   </div>
 </div>
 
-<!-- Statt der drei <script> Blöcke -->
-<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="js/scripts.js"></script>
 </body>
 </html>
