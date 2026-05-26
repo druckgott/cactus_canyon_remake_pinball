@@ -1,0 +1,51 @@
+1. Das Rang-System (Rank Progression)
+
+Auf deiner PDF steht, was die Ränge freischalten (Gunfight Ball Save, Mini Wizard Mode), aber nicht exakt, wie man aufsteigt.
+
+    Die Mechanik: Der Aufstieg durch die Ränge (Stranger -> Partner -> Deputy -> Sheriff -> Marshall) ist direkt an gewonnene Duelle (Gunfights) gekoppelt. Jeder erfolgreich abgeschlossene Gunfight bringt dich exakt einen Rang nach oben.
+
+2. Showdown (Quick Draws & Multiball Ablauf)
+
+    Unterschied Quick Draw vs. Gunfight: Wenn ein Gunfight über die Inlanes aktiviert wird, stoppen Posts die Kugel, um dich auf das Duell vorzubereiten. Ein Quick Draw (für den Showdown) stoppt die Kugel nicht; das Drop-Target poppt mitten im flüssigen Spiel auf und du musst es aus der Bewegung heraus treffen.
+
+    Exakter Showdown-Phasen-Ablauf: Der Showdown Multiball besteht aus exakt 5 Phasen (Stages).
+
+    Ball-Hinzunahme: Er startet als 2-Ball-Multiball. Sobald du das erste Set an Drop-Targets abgeräumt hast, wird eine dritte Kugel ins Spiel gebracht.
+
+    Der Zyklus: In jeder der 5 Phasen musst du zuerst alle aufgestellten Drop-Targets abräumen und anschließend einen noch ungetroffenen, rot leuchtenden Haupt-Jackpot schießen.
+
+    Das Finale: In der 5. Phase schießt du die letzten Targets ab und der finale Treffer muss dann zentral auf Boss Bart erfolgen, um die Victory Laps zu starten.
+
+3. Extra Balls (Die garantierten Wege)
+
+    Train Mode (Save Polly): Das erfolgreiche Beenden des Train Modes (Ablauf: Linke Rampe -> Rechte Rampe -> Center) beleuchtet garantiert einen Extra Ball.
+
+    Beer Mug: Neben den Modi (Shootout, Franks & Beans, Drunken Multiball) schalten reine Treffer auf den Bierkrug ebenfalls irgendwann einen Extra Ball frei.
+
+4. Shot Modes (Stampede-Ketten) Mechaniken
+
+    Bank Robber Mode: Du hast ein strenges Zeitlimit. Um den Modus zu beenden, musst du den 3. Schuss von links (Rechte Rampe) treffen. Pro-Tipp: Du kannst vorher die anderen leuchtenden Schüsse treffen, um Zusatzpunkte zu farmen, bevor du mit dem Hauptschuss den Modus beendest.
+
+    Marksman Mode Punkte-Maximierung: Es leuchten immer drei Ziele. Pro-Tipp: Triff unbedingt erst die beiden äußeren Ziele! Wenn du das mittlere Ziel (Center) zuerst triffst, wird der Modus sofort beendet und dir entgehen die Punkte der anderen beiden Targets.
+
+    Left Orbit Gate: Bei den "Buckin' Bronco/Horse" Modi fängt das Gate im linken Orbit die Kugel normalerweise ab und lässt sie in die Pop-Bumper (Pilze) fallen. Nur bei bestimmten Events (wie dem Super Skill Shot Hurry-Up) öffnet sich das Gate, sodass die Kugel den Orbit komplett durchlaufen kann.
+
+5. Bart Brothers & Saloon Party Details
+
+    Eskalierende Schwierigkeit: Der erste Bart erfordert nur wenige Treffer. Jeder weitere Bart auf dem Weg zu Bionic Bart erfordert immer mehr Treffer gegen die Saloon-Türen, bevor er besiegt ist.
+
+    Saloon Party Startbedingung: Der Modus "Saloon Party" startet nicht automatisch in der Sekunde, in der du Bionic Bart besiegst. Danach musst du erst mehrmals auf die Saloon-Tür schießen, um symbolisch "jedem Gast ein Bier auszugeben", erst dann wird die Saloon Party wirklich aktiv.
+
+6. Skill Shot & Plunge-Physik
+
+    Kontrolle über den Trichter (Funnel): Die Stärke, mit der du die Kugel abziehst, bestimmt exakt, wie viele Runden sie im Trichter dreht. Mit Übung ("Short Plunge" vs. "Full Plunge") kannst du so das Timing perfektionieren, um zielgenau den Hurry-Up (für den linken Orbit) oder den Millionen-Boost im Inlane-Rollover auszuwählen.
+
+7. Video Mode Details (Shootout)
+
+    Das Gameplay: Wenn du Shootout als Video-Modus auf dem Display spielst (weil kein Topper vorhanden ist), steuerst du mit den Flipperfingern nach links und rechts.
+
+    Regel: Du darfst unter keinen Umständen Frauen oder Kühe abschießen. Du musst warten, bis der Bad Guy freie Schussbahn hat, und das Timing perfekt abpassen.
+
+8. Instant Info (Status Report)
+
+    Gunfight Multiplier Check: Wenn du im Spiel die Flipperfinger gedrückt hältst, öffnet sich der "Status Report". Dort kannst du exakt ablesen, wie hoch dein aktueller Gunfight-Multiplier (2x, 3x, 4x...) durch gestackte Shot-Modes gerade ist, bevor du dich entscheidest, das Duell zu starten.

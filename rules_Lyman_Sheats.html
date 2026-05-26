@@ -213,7 +213,7 @@
         .paper-tooltip {
             position: absolute; top: 105%; left: 50%; transform: translateX(-50%);
             width: 320px; background: #fcf8ee; border: 2px solid #8a4b08; border-radius: 4px; padding: 15px;
-            font-family: 'Spectral', serif; font-size: 20px; color: #2b1708; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            font-family: 'Spectral', serif; font-size: 26px; color: #2b1708; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
             opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; pointer-events: none; text-align: left;
         }
         .paper-tooltip::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-width: 10px; border-style: solid; border-color: transparent transparent #8a4b08 transparent; }
@@ -458,7 +458,13 @@
                         <div class="box-title">STAMPEDE (SHOT MODES)</div>
                         <div class="chain-row"><span>Buck'n Bronco</span> <span>➔</span> <span>Wild Ride</span> <span>➔</span> <span>Ride 'Em Cowboy</span></div>
                         <div class="chain-row"><span>Whitewater</span> <span>➔</span> <span>Waterfall</span> <span>➔</span> <span>Save Polly</span></div>
-                        <div class="chain-row"><span>Cactus Train</span> <span>➔</span> <span>Stop Train</span> <span>➔</span> <span>Save Polly</span></div>
+                        
+                        <!-- NEU: Extra Ball Hinweis beim Train Mode -->
+                        <div class="chain-row">
+                            <span>Cactus Train</span> <span>➔</span> <span>Stop Train</span> <span>➔</span> 
+                            <span>Save Polly <b style="color: #a21a36; font-size: 0.85em;">(EXTRA BALL)</b></span>
+                        </div>
+                        
                         <div class="chain-row"><span>Good Shot</span> <span>➔</span> <span>Gunslinger</span> <span>➔</span> <span>Marksman</span></div>
                         <div class="chain-row"><span>Sound Alarm</span> <span>➔</span> <span>Shootout</span> <span>➔</span> <span>Save Polly</span></div>
                         
@@ -470,8 +476,9 @@
                         </div>
                         <div class="paper-tooltip tooltip-right">
                             <b>Stampede Details:</b><br>
-                            Complete these five mode chains. <span class="cite"></span><br><br>
-                            Once you reach all five end states (e.g., Save Polly or Marksman), Stampede is unlocked, leading to the High Noon Wizard Mode. <span class="cite"></span>
+                            Complete these five mode chains. Once you reach all five end states, Stampede is unlocked, leading to High Noon. <span class="cite"></span><br><br>
+                            <!-- NEU: Erklärung des Train Extra Balls -->
+                            <b>Guaranteed Extra Ball:</b> Successfully completing the Train Mode chain (Shoot Left Ramp ➔ Right Ramp ➔ Center) guarantees a lit Extra Ball!
                         </div>
                     </div>
 
@@ -482,18 +489,32 @@
                             <div style="width: 45%; margin-top: 20px; margin-left: 10px;">
                                 <div class="ribbon" style="border-color: #5c1e06;">LIGHT QUICK DRAW x4</div>
                                 <div class="ribbon" style="border-color: #5c1e06;">SHOOT BAD GUYS 1-4</div>
+                                
+                                <!-- NEU: Wichtiger Hinweis zum "On the fly" Schießen -->
+                                <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #a21a36; margin-top: 15px; line-height: 1.3;">
+                                    Hit on the fly!<br>
+                                    <span style="font-weight: normal; color: #555; font-style: italic;">(No ball stop like Gunfights)</span>
+                                </div>
                             </div>
+                            
                             <div style="width: 48%; text-align: center; border: 2px solid #5c1e06; padding: 15px; background: #fffdf9; border-radius: 4px;">
                                 <b style="font-family: 'Rye'; font-size: 1.4em; color: #1d0936;">SHOWDOWN<br>MULTIBALL</b>
-                                <div style="font-size: 0.9em; margin: 8px 0; font-style: italic;">Shoot Bad Guys and Jackpots</div>
+                                <!-- NEU: Add-a-ball Teaser -->
+                                <div style="font-size: 0.85em; margin: 8px 0; font-weight: bold; color: #5c1e06;">Starts 2-Ball ➔ Adds 3rd Ball</div>
+                                
                                 <div class="img-placeholder" style="height: 50px; margin-bottom: 8px; background: #111; color: #f44; border-color: #000;">Big Bad Guy Lit</div>
                                 <img src="images/showdown_2.jpg" style="width: 100%; height: 75px; object-fit: cover; border: 1px solid #3d2210; border-radius: 4px;">
                             </div>
                         </div>
-                        <div class="paper-tooltip tooltip-up tooltip-right">
-                            <b>Showdown Details:</b><br>
-                            Trigger Light Quick Draw four times to shoot Bad Guys 1 to 4. This leads to the Showdown. <span class="cite"></span><br><br>
-                            After 25 years of waiting: Boss Bart joins the battle. Hit all 4 Drop Targets and Jackpots to defeat Boss Bart and start Victory Laps! <span class="cite"></span>
+                        
+                        <div class="paper-tooltip tooltip-up tooltip-right" style="width: 380px;">
+                            <b>Quick Draw vs. Gunfight:</b><br>
+                            Unlike Gunfights, Quick Draws do <i>not</i> stop the ball via posts. Drop targets pop up during fluid gameplay and must be hit on the fly! <span class="cite"></span><br><br>
+                            
+                            <b>Showdown Multiball (5 Stages):</b><br>
+                            Starts as a 2-ball multiball. Clearing the first set of drops adds a 3rd ball! <span class="cite"></span><br>
+                            <b>The Cycle:</b> In each stage, clear all active drop targets, then shoot an uncollected red-lit Jackpot.<br>
+                            <b>The Finale (Stage 5):</b> Clear the final targets, then shoot Boss Bart directly in the center to start Victory Laps! <span class="cite"></span>
                         </div>
                     </div>
 
@@ -502,10 +523,18 @@
                         <div class="box-title">SUPER SKILL SHOT</div>
                         <img src="images/skill_shot.jpg" style="width: 100%; height: 80px; object-fit: cover; border: 2px solid #1a4269; border-radius: 4px;">
                         <div style="text-align: center; font-style: italic; margin-top: 12px; font-size: 1em;">Plunge Hurry-Up, then Shoot Left Loop</div>
+                        
+                        <!-- NEU: Kleiner Teaser für das Timing-Risiko -->
+                        <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #a21a36; margin-top: 5px;">
+                            ⚠️ Watch your timing!
+                        </div>
+
                         <div class="paper-tooltip tooltip-right">
                             <b>Skill Shot Details:</b><br>
-                            Start: Left orbit immediately after ball launch. Theme: Old Man Ames is losing his goods. <span class="cite"></span><br>
-                            Reward: Increasing Hurry-Up values that positively influence future Skill Shots. <span class="cite"></span>
+                            Start: Left orbit immediately after ball launch. Theme: Old Man Ames is losing his goods. <span class="cite"></span><br><br>
+                            Reward: Increasing Hurry-Up values that positively influence future Skill Shots. <span class="cite"></span><br><br>
+                            <!-- NEU: Das Risiko und die Nieten -->
+                            <b>Risk & Timing:</b> Plunging blindly is dangerous! Very low-value "duds" (like 10k, 50k) are now mixed into the cup rotation. You need perfect timing to grab the lucrative rewards.
                         </div>
                     </div>
 
@@ -646,12 +675,20 @@
                             <div class="purple-node" style="background:#fffaf0; border-color:#8c5a08; color:#8c5a08;">15 Mugs ➔ Franks N' Beans<br><span style="font-size: 0.8em; font-family: sans-serif;">(Timed Frenzy)</span></div>
                             <div class="purple-node" style="background:#fffaf0; border-color:#8c5a08; color:#8c5a08;">25 Mugs ➔ Drunken Multiball<br><span style="font-size: 0.8em; font-family: sans-serif;">(Inverted Flippers, Super Jackpot)</span></div>
                         </div>
-                        <div style="display: flex; gap: 10px; margin: 25px 0; justify-content: center;"><img src="images/frank_n_beans_1.jpg" style="width: 48%; height: 80px; object-fit: cover; border: 2px solid #8c5a08; border-radius: 4px;" title="Franks N Beans"><img src="images/drunkn_multiball.jpg" style="width: 48%; height: 80px; object-fit: cover; border: 2px solid #8c5a08; border-radius: 4px;" title="Drunken Multiball"></div>
+                        
+                        <!-- NEU: Extra Ball Teaser -->
+                        <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #a21a36; margin-top: 15px;">
+                            ⭐ Mug hits also eventually Light EXTRA BALL!
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;"><img src="images/frank_n_beans_1.jpg" style="width: 48%; height: 80px; object-fit: cover; border: 2px solid #8c5a08; border-radius: 4px;" title="Franks N Beans"><img src="images/drunkn_multiball.jpg" style="width: 48%; height: 80px; object-fit: cover; border: 2px solid #8c5a08; border-radius: 4px;" title="Drunken Multiball"></div>
                         <div class="paper-tooltip tooltip-left tooltip-up">
                             <b>Beer Mug Details:</b><br>
                             Beer Mugs serve as the central mode unlock mechanism. <span class="cite"></span><br><br>
-                            <b>Franks & Beans:</b> Timed Switch Frenzy. <span class="cite"></span><br>
-                            <b>Drunken Multiball:</b> Inverted flippers, Beer Mug is the Super Jackpot! <span class="cite"></span>
+                            <b>Franks & Beans:</b> Timed Switch Frenzy. <br>
+                            <b>Drunken Multiball:</b> Inverted flippers, Beer Mug is the Super Jackpot! <span class="cite"></span><br><br>
+                            <!-- NEU: Extra Ball im Tooltip -->
+                            <b>Extra Ball:</b> Alongside these modes, pure hits on the mug will also eventually light an Extra Ball.
                         </div>
                     </div>
 
@@ -699,18 +736,24 @@
                     <div class="paper-box rank-system" style="background: #fcf8ee;">
                         <div class="pin"></div>
                         <div class="box-title" style="font-size: 1.9em;">RANK SYSTEM</div>
-                        <div style="text-align: center; font-size: 1em; margin-bottom: 30px;">(META PROGRESSION)</div>
+                        <div style="text-align: center; font-size: 1em; margin-bottom: 15px;">(META PROGRESSION)</div>
+                        
+                        <!-- NEU: Klare Erklärung der Kernmechanik -->
+                        <div style="text-align: center; font-size: 1em; font-weight: bold; color: #8a1c1c; margin-bottom: 25px; border-bottom: 1px dashed #8b6508; padding-bottom: 15px;">
+                            Mechanic: Win a Gunfight (Duel) to advance exactly one rank!
+                        </div>
                         
                         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Shoot Bad Guy 1</div>
+                            <!-- TEXT ANGEPASST: "Win Gunfight" statt "Shoot Bad Guy" -->
+                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Win Gunfight 1</div>
                             <div class="img-placeholder" style="width: 220px; height: 45px; border: 2px dashed #8b6508; background:#fff;">STRANGER</div>
                             <div style="font-weight:bold; font-size:1.1em;">⬇</div>
                             
-                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Shoot Bad Guy 2</div>
+                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Win Gunfight 2</div>
                             <div class="img-placeholder" style="width: 220px; height: 45px; border: 2px dashed #8b6508; background:#fff;">PARTNER</div>
                             <div style="font-weight:bold; font-size:1.1em;">⬇</div>
                             
-                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Shoot Bad Guy 3</div>
+                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Win Gunfight 3</div>
                             <div class="img-placeholder" style="width: 220px; height: 45px; border: 2px dashed #006400; color: #006400; background:#fff;">DEPUTY</div>
                             
                             <div style="font-size: 0.9em; text-align: center; border: 2px solid #a31818; padding: 12px; margin: 6px 0; background: #fcebeb; color: #8a1c1c;">
@@ -719,11 +762,11 @@
                             
                             <div style="font-weight:bold; font-size:1.1em;">⬇</div>
                             
-                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Shoot Bad Guy 4</div>
+                            <div style="font-size: 0.9em; font-style: italic; color:#555;">Win Gunfight 4</div>
                             <div class="img-placeholder" style="width: 220px; height: 45px; border: 2px dashed #8b6508; background:#fff;">SHERIFF</div>
                             <div style="font-weight:bold; font-size:1.1em;">⬇</div>
                             
-                            <div style="font-size: 0.9em; font-style: italic; font-weight: bold;">Complete All</div>
+                            <div style="font-size: 0.9em; font-style: italic; font-weight: bold;">Win Gunfight 5</div>
                             <img src="images/marshall_1.jpg" style="width: 220px; height: 60px; object-fit: cover; border: 2px solid #4b0082; border-radius: 4px; box-shadow: 2px 2px 8px rgba(0,0,0,0.3);">
                             
                             <div style="width: 95%; margin-top: 30px; text-align: center; border: 2px solid #5a2e8c; background: #f4eef9; padding: 18px; box-sizing: border-box; border-radius: 4px;">
@@ -733,9 +776,10 @@
                                 <div class="purple-node" style="font-size: 0.95em; background:#fff;">5 Jackpots + Bad Guys + Saloon<br>➔ <b>Marshall Multiball</b></div>
                             </div>
                         </div>
+                        
                         <div class="paper-tooltip tooltip-left tooltip-up">
                             <b>Rank System Details:</b><br>
-                            A strong meta-progression across ranks. <span class="cite"></span><br>
+                            A strong meta-progression across ranks. Every successfully completed Gunfight (Duel) ranks you up exactly one level! <span class="cite"></span><br><br>
                             Deputy unlocks the Gunfight Ball Save. <span class="cite"></span><br>
                             Marshall unlocks the Mini-Wizard Mode. <span class="cite"></span><br><br>
                             <b>Mini Wizard Mode:</b><br>
@@ -761,18 +805,32 @@
                     <h2 class="rule-title">Stampede (Shot Modes)</h2>
                     <p>Complete these five mode chains. <span class="cite"></span></p>
                     <p>Once you reach all five end states (e.g., Save Polly or Marksman), Stampede is unlocked, leading to the High Noon Wizard Mode. <span class="cite"></span></p>
+                    
+                    <!-- NEU: Train Mode Extra Ball -->
+                    <p><b>Extra Ball (Train Mode):</b> Successfully completing the Train Mode chain (by shooting Left Ramp ➔ Right Ramp ➔ Center) guarantees lighting an Extra Ball!</p>
                 </div>
 
                 <div class="rule-card">
-                    <h2 class="rule-title">Showdown (Quick Draws)</h2>
+                    <h2 class="rule-title">Showdown (Quick Draws & Multiball)</h2>
                     <p>Trigger Light Quick Draw four times to shoot Bad Guys 1 to 4. This leads to the Showdown. <span class="cite"></span></p>
-                    <p>After 25 years of waiting: Boss Bart joins the battle. Hit all 4 Drop Targets and Jackpots to defeat Boss Bart and start Victory Laps! <span class="cite"></span></p>
+                    
+                    <!-- NEU: Quick Draw vs Gunfight Unterschied -->
+                    <p><b>Quick Draw vs. Gunfight:</b> Unlike Gunfights, Quick Draws do <i>not</i> stop the ball in the inlanes. Drop targets pop up during fluid gameplay and must be hit on the fly.</p>
+                    
+                    <!-- NEU: Die 5 Phasen exakt erklärt -->
+                    <p><b>Showdown Multiball (5 Stages):</b><br>
+                    Starts as a 2-ball multiball. Clearing the first set of drop targets adds a 3rd ball into play! <span class="cite"></span><br>
+                    <b>The Cycle:</b> In each of the 5 stages, you must first clear all active drop targets, and then shoot one uncollected, red-lit main jackpot. <span class="cite"></span><br>
+                    <b>The Finale:</b> In the 5th and final stage, after clearing the last drop targets, hit Boss Bart centrally to defeat him and start Victory Laps! <span class="cite"></span></p>
                 </div>
 
                 <div class="rule-card">
                     <h2 class="rule-title">Super Skill Shot</h2>
                     <p>Start: Left orbit immediately after ball launch. Theme: Old Man Ames is losing his goods. <span class="cite"></span></p>
                     <p>Reward: Increasing Hurry-Up values that positively influence future Skill Shots. <span class="cite"></span></p>
+                    
+                    <!-- NEU: Erklärung des Risikos im Appendix -->
+                    <p><b>Risk & Timing:</b> Very low-value "duds" (like 10k or 50k) are now mixed into the cup rotation alongside the lucrative values. Plunging blindly is risky—proper timing is essential to avoid these traps and secure the big rewards!</p>
                 </div>
 
                 <div class="rule-card">
@@ -820,10 +878,17 @@
                     <p>Beer Mugs serve as the central mode unlock mechanism. <span class="cite"></span></p>
                     <p><b>Franks & Beans:</b> Timed Switch Frenzy. <span class="cite"></span></p>
                     <p><b>Drunken Multiball:</b> Inverted flippers, Beer Mug is the Super Jackpot! <span class="cite"></span></p>
+                    
+                    <!-- NEU: Beer Mug Extra Ball -->
+                    <p><b>Extra Ball:</b> Alongside unlocking modes, accumulating pure hits on the Beer Mug will also eventually light an Extra Ball.</p>
                 </div>
 
                 <div class="rule-card">
-                    <h2 class="rule-title">Shootout Topper Mode</h2>
+                    <h2 class="rule-title">Shootout Topper Mode / Video Mode</h2>
+                    
+                    <!-- NEU: Wichtiger Hinweis für die Druckansicht -->
+                    <p><b>Alternative:</b> If a physical Topper is not installed on the machine, this mode automatically plays as a pure Video Mode on the main LCD display! <span class="cite"></span></p>
+                    
                     <p>Waves of enemies appear. The clear goal: Shoot Bad Guys, but strictly avoid Bystanders (civilians)! <span class="cite"></span></p>
                 </div>
 
@@ -839,6 +904,10 @@
                 <div class="rule-card">
                     <h2 class="rule-title">Rank System (Meta Progression)</h2>
                     <p>A strong meta-progression across ranks. <span class="cite"></span></p>
+                    
+                    <!-- NEU: Erklärung der Mechanik im Appendix -->
+                    <p><b>Core Mechanic:</b> Every successfully completed Gunfight (Duel) ranks you up exactly one level (Stranger ➔ Partner ➔ Deputy ➔ Sheriff ➔ Marshall).</p>
+                    
                     <p>Deputy unlocks the Gunfight Ball Save. <span class="cite"></span></p>
                     <p>Marshall unlocks the Mini-Wizard Mode. <span class="cite"></span></p>
                     <p><b>Mini Wizard Mode:</b><br>

@@ -1,0 +1,60 @@
+1. Topper Geheimnisse (Visual Feedback)
+
+Viele denken, der Topper sei nur Deko, aber er liefert aktiv wichtiges Feedback zum Spiel:
+
+    Die Fenster: Die Fenster im Hintergrund des Toppers schalten sich je nach Modus ein und aus, um deinen Fortschritt anzuzeigen [05:24].
+
+    Versteckte Ladeanzeige: Die gesamte untere schwarze Kante des Toppers ist mit versteckten LEDs bestückt [05:29]. Diese zeigen beispielsweise beim "Shootout" deine verbleibenden Patronen oder beim "Saloon Fight" deine gesammelten Spinner-Umdrehungen an [05:29].
+
+2. Bionic Bart (Der Mini-Wizard Mode)
+
+Die Regeln für den Kampf gegen Bionic Bart sind sehr spezifisch und verzeihen Fehler:
+
+    Phasen-Kampf: Der Modus läuft in drei Stufen ab. Zuerst musst du 1 beleuchteten Jackpot-Schuss treffen und danach Bart [21:03]. Dann 2 verschiedene Schüsse und Bart [21:23]. Zuletzt 3 verschiedene Schüsse und Bart [21:36].
+
+    Kein Reset bei Drain: Wenn du während dieses Modus die Kugel verlierst, geht der Modus beim nächsten Ball exakt dort weiter, wo du aufgehört hast – dein Fortschritt bleibt gespeichert [21:44]!
+
+3. Gold Mine Multiball & Der "Joker"
+
+    Der Timer: Während des Multiballs bewegt sich die Mine auf und ab [17:58]. Du hast einen 10-Sekunden-Timer, um den Ball genau dann in die Mine zu schießen, wenn sie offen ist [17:58]. Dieser Timer setzt sich wieder auf 10 Sekunden zurück, sobald du stattdessen einen anderen Jackpot triffst [17:58].
+
+    Die "Joker"-Mechanik: Im alten Code hat ein Schuss in den Saloon dir einen noch fehlenden Jackpot geschenkt [17:39]. Da die neuen Saloon-Türen das jetzt blockieren, fungiert die Mine als neuer Joker: Schießt du direkt in die Mine, gewährt dir das Spiel automatisch einen deiner noch ungetroffenen Jackpots [17:45].
+
+4. Marshall Mode & Marshall Multiball
+
+Die Mechanik rund um die Drop-Targets ist hier entscheidend:
+
+    Phase 1 (Pop-ups): In der Vorbereitungsphase poppen die Drop-Targets in verschiedenen Formationen auf [14:33]. Wenn du es schaffst, die Kugel exakt durch die Lücken zu spielen, ohne die aufgestellten Targets an der Seite zu berühren, ist der Schuss massiv mehr Punkte wert [14:33].
+
+    Phase 2 (Multiball): Es handelt sich um einen 4-Ball-Multiball [15:19]. Für jeden getroffenen roten Jackpot poppt ein Bösewicht (Drop-Target) auf [15:25]. Hast du alle 5 erledigt, musst du in den Saloon schießen, um den Super Jackpot zu kassieren [15:42]. Danach resettet sich das Feld für eine weitere Runde [15:49].
+
+5. Drunken Multiball (Der ultimative Pro-Tipp)
+
+    Ab 25 gesammelten Bierkrügen startet dieser Modus [23:38].
+
+    Wie bereits in deiner PDF vermerkt, sind die Flipperfinger invertiert (der linke Button steuert den rechten Flipper und umgekehrt) [24:03].
+
+    Der Tooltip für Spieler: Überkreuze physisch deine Arme/Hände an den Flipperknöpfen! Das ist der beste Weg, um dein Gehirn auszutricksen und den Multiball zu überstehen [24:09].
+
+6. Skill Shot Eskalation
+
+Das Plungen am Anfang der Kugel hat einen Schneeballeffekt:
+
+    Hurry-Up: Für den "Hurry-Up"-Skill Shot (linker Orbit) musst du die Kugel sanft ("short plunge") abziehen, damit sie nicht die volle Runde im Trichter dreht [06:17]. Schließt du den Hurry-Up ab, ist er beim nächsten Versuch noch lukrativer [26:45].
+
+    Millionen-Boost: Wenn du stattdessen den "1 Million"-Preis im Trichter auswählst, steigt dieser Wert für deine nächste Kugel auf 2 Millionen an, und immer so weiter [06:06].
+
+7. Marksman Mode Strategie
+
+    Es leuchten immer drei Schüsse gleichzeitig [10:11].
+
+    Punkte-Maximierung: Du solltest für die maximale Punktzahl unbedingt erst die beiden äußeren Schüsse treffen [10:11]. Triffst du nämlich den mittleren (Center) Schuss zuerst, wird der Modus sofort beendet und dir entgehen die Punkte der anderen beiden Targets [10:11].
+
+8. Train Mode (Save Polly)
+
+    Um diesen Modus erfolgreich zu beenden (und den "Extra Ball" zu beleuchten), musst du zwingend zuerst den linken Schuss, dann den rechten Schuss und ganz am Ende die Mitte (Center Ramp) treffen [16:26].
+
+    Schießt du zu früh in die Mitte, pausiert das den Modus nur, treibt ihn aber nicht voran [16:31].
+
+Mein Vorschlag für dein PDF:
+Die Infos zu Bionic Bart (Fortschritt bleibt erhalten), dem Mine Multiball Joker und dem Drunken Multiball Arme-Überkreuzen-Trick eignen sich perfekt als kleine Sternchen-Texte (Pro-Tips) in den entsprechenden Boxen auf deiner Mindmap!
