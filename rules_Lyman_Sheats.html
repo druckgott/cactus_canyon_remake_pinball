@@ -112,25 +112,81 @@
         #board-wrapper { transform-origin: top left; transition: transform 0.2s ease-out; }
 
         /* --- MAIN BOARD --- */
+        /* ====================== BOARD BACKGROUND ====================== */
         .board-container {
             width: var(--board-width);
             height: var(--board-height); 
-            background: radial-gradient(circle at center, #f5e8d0 0%, #e0c598 60%, #b88d4c 90%, #855325 100%);
+            /* ANGEPASST: Detailliertere Papiertextur und rußigere Ränder */
+            background-color: #e8d0ad;
+            background-image: 
+                /* Feines Rauschen/Papier-Struktur */
+                radial-gradient(circle, transparent 20%, #e8d0ad 20%, #e8d0ad 80%, transparent 80%, transparent),
+                radial-gradient(circle, transparent 20%, #e8d0ad 20%, #e8d0ad 80%, transparent 80%, transparent) 25px 25px,
+                /* Weicher Verlauf zur Mitte */
+                radial-gradient(circle at center, rgba(245, 232, 208, 0.9) 0%, rgba(224, 197, 152, 0.5) 60%, rgba(184, 141, 76, 0.3) 90%),
+                /* Die dunklen, rußigen Ränder */
+                linear-gradient(to right, rgba(60, 25, 5, 0.9) 0%, transparent 5%, transparent 95%, rgba(60, 25, 5, 0.9) 100%),
+                linear-gradient(to bottom, rgba(60, 25, 5, 0.9) 0%, transparent 5%, transparent 95%, rgba(60, 25, 5, 0.9) 100%);
+            background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+            
             position: relative; box-sizing: border-box;
             filter: drop-shadow(0 30px 40px rgba(0,0,0,0.8)) url('#torn-edge');
-            box-shadow: inset 0 0 150px rgba(80, 30, 10, 0.7);
+            
+            /* Tieferer innerer Schatten für den Ruß-Effekt an den Rändern */
+            box-shadow: inset 0 0 180px rgba(30, 10, 0, 0.95), inset 0 0 50px rgba(10, 2, 0, 0.9);
             overflow: visible; 
-            margin: 80px 0 0 20px; /* Space for zoom controls */
+            margin: 20px 0 0 20px; 
+        }
+
+        /* --- BULLET HOLES --- */
+        .board-container::before, .board-container::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #111; /* Das eigentliche Loch */
+            border-radius: 40% 60% 50% 40%; /* Etwas unregelmäßig rund */
+            /* Der verbrannte/aufgerissene Rand um das Loch */
+            box-shadow: 
+                0 0 0 4px rgba(80, 30, 10, 0.8), /* Dunkelbrauner, verbrannter Rand */
+                0 0 0 8px rgba(180, 140, 100, 0.4), /* Hellerer aufgeworfener Rand */
+                inset 5px 5px 10px rgba(0,0,0,0.9); /* Tiefe im Loch */
+            z-index: 2; /* Unter den Papier-Boxen, aber über dem Hintergrund */
+            pointer-events: none; /* Damit man durchklicken kann */
+        }
+
+        /* Einschussloch 1: Oben rechts */
+        .board-container::before {
+            top: 150px;
+            right: 300px;
+            transform: rotate(35deg);
+        }
+
+        /* Einschussloch 2: Unten links */
+        .board-container::after {
+            bottom: 400px;
+            left: 200px;
+            width: 25px; /* Etwas kleiner */
+            height: 28px;
+            border-radius: 50% 40% 60% 50%;
+            transform: rotate(-15deg);
         }
 
         .vintage-corner {
-            position: absolute; width: 180px; height: 180px;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='none' stroke='%235c3418' stroke-width='2' d='M0,0 L90,0 C70,10 60,30 60,50 C60,70 80,80 100,100 L0,100 Z'/%3E%3Cpath fill='none' stroke='%23381a07' stroke-width='4' d='M10,10 L70,10 C50,20 40,40 40,60 C40,80 50,90 70,100'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23381a07'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%235c3418'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat; z-index: 1; opacity: 0.8; pointer-events: none;
+            position: absolute; 
+            width: 140px; height: 140px;
+            /* Dreilagiges, organisches SVG für echte Brandlöcher */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,0 C75,10 65,35 50,50 C35,65 10,75 0,100 Z' fill='rgba(60,20,5,0.7)'/%3E%3Cpath d='M0,0 L80,0 C60,15 50,35 35,50 C20,65 5,70 0,80 Z' fill='rgba(30,5,0,0.85)'/%3E%3Cpath d='M0,0 L55,0 C40,15 30,25 20,35 C10,45 5,50 0,55 Z' fill='%230d0402'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat; 
+            z-index: 1; /* Wie von dir gewünscht: liegt sauber GANZ UNTEN */
+            opacity: 0.9; pointer-events: none;
         }
-        .tl { top: 20px; left: 20px; } .tr { top: 20px; right: 20px; transform: scaleX(-1); }
-        .bl { bottom: 20px; left: 20px; transform: scaleY(-1); } .br { bottom: 20px; right: 20px; transform: scale(-1, -1); }
 
+        /* Wir kleben sie exakt an die Außenkante (0px statt 20px) */
+        .tl { top: 0; left: 0; } 
+        .tr { top: 0; right: 0; transform: scaleX(-1); }
+        .bl { bottom: 0; left: 0; transform: scaleY(-1); } 
+        .br { bottom: 0; right: 0; transform: scale(-1, -1); }
         /* ====================== ICONS.CSS INTEGRATION ====================== */
         .icon-badge {
             position: absolute; width: 80px; height: 80px; border-radius: 50%; border: 6px solid #1a0a04;

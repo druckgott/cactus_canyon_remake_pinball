@@ -1,0 +1,27 @@
+. Die fehlenden Hardcore-Regeln aus dem Video (Pro-Tipps)
+
+Diese Mechaniken sind im Video bestätigt und fehlen aktuell noch in deinem PDF. Sie eignen sich perfekt als kleine Sternchen-Texte (*Pro-Tip:):
+
+    Bionic Bart (Der gnädige Modus): Der finale Kampf gegen Bionic Bart läuft in Phasen ab (1 Schuss + Bart, dann 2 Schüsse + Bart, dann 3 Schüsse + Bart). Das Wichtigste: Wenn du während dieses Modus die Kugel verlierst (Drain), gibt es keinen Reset! Der Fortschritt bleibt beim nächsten Ball exakt dort gespeichert, wo du aufgehört hast.
+
+    Gold Mine Multiball ("Der Joker"): Im alten Code ohne Upgrade-Kit konnte man in den Saloon schießen, um sich fehlende Jackpots schenken zu lassen. Da die neuen Saloon-Türen das blockieren, ist die Mine der neue Joker: Schießt du direkt in die sich bewegende Mine (während sie offen ist), schenkt dir das Spiel automatisch einen deiner noch ungetroffenen Jackpots auf dem Spielfeld.
+
+    Marshall Mode (Phase 1 Pop-ups): In der ersten Phase poppen die Drop-Targets (Bad Guys) als Hindernisse auf. Pro-Tipp: Wenn du es schaffst, die Jackpots exakt durch die Lücken zu schießen, ohne die aufgestellten Pop-up-Targets an den Seiten zu berühren, ist der Schuss massiv mehr Punkte wert.
+
+    Drunken Multiball Trick: Füge bei den invertierten Flippern den ultimativen physischen Spieler-Tipp hinzu: Kreuz deine Arme an den Flipperknöpfen! Das trickst das Gehirn aus und ist die beste Strategie für diesen Modus.
+
+    Geheime Topper-Anzeige: Der Topper ist nicht nur Deko. Die gesamte untere schwarze Kante des Toppers besteht aus versteckten LEDs, die im Spiel aktiv deinen Fortschritt anzeigen (z.B. verbleibende Patronen beim Shootout oder die Spinner-Umdrehungen beim Saloon Fight).
+
+2. Offizielle "Lore" von der Chicago Gaming Website
+
+Die Herstellerseite beschreibt die Modi mit den offiziellen Namen der Charaktere. Das ist genial für Tooltips oder Sub-Headlines auf Seite 1, um dem Rulesheet noch mehr "Seele" zu geben:
+
+    Super Skill Shot: Der alte Mann auf der Kutsche, dessen Pferde durchgehen und der seine Ladung verliert, heißt offiziell "Old Man Ames".
+
+    Saloon Fight: Die beiden Typen, die sich um die Rechnung streiten, heißen "Beau und Boone". Der Modus eskaliert, weil Boone seinen Drink nach Beau wirft.
+
+    Drunken Multiball: Der stadtbekannte Trinker, der aus dem Saloon stolpert, heißt "Dooley".
+
+    Saloon Party: Der Barkeeper, dem du hilfst, die Krüge der Gäste zu füllen, heißt "Jesse".
+
+    Gunfight System (Mathematik): Die Seite bestätigt die exakte Mathematik des Multiplikators: Der erste beendete Shot Mode gibt den gesammelten Wert mal 1X, der zweite mal 2X, und der Multiplikator wächst unendlich weiter, solange du Modi abschließt, bevor du das Duell startest.
