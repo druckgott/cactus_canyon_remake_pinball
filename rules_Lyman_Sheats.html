@@ -32,7 +32,7 @@
 
             /* --- RIGHT COLUMN 1 --- */
             --pos-bart-posters-x: 1080px;   --pos-bart-posters-y: 60px;
-            --pos-saloon-party-x: 1140px;   --pos-saloon-party-y: 330px;
+            --pos-saloon-party-x: 1140px;   --pos-saloon-party-y: 340px;
             --pos-bart-node-x: 1140px;      --pos-bart-node-y: 520px;
             --pos-combo-x: 1140px;          --pos-combo-y: 650px;
             --pos-spinner-x: 1080px;        --pos-spinner-y: 810px;
@@ -47,13 +47,13 @@
             /* --- POINTERS & ICONS --- */
             --ptr-mother-noon-x: 540px;     --ptr-mother-noon-y: 400px;
             --ptr-stampede-noon-x: 540px;   --ptr-stampede-noon-y: 650px;
-            --ptr-showdown-noon-x: 540px;   --ptr-showdown-noon-y: 1070px;
+            --ptr-showdown-noon-x: 540px;   --ptr-showdown-noon-y: 1130px;
             
-            --ptr-barts-saloon-x: 1300px;   --ptr-barts-saloon-y: 290px;
-            --ptr-saloon-bros-x: 1300px;    --ptr-saloon-bros-y: 420px;
+            --ptr-barts-saloon-x: 1300px;   --ptr-barts-saloon-y: 330px;
+            --ptr-saloon-bros-x: 1300px;    --ptr-saloon-bros-y: 500px;
             
-            --ptr-bros-noon-x: 1080px;      --ptr-bros-noon-y: 490px;
-            --ptr-combo-noon-x: 1080px;     --ptr-combo-noon-y: 630px;
+            --ptr-bros-noon-x: 1080px;      --ptr-bros-noon-y: 590px;
+            --ptr-combo-noon-x: 1080px;     --ptr-combo-noon-y: 690px;
         }
 
         /* --- NEW INNER WRAPPER STYLES (Replaced body styling to preserve old theme) --- */
@@ -194,7 +194,7 @@
         .paper-tooltip {
             position: absolute; top: 105%; left: 50%; transform: translateX(-50%);
             width: 320px; background: #fcf8ee; border: 2px solid #8a4b08; border-radius: 4px; padding: 15px;
-            font-family: 'Spectral', serif; font-size: 16px; color: #2b1708; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            font-family: 'Spectral', serif; font-size: 20px; color: #2b1708; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
             opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; pointer-events: none; text-align: left;
         }
         .paper-tooltip::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-width: 10px; border-style: solid; border-color: transparent transparent #8a4b08 transparent; }
@@ -515,16 +515,26 @@
                             <span style="color: #a21a36; font-family: 'Rye'; font-size: 1.9em;">Gunfight is Lit</span>
                         </div>
                         <ul style="list-style-type: none; padding: 0; text-align: center; font-size: 1.25em;">
-                            <li><b>Value Progression:</b></li>
+                            <!-- NEU: Wie man es qualifiziert -->
+                            <li><b>How to Qualify:</b></li>
+                            <li style="font-size: 0.95em; margin-bottom: 10px;">Defeat a Bart | Bounty Reward | Complete a Shot Mode</li>
+                            
+                            <!-- Bestehender Teil (leicht angepasst für bessere Trennung) -->
+                            <li style="margin-top: 15px;"><b>Value Progression:</b></li>
                             <li style="font-size: 0.9em; font-style: italic; margin-bottom: 12px;">Light Gunfight ➔ Shoot Bad Guy 1-4</li>
                             <li>Builds Value</li>
                             <li>Value Multiplier (1x, 2x...)</li>
                             <li style="color: #a21a36; font-weight: bold;">Risk: Lost on Drain</li>
                             <li>Collect: Reset after Completion</li>
+                            
+                            <!-- NEU: Wichtige Einschränkung -->
+                            <li style="font-size: 0.85em; font-style: italic; color: #666; margin-top: 15px;">(Disabled during active Shot Modes)</li>
                         </ul>
                         <div class="paper-tooltip tooltip-up">
                             <b>Gunfight Details:</b><br>
                             The Gunfight is a storable Mega-Jackpot. <span class="cite"></span><br><br>
+                            <!-- NEU: Tooltip Ergänzung -->
+                            Qualify via Bart Defeat, Bounty, or Shot Mode Completion. Disabled during active Shot Modes.<br><br>
                             There is an inlane display (toggleable left/right). The value is completely lost upon a ball drain! <span class="cite"></span><br>
                             Resets after completed Gunfight. <span class="cite"></span>
                         </div>
@@ -533,17 +543,25 @@
                     <div class="paper-box bart-bros-posters theme-main-quest">
                         <div class="pin"></div>
                         <div class="box-title">5 BART BROTHERS</div>
-                        <div class="flex-row">
-                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Big</div>
-                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Bandolero</div>
-                            <div class="wanted-poster">WANTED<br><img src="images/bubba_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #8a4b08; margin: 4px 0;"><br>Bubba</div>
-                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:60px; margin:4px 0;">Image</div>Bionic</div>
-                            <div class="wanted-poster wanted-red">WANTED<br><img src="images/bella_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #a31818; margin: 4px 0;"><br><b>NEW<br>BELLA</b></div>
+                        
+                        <div style="text-align: center; font-size: 0.9em; font-style: italic; margin-bottom: 12px; color: #555;">
+                            Defeat 4 Barts to reach Final Bionic Bart!
                         </div>
+
+                        <div class="flex-row">
+                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:55px; margin:4px 0;">Image</div>Big</div>
+                            <div class="wanted-poster">WANTED<br><div class="img-placeholder" style="height:55px; margin:4px 0;">Image</div>Bandolero</div>
+                            <div class="wanted-poster">WANTED<br><img src="images/bubba_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #8a4b08; margin: 4px 0;"><br>Bubba</div>
+                            
+                            <div class="wanted-poster wanted-red">WANTED<br><img src="images/bella_bart.png" style="width: 90%; height: 55px; object-fit: cover; border: 1px solid #a31818; margin: 4px 0;"><br><b>Bella</b></div>
+                            
+                            <div class="wanted-poster" style="border: 2px solid #4a217a; background: #e6dcf5; color: #1d0936;">WANTED<br><div class="img-placeholder" style="height:55px; margin:4px 0; border-color: #4a217a; background: #fff;">Image</div><b>BIONIC</b></div>
+                        </div>
+                        
                         <div class="paper-tooltip tooltip-left">
                             <b>Bart Brothers Details:</b><br>
-                            Defeat all five Barts: Big Bart, Bandolero Bart, Bubba Bart, Bionic Bart, and the new sister Bella Bart. <span class="cite"></span><br>
-                            Defeating all Barts unlocks the Saloon Party. <span class="cite"></span>
+                            Bella Bart is now mixed into the normal rotation. You must defeat one additional Bart (4 total) to unlock the final fight against Bionic Bart. <span class="cite"></span><br><br>
+                            Defeating Bionic Bart unlocks the Saloon Party. <span class="cite"></span>
                         </div>
                     </div>
 
@@ -575,15 +593,25 @@
                         <div class="pin"></div>
                         <div class="box-title" style="font-size: 1.35em;">SPINNER & SALOON FIGHT</div>
                         <img src="images/saloon_fight_lit.png" style="width: 100%; height: 60px; object-fit: cover; border: 1px solid #4a217a; border-radius: 4px; margin-top: 5px;">
-                        <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 25px;">
+                        
+                        <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 20px;">
                             <div class="purple-node" style="width: 42%; font-size: 1.05em; background:#fff;">200 Spins<br>➔ Saloon</div>
                             <b style="font-size: 2em; color:#4a217a;">➔</b>
                             <div class="purple-node" style="width: 42%; font-size: 1.05em; background:#fff;">Switches<br>➔ Beer Mug</div>
                         </div>
+                        
+                        <!-- NEU: Pro-Tip Teaser auf der Box -->
+                        <div style="text-align: center; font-size: 0.9em; font-weight: bold; color: #a21a36; margin-top: 12px;">
+                            ⭐ Pro-Tip: Double Scoring!
+                        </div>
+                        
                         <div class="paper-tooltip tooltip-left">
                             <b>Saloon Fight Details:</b><br>
                             Triggered by Spinner Count (200 Spins). <span class="cite"></span><br>
-                            Switches massively increase the Jackpot value. Collect is only possible at the Beer Mug. <span class="cite"></span>
+                            Switches massively increase the Jackpot value. Collect is only possible at the Beer Mug. <span class="cite"></span><br><br>
+                            
+                            <!-- NEU: Die Erklärung des Tricks im Tooltip -->
+                            <b>Double-Scoring Trick:</b> Points are added to your score instantly <i>while</i> building the jackpot. Collecting at the Beer Mug pays those points a second time! You effectively earn 2x the displayed jackpot value.
                         </div>
                     </div>
 
@@ -605,11 +633,17 @@
                     </div>
 
                     <div class="paper-box topper-mode">
-                        <div class="box-title">SHOOTOUT TOPPER MODE</div>
-                        <img src="images/shoutout_topper_mode1.jpg" style="width: 100%; height: 80px; object-fit: cover; border: 1px solid #3d2210; border-radius: 4px; margin-top: 5px;">
+                        <div class="box-title" style="margin-bottom: 4px;">SHOOTOUT TOPPER MODE</div>
+                        
+                        <div style="text-align: center; font-size: 0.85em; font-style: italic; margin-bottom: 8px; color: #555;">
+                            (Plays as Video Mode if no Topper is installed)
+                        </div>
+                        
+                        <img src="images/shoutout_topper_mode1.jpg" style="width: 100%; height: 80px; object-fit: cover; border: 1px solid #3d2210; border-radius: 4px;">
                         <p style="text-align: center; font-size: 1.05em; margin-top:10px;">Waves of Bad Guys next round and waves for waves of shootout Bad Guys.<br><b style="font-size: 1.15em;">Avoid Bystanders</b></p>
                         <div class="paper-tooltip tooltip-left tooltip-up">
                             <b>Topper Mode Details:</b><br>
+                            If a physical Topper is missing, this starts as a Video Mode on the main display. <span class="cite"></span><br><br>
                             Waves of enemies appear. The clear goal: Shoot Bad Guys, but strictly avoid Bystanders (civilians)! <span class="cite"></span>
                         </div>
                     </div>
@@ -619,10 +653,17 @@
                         <div class="box-title" style="border:none; margin:0; font-size: 1.7em;">GUNFIGHT BALL SAVE</div>
                         <img src="images/gunfight_ball_save_1.jpg" style="width: 100%; height: 75px; object-fit: cover; border: 1px solid #8a1c1c; border-radius: 4px; margin-top: 10px;">
                         <div style="text-align: center; font-style: italic; margin-top: 10px; font-size: 1.1em;">Take out Wyatt (Green Target)</div>
+                        
+                        <!-- NEU: Wichtiger Hinweis, dass der Wert nicht gesammelt wird -->
+                        <div style="text-align: center; font-size: 0.85em; margin-top: 5px; color: #8a1c1c; font-weight: bold;">
+                            (Does NOT collect Gunfight Value!)
+                        </div>
+                        
                         <div class="paper-tooltip tooltip-left">
                             <b>Ball Save Details:</b><br>
                             Available only 1x per game. Activated by a left outlane drain. <span class="cite"></span><br><br>
-                            Wyatt appears behind one of 4 drops. There are 3x deadly TNT and 1x safe target. Hit the correct drop first -> Save the ball! <span class="cite"></span>
+                            Wyatt appears behind one of 4 drops. There are 3x deadly TNT and 1x safe target. Hit the correct drop first -> Save the ball! <span class="cite"></span><br><br>
+                            <b>Important:</b> This only saves your ball (protecting your stored value from draining). It does <i>not</i> collect the Gunfight Mega-Jackpot!
                         </div>
                     </div>
 
@@ -727,8 +768,13 @@
 
                 <div class="rule-card">
                     <h2 class="rule-title">5 Bart Brothers & Saloon Party</h2>
-                    <p>Defeat all five Barts: Big Bart, Bandolero Bart, Bubba Bart, Bionic Bart, and the new sister Bella Bart. <span class="cite"></span></p>
-                    <p>Defeating all Barts unlocks the Saloon Party. Starts after defeating all Barts. The Saloon becomes active again. <span class="cite"></span></p>
+                    <p>Defeat all five Barts: Big Bart, Bandolero Bart, Bubba Bart, the new sister Bella Bart, and finally <b>Bionic Bart</b>. <span class="cite"></span></p>
+                    
+                    <p><b>New Order:</b> Bella Bart is mixed into the standard rotation. This means you must defeat one additional Bart before facing the final Bionic Bart.</p>
+                    
+                    <p><b>Saloon Doors Mechanics:</b> Physical doors remain closed during normal Bart fights, blocking the scoop to increase danger. They only open for the final Kill Shot, Bounties, or Mode Starts. </p>
+                    
+                    <p>Defeating all Barts unlocks the Saloon Party. The Saloon becomes active again. <span class="cite"></span></p>
                     <p>The goal is to fill beer mugs to activate the powerful Chug Bonus. <span class="cite"></span></p>
                 </div>
 
@@ -741,6 +787,9 @@
                     <h2 class="rule-title">Spinner & Saloon Fight</h2>
                     <p>Triggered by Spinner Count (200 Spins). <span class="cite"></span></p>
                     <p>Switches massively increase the Jackpot value. Collect is only possible at the Beer Mug. <span class="cite"></span></p>
+                    
+                    <!-- NEU: Ausführliche Erklärung im Appendix -->
+                    <p><b>⭐ Pro-Tip (Double-Scoring Trick):</b> This is a massive strategic advantage! Spinner points are added to your score immediately during the mode <i>and</i> they build the jackpot simultaneously. When you collect at the Beer Mug, you receive those points a second time. The mode effectively pays out exactly double the displayed jackpot value!</p>
                 </div>
 
                 <div class="rule-card">
@@ -759,6 +808,9 @@
                     <h2 class="rule-title">Gunfight Ball Save</h2>
                     <p>Available only 1x per game. Activated by a left outlane drain. <span class="cite"></span></p>
                     <p>Wyatt appears behind one of 4 drops. There are 3x deadly TNT and 1x safe target. Hit the correct drop first -> Save the ball! <span class="cite"></span></p>
+                    
+                    <!-- NEU: Wichtiger Hinweis im Appendix -->
+                    <p><b>Important:</b> This event does <i>not</i> collect your accumulated Gunfight Jackpot. It solely rescues your ball, which effectively protects your stored jackpot value from being lost to a drain.</p>
                 </div>
 
                 <div class="rule-card">
