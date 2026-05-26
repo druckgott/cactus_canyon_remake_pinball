@@ -18,7 +18,7 @@
            ===================================================================== */
         :root {
             --board-width: 2000px;
-            --board-height: 2000px; 
+            --board-height: 2050px; 
 
             /* --- LEFT COLUMN --- */
             --pos-mother-lode-x: 60px;      --pos-mother-lode-y: 60px;
@@ -459,7 +459,6 @@
                         <div class="chain-row"><span>Buck'n Bronco</span> <span>➔</span> <span>Wild Ride</span> <span>➔</span> <span>Ride 'Em Cowboy</span></div>
                         <div class="chain-row"><span>Whitewater</span> <span>➔</span> <span>Waterfall</span> <span>➔</span> <span>Save Polly</span></div>
                         
-                        <!-- NEU: Extra Ball Hinweis beim Train Mode -->
                         <div class="chain-row">
                             <span>Cactus Train</span> <span>➔</span> <span>Stop Train</span> <span>➔</span> 
                             <span>Save Polly <b style="color: #a21a36; font-size: 0.85em;">(EXTRA BALL)</b></span>
@@ -468,17 +467,27 @@
                         <div class="chain-row"><span>Good Shot</span> <span>➔</span> <span>Gunslinger</span> <span>➔</span> <span>Marksman</span></div>
                         <div class="chain-row"><span>Sound Alarm</span> <span>➔</span> <span>Shootout</span> <span>➔</span> <span>Save Polly</span></div>
                         
-                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 30px; padding-top: 20px;">
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px; padding-top: 15px;">
                             <img src="images/buckn_bronco.png" id="stampede-random-img" data-gallery='["images/buckn_bronco.png", "images/marksman_175.png", "images/save_polly_river.png"]' style="width: 210px; height: 80px; object-fit: cover; border: 2px solid #5c1e06; border-radius: 4px; margin-right: 25px;">
                             <div style="text-align: center;">
                                 <b style="font-family: 'Rye'; font-size: 2.2em; color: #5c1e06;">➔ STAMPEDE</b>
+                                <!-- NEU: Teaser für die Pro-Tips -->
+                                <div style="font-size: 0.55em; font-family: sans-serif; font-weight: bold; color: #a21a36; margin-top: 5px;">
+                                    ⭐ Check Tooltip for Mode Pro-Tips!
+                                </div>
                             </div>
                         </div>
-                        <div class="paper-tooltip tooltip-right">
-                            <b>Stampede Details:</b><br>
-                            Complete these five mode chains. Once you reach all five end states, Stampede is unlocked, leading to High Noon. <span class="cite"></span><br><br>
-                            <!-- NEU: Erklärung des Train Extra Balls -->
-                            <b>Guaranteed Extra Ball:</b> Successfully completing the Train Mode chain (Shoot Left Ramp ➔ Right Ramp ➔ Center) guarantees a lit Extra Ball!
+                        
+                        <!-- NEU: Tooltip etwas breiter (440px) für bessere Lesbarkeit -->
+                        <div class="paper-tooltip tooltip-right" style="width: 440px;">
+                            <b>Stampede Details:</b> Complete all five mode chains to unlock High Noon. <span class="cite"></span><br><br>
+                            <b>Guaranteed Extra Ball:</b> Completing the Train Mode chain (Left Ramp ➔ Right Ramp ➔ Center) guarantees a lit Extra Ball!<br><br>
+                            
+                            <!-- NEU: Die Mechaniken komprimiert im Tooltip -->
+                            <b style="color: #a21a36;">⭐ Mode Pro-Tips:</b><br>
+                            • <i>Bank Robber:</i> Strict time limit! Right Ramp finishes the mode. Farm other lit shots for points first!<br>
+                            • <i>Marksman:</i> 3 targets lit. Hit outer targets first! Hitting the Center immediately ends the mode.<br>
+                            • <i>Left Orbit (Bronco):</i> The gate usually drops the ball into the pops. It only opens for full loops during special events (like Super Skill Shot).
                         </div>
                     </div>
 
@@ -524,17 +533,17 @@
                         <img src="images/skill_shot.jpg" style="width: 100%; height: 80px; object-fit: cover; border: 2px solid #1a4269; border-radius: 4px;">
                         <div style="text-align: center; font-style: italic; margin-top: 12px; font-size: 1em;">Plunge Hurry-Up, then Shoot Left Loop</div>
                         
-                        <!-- NEU: Kleiner Teaser für das Timing-Risiko -->
                         <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #a21a36; margin-top: 5px;">
-                            ⚠️ Watch your timing!
+                            ⚠️ Watch your timing & plunge strength!
                         </div>
 
-                        <div class="paper-tooltip tooltip-right">
+                        <div class="paper-tooltip tooltip-right" style="width: 400px;">
                             <b>Skill Shot Details:</b><br>
                             Start: Left orbit immediately after ball launch. Theme: Old Man Ames is losing his goods. <span class="cite"></span><br><br>
-                            Reward: Increasing Hurry-Up values that positively influence future Skill Shots. <span class="cite"></span><br><br>
-                            <!-- NEU: Das Risiko und die Nieten -->
-                            <b>Risk & Timing:</b> Plunging blindly is dangerous! Very low-value "duds" (like 10k, 50k) are now mixed into the cup rotation. You need perfect timing to grab the lucrative rewards.
+                            
+                            <b>Risk & Timing:</b> Plunging blindly is dangerous! Very low-value "duds" (like 10k, 50k) are mixed into the cup rotation. <span class="cite"></span><br><br>
+                            
+                            <b>⭐ Plunge Physics:</b> Your plunge strength (Short vs. Full Plunge) determines exactly how many rotations the ball makes in the funnel. Master this to perfectly time the Left Orbit Hurry-Up or the Inlane Million-Boost!
                         </div>
                     </div>
 
@@ -566,12 +575,10 @@
                         <div style="text-align: center; font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #3d2210; padding-bottom: 15px;">
                             <span style="color: #a21a36; font-family: 'Rye'; font-size: 1.9em;">Gunfight is Lit</span>
                         </div>
-                        <ul style="list-style-type: none; padding: 0; text-align: center; font-size: 1.25em;">
-                            <!-- NEU: Wie man es qualifiziert -->
+                        <ul style="list-style-type: none; padding: 0; text-align: center; font-size: 1.25em; margin-bottom: 5px;">
                             <li><b>How to Qualify:</b></li>
                             <li style="font-size: 0.95em; margin-bottom: 10px;">Defeat a Bart | Bounty Reward | Complete a Shot Mode</li>
                             
-                            <!-- Bestehender Teil (leicht angepasst für bessere Trennung) -->
                             <li style="margin-top: 15px;"><b>Value Progression:</b></li>
                             <li style="font-size: 0.9em; font-style: italic; margin-bottom: 12px;">Light Gunfight ➔ Shoot Bad Guy 1-4</li>
                             <li>Builds Value</li>
@@ -579,16 +586,23 @@
                             <li style="color: #a21a36; font-weight: bold;">Risk: Lost on Drain</li>
                             <li>Collect: Reset after Completion</li>
                             
-                            <!-- NEU: Wichtige Einschränkung -->
                             <li style="font-size: 0.85em; font-style: italic; color: #666; margin-top: 15px;">(Disabled during active Shot Modes)</li>
                         </ul>
-                        <div class="paper-tooltip tooltip-up">
+                        
+                        <!-- NEU: Teaser für den Status Report -->
+                        <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #4a217a; margin-top: 15px;">
+                            ⭐ Hold Flippers to check Multiplier!
+                        </div>
+                        
+                        <div class="paper-tooltip tooltip-up" style="width: 380px;">
                             <b>Gunfight Details:</b><br>
                             The Gunfight is a storable Mega-Jackpot. <span class="cite"></span><br><br>
-                            <!-- NEU: Tooltip Ergänzung -->
                             Qualify via Bart Defeat, Bounty, or Shot Mode Completion. Disabled during active Shot Modes.<br><br>
                             There is an inlane display (toggleable left/right). The value is completely lost upon a ball drain! <span class="cite"></span><br>
-                            Resets after completed Gunfight. <span class="cite"></span>
+                            Resets after completed Gunfight. <span class="cite"></span><br><br>
+                            
+                            <!-- NEU: Erklärung im Tooltip -->
+                            <b>⭐ Instant Info (Status Report):</b> Hold both flipper buttons during gameplay to check your exact Gunfight Multiplier (built up from stacked shot modes) before starting the duel!
                         </div>
                     </div>
 
@@ -613,7 +627,24 @@
                         <div class="paper-tooltip tooltip-left">
                             <b>Bart Brothers Details:</b><br>
                             Bella Bart is now mixed into the normal rotation. You must defeat one additional Bart (4 total) to unlock the final fight against Bionic Bart. <span class="cite"></span><br><br>
-                            Defeating Bionic Bart unlocks the Saloon Party. <span class="cite"></span>
+                            <b>Escalating Difficulty:</b> Each subsequent Bart requires progressively more hits on the Saloon doors to be defeated! <span class="cite"></span><br><br>
+                            Defeating Bionic Bart qualifies the Saloon Party. <span class="cite"></span>
+                        </div>
+                    </div>
+
+                    <div class="paper-box saloon-party theme-main-quest no-inner-border">
+                        <div class="box-title" style="border: none; margin: 0; font-size: 1.9em;">SALOON PARTY</div>
+                        
+                        <div style="text-align: center; font-size: 0.85em; font-weight: bold; color: #a21a36; margin-top: -5px; margin-bottom: 5px;">
+                            Shoot doors to buy guests a beer!
+                        </div>
+                        
+                        <img src="images/salon_party_1.jpg" style="width: 100%; height: 50px; object-fit: cover; border: 1px solid #4a217a; border-radius: 4px;">
+                        
+                        <div class="paper-tooltip tooltip-left">
+                            <b>Saloon Party Details:</b><br>
+                            <b>Activation:</b> Defeating Bionic Bart does <i>not</i> start the mode instantly! You must shoot the Saloon doors multiple times to symbolically "buy every guest a beer" before the party actually kicks off. <span class="cite"></span><br><br>
+                            Once active, the goal is to fill beer mugs to activate the powerful Chug Bonus. <span class="cite"></span>
                         </div>
                     </div>
 
@@ -700,11 +731,20 @@
                         </div>
                         
                         <img src="images/shoutout_topper_mode1.jpg" style="width: 100%; height: 80px; object-fit: cover; border: 1px solid #3d2210; border-radius: 4px;">
-                        <p style="text-align: center; font-size: 1.05em; margin-top:10px;">Waves of Bad Guys next round and waves for waves of shootout Bad Guys.<br><b style="font-size: 1.15em;">Avoid Bystanders</b></p>
-                        <div class="paper-tooltip tooltip-left tooltip-up">
-                            <b>Topper Mode Details:</b><br>
+                        
+                        <!-- ANGEPASST: Spezifischer Hinweis auf die Bystanders -->
+                        <p style="text-align: center; font-size: 1.05em; margin-top:10px; line-height: 1.3;">
+                            Waves of Bad Guys appear!<br>
+                            <b style="font-size: 1.1em; color: #a21a36;">Do NOT shoot Women & Cows</b>
+                        </p>
+                        
+                        <div class="paper-tooltip tooltip-left tooltip-up" style="width: 380px;">
+                            <b>Topper / Video Mode Details:</b><br>
                             If a physical Topper is missing, this starts as a Video Mode on the main display. <span class="cite"></span><br><br>
-                            Waves of enemies appear. The clear goal: Shoot Bad Guys, but strictly avoid Bystanders (civilians)! <span class="cite"></span>
+                            
+                            <!-- NEU: Steuerung & Timing-Regeln -->
+                            <b>Gameplay Controls:</b> Use the left and right flipper buttons to steer.<br>
+                            <b>Strict Rules:</b> You must <i>never</i> shoot the bystanders (women or cows). Wait patiently until the Bad Guy gives you a clear line of sight, and time your shot perfectly! <span class="cite"></span>
                         </div>
                     </div>
 
@@ -803,11 +843,17 @@
 
                 <div class="rule-card">
                     <h2 class="rule-title">Stampede (Shot Modes)</h2>
-                    <p>Complete these five mode chains. <span class="cite"></span></p>
-                    <p>Once you reach all five end states (e.g., Save Polly or Marksman), Stampede is unlocked, leading to the High Noon Wizard Mode. <span class="cite"></span></p>
+                    <p>Complete these five mode chains. Once you reach all five end states (e.g., Save Polly or Marksman), Stampede is unlocked, leading to the High Noon Wizard Mode. <span class="cite"></span></p>
                     
-                    <!-- NEU: Train Mode Extra Ball -->
                     <p><b>Extra Ball (Train Mode):</b> Successfully completing the Train Mode chain (by shooting Left Ramp ➔ Right Ramp ➔ Center) guarantees lighting an Extra Ball!</p>
+                    
+                    <!-- NEU: Detaillierte Mechaniken für den Ausdruck -->
+                    <p style="margin-top: 15px; color: #a21a36; font-family: 'Rye', serif;">⭐ Specific Mode Mechanics & Pro-Tips:</p>
+                    <ul style="margin-top: 5px;">
+                        <li style="margin-bottom: 8px;"><b>Bank Robber:</b> You have a strict time limit. The mode ends when you hit the Right Ramp (3rd shot from left). <i>Pro-Tip:</i> Farm other lit shots for extra points before hitting the final Right Ramp shot!</li>
+                        <li style="margin-bottom: 8px;"><b>Marksman:</b> Three targets are lit. <i>Pro-Tip:</i> Always hit the two outer targets first! Hitting the center target immediately ends the mode, costing you the points from the outer targets.</li>
+                        <li><b>Left Orbit Gate (Buckin' Bronco):</b> During these modes, the gate in the left orbit usually intercepts the ball and drops it into the pop bumpers. The gate only opens for a full orbit during specific events (like the Super Skill Shot Hurry-Up).</li>
+                    </ul>
                 </div>
 
                 <div class="rule-card">
@@ -825,12 +871,13 @@
                 </div>
 
                 <div class="rule-card">
-                    <h2 class="rule-title">Super Skill Shot</h2>
+                    <h2 class="rule-title">Super Skill Shot & Plunge Physics</h2>
                     <p>Start: Left orbit immediately after ball launch. Theme: Old Man Ames is losing his goods. <span class="cite"></span></p>
                     <p>Reward: Increasing Hurry-Up values that positively influence future Skill Shots. <span class="cite"></span></p>
                     
-                    <!-- NEU: Erklärung des Risikos im Appendix -->
                     <p><b>Risk & Timing:</b> Very low-value "duds" (like 10k or 50k) are now mixed into the cup rotation alongside the lucrative values. Plunging blindly is risky—proper timing is essential to avoid these traps and secure the big rewards!</p>
+                    
+                    <p><b>⭐ Funnel Control (Plunge Physics):</b> The strength of your plunge exactly determines how many times the ball spins in the funnel. By practicing a "Short Plunge" versus a "Full Plunge," you can perfect your timing to precisely target either the lucrative Hurry-Up (Left Orbit) or the Million-Boost in the inlane rollovers!</p>
                 </div>
 
                 <div class="rule-card">
@@ -845,18 +892,22 @@
                     <p>The Gunfight is a storable Mega-Jackpot. <span class="cite"></span></p>
                     <p>There is an inlane display (toggleable left/right). The value is completely lost upon a ball drain! <span class="cite"></span></p>
                     <p>Resets after completed Gunfight. <span class="cite"></span></p>
+                    
+                    <!-- NEU: Ausführliche Erklärung im Appendix -->
+                    <p><b>⭐ Instant Info (Status Report):</b> By holding both flipper buttons during gameplay, you can open the Status Report on the display. This allows you to check your exact Gunfight Multiplier (e.g., 2x, 3x, 4x...) built up from stacked shot modes <i>before</i> deciding to start the duel!</p>
                 </div>
 
                 <div class="rule-card">
                     <h2 class="rule-title">5 Bart Brothers & Saloon Party</h2>
                     <p>Defeat all five Barts: Big Bart, Bandolero Bart, Bubba Bart, the new sister Bella Bart, and finally <b>Bionic Bart</b>. <span class="cite"></span></p>
                     
-                    <p><b>New Order:</b> Bella Bart is mixed into the standard rotation. This means you must defeat one additional Bart before facing the final Bionic Bart.</p>
+                    <p><b>New Order & Escalating Difficulty:</b> Bella Bart is mixed into the standard rotation. This means you must defeat one additional Bart before facing the final Bionic Bart. Additionally, each subsequent Bart on your journey requires progressively more hits on the Saloon doors to be defeated!</p>
                     
                     <p><b>Saloon Doors Mechanics:</b> Physical doors remain closed during normal Bart fights, blocking the scoop to increase danger. They only open for the final Kill Shot, Bounties, or Mode Starts. </p>
                     
-                    <p>Defeating all Barts unlocks the Saloon Party. The Saloon becomes active again. <span class="cite"></span></p>
-                    <p>The goal is to fill beer mugs to activate the powerful Chug Bonus. <span class="cite"></span></p>
+                    <p><b>Saloon Party Activation:</b> Defeating Bionic Bart does <i>not</i> start the party instantly! Afterwards, you must shoot the Saloon doors several times to symbolically "buy every guest a beer." Only then does the Saloon Party actually kick off. <span class="cite"></span></p>
+                    
+                    <p>The goal during the party is to fill beer mugs to activate the powerful Chug Bonus. <span class="cite"></span></p>
                 </div>
 
                 <div class="rule-card">
@@ -886,10 +937,12 @@
                 <div class="rule-card">
                     <h2 class="rule-title">Shootout Topper Mode / Video Mode</h2>
                     
-                    <!-- NEU: Wichtiger Hinweis für die Druckansicht -->
                     <p><b>Alternative:</b> If a physical Topper is not installed on the machine, this mode automatically plays as a pure Video Mode on the main LCD display! <span class="cite"></span></p>
                     
-                    <p>Waves of enemies appear. The clear goal: Shoot Bad Guys, but strictly avoid Bystanders (civilians)! <span class="cite"></span></p>
+                    <!-- NEU: Erklärung von Steuerung und strengen Regeln -->
+                    <p><b>Gameplay Controls:</b> Use your flipper buttons to steer left and right across the screen.</p>
+                    
+                    <p><b>Strict Rules:</b> Waves of enemies appear. The clear goal is to shoot the Bad Guys, but you must <i>never, under any circumstances</i>, shoot the bystanders (women or cows). Wait patiently until the Bad Guy gives you a clear line of sight, and time your shot perfectly to avoid penalties! <span class="cite"></span></p>
                 </div>
 
                 <div class="rule-card">
