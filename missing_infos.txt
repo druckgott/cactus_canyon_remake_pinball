@@ -1,27 +1,34 @@
-. Die fehlenden Hardcore-Regeln aus dem Video (Pro-Tipps)
-
-Diese Mechaniken sind im Video bestätigt und fehlen aktuell noch in deinem PDF. Sie eignen sich perfekt als kleine Sternchen-Texte (*Pro-Tip:):
-
-    Bionic Bart (Der gnädige Modus): Der finale Kampf gegen Bionic Bart läuft in Phasen ab (1 Schuss + Bart, dann 2 Schüsse + Bart, dann 3 Schüsse + Bart). Das Wichtigste: Wenn du während dieses Modus die Kugel verlierst (Drain), gibt es keinen Reset! Der Fortschritt bleibt beim nächsten Ball exakt dort gespeichert, wo du aufgehört hast.
-
-    Gold Mine Multiball ("Der Joker"): Im alten Code ohne Upgrade-Kit konnte man in den Saloon schießen, um sich fehlende Jackpots schenken zu lassen. Da die neuen Saloon-Türen das blockieren, ist die Mine der neue Joker: Schießt du direkt in die sich bewegende Mine (während sie offen ist), schenkt dir das Spiel automatisch einen deiner noch ungetroffenen Jackpots auf dem Spielfeld.
-
-    Marshall Mode (Phase 1 Pop-ups): In der ersten Phase poppen die Drop-Targets (Bad Guys) als Hindernisse auf. Pro-Tipp: Wenn du es schaffst, die Jackpots exakt durch die Lücken zu schießen, ohne die aufgestellten Pop-up-Targets an den Seiten zu berühren, ist der Schuss massiv mehr Punkte wert.
-
-    Drunken Multiball Trick: Füge bei den invertierten Flippern den ultimativen physischen Spieler-Tipp hinzu: Kreuz deine Arme an den Flipperknöpfen! Das trickst das Gehirn aus und ist die beste Strategie für diesen Modus.
-
-    Geheime Topper-Anzeige: Der Topper ist nicht nur Deko. Die gesamte untere schwarze Kante des Toppers besteht aus versteckten LEDs, die im Spiel aktiv deinen Fortschritt anzeigen (z.B. verbleibende Patronen beim Shootout oder die Spinner-Umdrehungen beim Saloon Fight).
-
-2. Offizielle "Lore" von der Chicago Gaming Website
-
-Die Herstellerseite beschreibt die Modi mit den offiziellen Namen der Charaktere. Das ist genial für Tooltips oder Sub-Headlines auf Seite 1, um dem Rulesheet noch mehr "Seele" zu geben:
-
-    Super Skill Shot: Der alte Mann auf der Kutsche, dessen Pferde durchgehen und der seine Ladung verliert, heißt offiziell "Old Man Ames".
-
-    Saloon Fight: Die beiden Typen, die sich um die Rechnung streiten, heißen "Beau und Boone". Der Modus eskaliert, weil Boone seinen Drink nach Beau wirft.
-
-    Drunken Multiball: Der stadtbekannte Trinker, der aus dem Saloon stolpert, heißt "Dooley".
-
-    Saloon Party: Der Barkeeper, dem du hilfst, die Krüge der Gäste zu füllen, heißt "Jesse".
-
-    Gunfight System (Mathematik): Die Seite bestätigt die exakte Mathematik des Multiplikators: Der erste beendete Shot Mode gibt den gesammelten Wert mal 1X, der zweite mal 2X, und der Multiplikator wächst unendlich weiter, solange du Modi abschließt, bevor du das Duell startest.
+04.06.2026  09:52           399.690 advance_bank_1.png
+04.06.2026  09:52           432.668 bandelero_bart.png
+04.06.2026  09:52           557.530 bandelero_bart_2.png
+04.06.2026  09:52           815.305 bank_1.png
+04.06.2026  09:52           811.857 bank_2.png
+04.06.2026  09:52           818.286 bank_3.png
+04.06.2026  09:52           466.164 bank_robbery.png
+04.06.2026  09:52           386.507 bella_bart_1.png
+04.06.2026  09:52           383.236 bounty_extra_ball_1.png
+04.06.2026  09:52           375.874 bounty_multiball.png
+04.06.2026  09:52           603.951 extra_ball_1.png
+04.06.2026  09:52           460.113 gold_mine_mulitiball_1.png
+04.06.2026  09:52           757.121 harry_up.png
+04.06.2026  09:52           798.476 harry_up_1.png
+04.06.2026  09:52           762.137 harry_up_2.png
+04.06.2026  09:52           791.316 harry_up_3.png
+04.06.2026  09:52           840.138 harry_up_4.png
+04.06.2026  09:52             2.881 image.py
+04.06.2026  09:52           506.936 polly_perli_1.png
+04.06.2026  09:52           839.415 polly_perli_save_1.png
+04.06.2026  09:52           829.370 polly_perli_save_2.png
+04.06.2026  09:52           838.038 polly_perli_save_3.png
+04.06.2026  09:52           329.764 polly_perli_save_4.png
+04.06.2026  09:52           191.308 shoot_again_1.png
+04.06.2026  09:52           774.457 shout_out_1.png
+04.06.2026  09:52           726.896 Showdown_1.png
+04.06.2026  09:52           556.823 Showdown_2.png
+04.06.2026  09:52           302.664 Showdown_multiball_1.png
+04.06.2026  09:52           552.402 Showdown_multiball_2.png
+04.06.2026  09:52           402.111 Showdown_multiball_3.png
+04.06.2026  09:52           764.673 train.png
+04.06.2026  09:52           434.727 train_paused_1.png
+04.06.2026  09:52           436.255 train_paused_2.png
+04.06.2026  09:52           764.868 train_paused_3.png
