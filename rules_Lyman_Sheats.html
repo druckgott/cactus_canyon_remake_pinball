@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Cactus Canyon - Ultimate Analog Map V19</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/interactive.css">
@@ -64,11 +63,13 @@
             padding-bottom: 20px;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            
         }
 
         /* --- PANNING CURSORS --- */
         .map-wrapper-container {
             cursor: grab; /* Zeigt eine offene Hand an */
+            touch-action: none;
         }
         .map-wrapper-container:active {
             cursor: grabbing; /* Zeigt eine geschlossene Hand an beim Klicken */
@@ -109,7 +110,8 @@
         .print-btn:hover { background: #e04a4a !important; }
 
         .scale-wrapper { width: 100%; display: flex; justify-content: flex-start; align-items: flex-start; }
-        #board-wrapper { transform-origin: top left; transition: transform 0.2s ease-out; }
+        /* #board-wrapper { transform-origin: top left; transition: transform 0.2s ease-out; }*/
+        #board-wrapper { transform-origin: top left; transition: transform 0.2s ease-out; -webkit-transform: translateZ(0);  will-change: transform; }
 
         /* --- MAIN BOARD --- */
         /* ====================== BOARD BACKGROUND ====================== */
@@ -136,6 +138,11 @@
             box-shadow: inset 0 0 180px rgba(30, 10, 0, 0.95), inset 0 0 50px rgba(10, 2, 0, 0.9);
             overflow: visible; 
             margin: 20px 0 0 20px; 
+            /* iOS Hardware Acceleration */
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         /* --- BULLET HOLES --- */
@@ -402,6 +409,14 @@
                 font-family: 'Rye', serif; font-size: 20px; color: #a21a36; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0;
             }
         }
+        /* --- MOBILE PERFORMANCE OPTIMIZATION --- */
+        @media (max-width: 1366px), (hover: none) {
+            .board-container {
+                /* Deaktiviert den extrem rechenintensiven SVG-Filter auf allen Tablets/Handys */
+                filter: drop-shadow(0 15px 20px rgba(0,0,0,0.6)) !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1105,29 +1120,38 @@
     };
 
     // --- PANNING / DRAG LOGIK ---
-    container.addEventListener('mousedown', function(e) {
-        e.preventDefault(); 
+    // --- PANNING / DRAG LOGIK (Modern: Pointer Events für Maus & Touch) ---
+    container.addEventListener('pointerdown', function(e) {
         isPanning = true;
-        
         startX = e.clientX - pointX;
         startY = e.clientY - pointY;
         
-        wrapper.style.transition = "none"; // Animation aus, damit es an der Maus klebt
+        wrapper.style.transition = "none"; // Animation aus
+        
+        if (e.pointerId) {
+            container.setPointerCapture(e.pointerId);
+        }
     });
 
-    // Benutze window für mousemove/mouseup, damit es nicht stockt, wenn man schnell zieht
-    window.addEventListener('mousemove', function(e) {
-        if (!isPanning) return; 
+    window.addEventListener('pointermove', function(e) {
+        if (!isPanning) return;
+        e.preventDefault(); // Zwingend notwendig für iOS, um das Wischen der Webseite zu stoppen
         
         pointX = e.clientX - startX;
         pointY = e.clientY - startY;
         
         updateTransform();
-    });
+    }, { passive: false }); // passive: false erlaubt das e.preventDefault()
 
-    window.addEventListener('mouseup', function() {
+    function endPanning(e) {
         isPanning = false;
-    });
+        if (e && e.pointerId && container.hasPointerCapture(e.pointerId)) {
+            container.releasePointerCapture(e.pointerId);
+        }
+    }
+
+    window.addEventListener('pointerup', endPanning);
+    window.addEventListener('pointercancel', endPanning); // Wichtig, falls iOS den Touch abbricht
 
     // Initiale Events
     window.addEventListener('DOMContentLoaded', setInitialZoom);
